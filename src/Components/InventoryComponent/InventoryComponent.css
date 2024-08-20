@@ -1,0 +1,45 @@
+.inventoryComponent{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: center;
+    gap:1rem;
+
+}
+
+.buttonOptions{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dataSectionInventory{
+    width: 900px;
+    height: 425px;
+    border: 1px solid #62A6C9;
+}
+
+.buttonOptions > button{
+    width: 150px;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #324D7E;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.buttonOptions > button:hover{
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+}
+
+.buttonOptions > button:active{
+    background: #0a1b39;
+    transition: all 0.1s ease-in-out;
+}

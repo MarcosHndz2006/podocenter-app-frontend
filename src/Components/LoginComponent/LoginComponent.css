@@ -1,0 +1,175 @@
+.loginComponent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap:8rem;
+}
+
+.logoSection{
+    width: 300px;
+    height: 310px;
+    padding: 1rem;
+    border-radius: 50%;
+    border: 3px solid #62A6C9;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 5px 1px rgb(218, 218, 218);
+    gap:1rem;
+}
+
+.logoSection > img{
+    border-radius: 25px;
+}
+
+.logoSection > p{
+    font-weight:600;
+    font-size: 1.4rem;
+    color: #324D7E;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.authSection{
+    width: 400px;
+    height: 600px;
+    padding: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 5px 1px rgb(218, 218, 218);
+    border: 3px solid #62A6C9;
+    border-radius: 10px;
+    gap:1.5rem;
+}
+
+.authSection > a{
+    text-decoration: none;
+    color: #137dc0;
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+
+.authSection > p{
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: #324D7E;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.authSection > div{
+    display: flex;
+    flex-flow: column nowrap;
+    gap:1rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.authSection > div > p{
+    font-weight: normal;
+    font-size: 0.9rem;
+    color: gray;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.authSection > button{
+    width: 125px;
+    height: 40px;
+    padding: 0.5rem;
+    font-weight: 400;
+    font-size: 1.1rem;
+    font-family: 'Montserrat';
+    color: white;
+    background-color: #324D7E;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* estilización responsive */
+@media(max-width:1024px){
+    .logoSection{
+        width:225px;
+        height: 225px;
+    }
+
+    .logoSection > img{
+        height: 100px;
+        width: 90px;
+        border-radius: 25px;
+    }
+
+    .logoSection > p{
+        font-size: 1.2rem;
+    }
+
+    .authSection{
+        width: 40%;
+    }
+
+    .loginComponent{
+        gap: 4rem;
+    }
+}
+
+@media(max-width:768px){
+
+    .authSection{
+        width: 410px;
+        height: 465px;
+    }
+
+    .loginComponent{
+        flex-flow: column nowrap;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .authSection > img{
+        height: 50px;
+        width: 50px;
+    }
+
+    .authSection{
+        gap:1rem;
+    }
+
+}
+
+@media(max-width:462px){
+    .loginComponent{
+        gap: 0;
+        padding: 0;
+    }
+
+    .authSection{
+        width: 90%;
+        height: 100%;
+        gap:1.5rem;
+   }
+
+   .logoSection{
+        position:absolute;
+        bottom:20px;
+        right: 30px;
+        width: 100px;
+        height: 100px;
+        gap:0.5rem;
+        box-shadow: 0 0 0 0;
+   }
+
+   .logoSection > img{
+        height: 50px;
+        width: 50px;
+   }
+
+    .logoSection > p{
+          font-size: 9pt;
+          font-weight:800;
+    }
+}

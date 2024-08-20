@@ -1,0 +1,46 @@
+.navButtonGeneric{
+    background-color: white;
+    color:#324d7e;
+    font-family: 'Montserrat';
+    font-size: 13pt;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 14pt;
+    width: 250px;
+    height: 250px;
+    transition: all 0.2s ease-in-out;
+}
+
+.navButtonGeneric:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    transition: all 0.1s ease-in-out;
+}
+
+.navButtonGeneric:active{
+    background: rgb(209, 209, 209);
+}
+
+/*Sección de configuración responsive*/
+
+@media(max-width:768px){
+    .navButtonGeneric{
+        width: 125px;
+        height: 125px;
+        font-size: 10pt;
+    }
+
+    .navButtonGeneric > img{
+        width: 50px;
+        height: 50px;
+    }
+}

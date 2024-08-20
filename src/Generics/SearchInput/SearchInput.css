@@ -1,0 +1,31 @@
+.searchInputComponent{
+    width: 600px;
+    height: 60px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+}
+
+.searchInputComponent > .MuiAutocomplete-root{
+    width: 400px;
+    height: 100%;
+}
+
+.searchInputComponent > img{
+    height: 30px;
+    width: 30px;
+}
+
+.searchButton{
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    background: #324D7E;
+    color: white;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 1rem;
+}

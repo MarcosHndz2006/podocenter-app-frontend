@@ -1,0 +1,26 @@
+.headerGeneric{
+    width: 100%;
+    height: 45px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
+
+.headerGeneric > img{
+    width: 30px;
+    height: 30px;
+    margin: 0 10px 0 0;
+}
+
+.headerGeneric{
+    font-family: 'Montserrat';
+    font-size: 16pt;
+    font-weight: 500;
+}
+
+.headerGeneric > p{
+    font-size: 10pt;
+    margin: 0 0 0 10px;
+}

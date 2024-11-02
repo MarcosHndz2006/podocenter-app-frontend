@@ -1,12 +1,4 @@
 # React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
 # Para crear una template de proyecto con React y Vite se usan los comandos siguientes
 
 ## crear app de vite 
@@ -25,3 +17,41 @@ El comando para correr el proyecto es.
 ...
 npm run dev
 ...
+
+# Información para conexión con base de datos
+
+DATABASE_PUBLIC_URL
+postgresql://postgres:xpQoYVagyRpGHcvWUStOsPRqczXtNJwS@monorail.proxy.rlwy.net:47517/railway
+
+DATABASE_URL
+postgresql://postgres:xpQoYVagyRpGHcvWUStOsPRqczXtNJwS@postgres.railway.internal:5432/railway
+
+PGDATA
+/var/lib/postgresql/data/pgdata
+
+PGDATABASE
+railway
+
+PGHOST
+postgres.railway.internal
+
+PGPASSWORD
+xpQoYVagyRpGHcvWUStOsPRqczXtNJwS
+
+PGPORT
+5432
+
+PGUSER
+postgres
+
+POSTGRES_DB
+railway
+
+POSTGRES_PASSWORD
+xpQoYVagyRpGHcvWUStOsPRqczXtNJwS
+
+POSTGRES_USER
+postgres
+
+SSL_CERT_DAYS
+820

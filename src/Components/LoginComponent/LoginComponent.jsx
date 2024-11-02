@@ -2,9 +2,16 @@ import './LoginComponent.css'
 import Logo from '../../assets/img/logo podocenter.png'
 import officer from '../../assets/img/policia.png'
 import TextField from '@mui/material/TextField'
-
+import {useNavigate} from 'react-router-dom'
 
 function LoginComponent(){
+
+    const navigate = useNavigate()
+
+    const redirect = () => {
+        navigate("/podocenter/home")
+    }
+
     return(
         <div className="loginComponent">
             <section className="logoSection">
@@ -31,7 +38,7 @@ function LoginComponent(){
                 </div>
                 <a href="#">Olvidé mi contraseña</a>
                 <a href="#">No tengo una cuenta. ¡Registrarse!</a>
-                <button>Ingresar</button>
+                <button onClick={redirect}>Ingresar</button>
             </section>
         </div>
     )

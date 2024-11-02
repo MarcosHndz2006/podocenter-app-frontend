@@ -11,21 +11,21 @@ import mysoft from '../../assets/img/my soft logo.png'
 function HomeComponent(){
     return(
         <div className='homeComponent'>
-            <HeaderGeneric username="@username">Home</HeaderGeneric>
+            <HeaderGeneric username="@username" route="/podocenter/auth">Home</HeaderGeneric>
             <p>Selecciona una opción para comenzar a navegar</p>
             <img src={hand} alt="" height="30px" width="30px"/>
             <section className='menuOptionsContainer1'>
-                <NavButtonGeneric>
+                <NavButtonGeneric route="/podocenter/inventory">
                     <img src={inventory} alt="inventario.png" width="150px" height="150px"/>
                     <p>Inventario</p>
                 </NavButtonGeneric>
-                <NavButtonGeneric>
+                <NavButtonGeneric route="/podocenter/stocks">
                     <img src={stocks} alt="inventario.png" width="150px" height="150px"/>
                     <p>Productos</p>
                 </NavButtonGeneric>
             </section>
             <section className='menuOptionsContainer2'>
-                <NavButtonGeneric>
+                <NavButtonGeneric route="/podocenter/payments">
                     <img src={cobros} alt="inventario.png" width="150px" height="150px"/>
                     <p>Cobros</p>
                 </NavButtonGeneric>

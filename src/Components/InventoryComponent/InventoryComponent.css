@@ -1,14 +1,14 @@
-.inventoryComponent{
+.inventoryComponent {
     display: flex;
     flex-flow: column nowrap;
     justify-content: start;
     align-items: center;
-    gap:1rem;
+    gap: 1rem;
     font-family: "Roboto";
     font-weight: light;
 }
 
-.buttonOptions{
+.buttonOptions {
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -17,13 +17,13 @@
     gap: 1rem;
 }
 
-.dataSectionInventory{
+.dataSectionInventory {
     width: 900px;
     height: 425px;
     border: 1px solid #62A6C9;
 }
 
-.buttonOptions > button{
+.buttonOptions>button {
     width: 150px;
     padding: 0.5rem;
     border: none;
@@ -35,17 +35,42 @@
     transition: all 0.3s ease-in-out;
 }
 
-.buttonOptions > button:hover{
+.buttonOptions>button:hover {
     transform: scale(1.05);
     transition: all 0.3s ease-in-out;
 }
 
-.buttonOptions > button:active{
+.buttonOptions>button:active {
     background: #0a1b39;
     transition: all 0.1s ease-in-out;
 }
 
-.btns{
+.modalDiv {
+    width: auto;
+    padding: 0.5rem;
+    background: #324D7E;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.titleModal {
+    color: white;
+    width: auto;
+    text-align: center;
+}
+
+.formModal {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-flow: column wrap;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: start;
+}
+
+.btns {
     width: 100%;
     padding: 10px 0;
     display: flex;
@@ -55,7 +80,39 @@
     gap: 3rem;
 }
 
-.btnSave{
+.btnStands{
+    background: #324D7E;
+    color: white;
+    padding: 10px;
+    margin: 0px;
+    box-shadow: 0;
+    border: 0;
+    border-radius: 5px;
+    width: 200px;
+    font-size: 11pt;
+    font-family: 'Roboto';
+    font-weight: 400;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;    
+}
+
+.btnStands:hover {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #324D7E;
+    color: #324D7E;
+    background: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.btnStands:active {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+    background: rgb(163, 162, 162);
+
+}
+
+.btnSave {
     background: #324D7E;
     color: white;
     padding: 10px;
@@ -72,7 +129,7 @@
     cursor: pointer;
 }
 
-.btnSave:hover{
+.btnSave:hover {
     transition: all 0.2s ease-in-out;
     border: 1px solid #324D7E;
     color: #324D7E;
@@ -80,14 +137,14 @@
     transition: all 0.2s ease-in-out;
 }
 
-.btnSave:active{
+.btnSave:active {
     transition: all 0.2s ease-in-out;
     transform: scale(1);
     background: rgb(163, 162, 162);
 
 }
 
-.btnCancel{
+.btnCancel {
     background: #324D7E;
     color: white;
     padding: 10px;
@@ -104,7 +161,7 @@
     cursor: pointer;
 }
 
-.btnCancel:hover{
+.btnCancel:hover {
     transition: all 0.2s ease-in-out;
     border: 1px solid #324D7E;
     color: #324D7E;
@@ -112,9 +169,9 @@
     transition: all 0.2s ease-in-out;
 }
 
-.btnCancel:active{
+.btnCancel:active {
     transition: all 0.2s ease-in-out;
     transform: scale(1);
     background: rgb(163, 162, 162);
-    
+
 }

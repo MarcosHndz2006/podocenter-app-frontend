@@ -6,6 +6,13 @@ import dayjs from 'dayjs'
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -13,12 +20,17 @@ import { DateField } from '@mui/x-date-pickers/DateField';
 import './InventoryComponent.css';
 import Modal from 'react-modal'
 import ModalSuppliers from 'react-modal'
+import AddSupplierModal from 'react-modal'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom' 
 
 function InventoryComponent() {
 
+  const navigate = useNavigate()
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalSuppliersIsOpen, setModalSuppliersIsOpen] = useState(false);
+  const [AddSuppliersIsOpen, setAddSuppliersIsOpen] = useState(false);
   const [productData, setProductData] = useState({ name: '', price: '' });
   const [age, setAge] = useState('');
   const [value, setValue] = useState(null);
@@ -39,6 +51,23 @@ function InventoryComponent() {
     setAge(event.target.value);
   };
 
+  function createData(name, calories, fat, carbs) {
+    return { name, calories, fat, carbs };
+  }
+
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
+
+  //función de navegación a almacenes y estanterías
+  const toStandsPage = () => {
+    navigate("/podocenter/stands")
+  }
+
   return (
     <div className='inventoryComponent'>
       <HeaderGeneric username="@username" route="/podocenter/home">Inventario</HeaderGeneric>
@@ -57,16 +86,10 @@ function InventoryComponent() {
           }
         }}
       >
-        <div style={{
-          width: 'auto', padding: '0.5rem', background: '#324D7E',
-          flexFlow: 'row nowrap', justifyContent: 'center', alignItems: 'center'
-        }}>
-          <h2 style={{ color: 'white', width: 'auto', textAlign: 'center' }}>Agregar item</h2>
+        <div className='modalDiv'>
+          <h2 className='titleModal'>Agregar item</h2>
         </div>
-        <form style={{
-          width: 'auto', height: 'auto', display: 'flex', flexFlow: 'column wrap',
-          padding: '0.5rem', justifyContent: 'center', alignItems: 'start'
-        }}>
+        <form className='formModal'>
           <TextField fullWidth id="filled-basic" label="Nombre comercial" variant="filled" margin="dense" size="small" />
           <TextField fullWidth id="filled-basic" label="Componente principal" variant="filled" margin="dense" size="small" />
           <TextField fullWidth id="filled-basic" label="Componente secundario" variant="filled" margin="dense" size="small" />
@@ -141,16 +164,42 @@ function InventoryComponent() {
           </div>
         </form>
       </Modal>
-      <p>Opciones avanzadas de búsqueda</p>
-      <p>Resultados encontrados</p>
+      <p>ítems</p>
       <section className='dataSectionInventory'>
-
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 500 }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align="right">Calories</TableCell>
+                <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.calories}</TableCell>
+                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell align="right">{row.carbs}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </section>
       <section className='buttonOptions'>
         <button className='generateReportButton'>Generar reporte</button>
         <button className='AddItemButton' onClick={() => setModalIsOpen(true)}>Agregar item</button>
         <button className='suppliersButton' onClick={() => setModalSuppliersIsOpen(true)}>Ver proveedores</button>
       </section>
+      <button className='btnStands' onClick={toStandsPage}>Administrar estanterías y almacenes</button>
       <ModalSuppliers
         isOpen={modalSuppliersIsOpen}
         onRequestClose={() => setModalSuppliersIsOpen(false)}
@@ -158,6 +207,7 @@ function InventoryComponent() {
         style={{
           content: {
             width: '600px',
+            height: '500px',
             margin: 'auto',
             padding: '0',
             fontFamily: "Roboto",
@@ -165,22 +215,75 @@ function InventoryComponent() {
           }
         }}
       >
-        <div style={{
-          width: 'auto', padding: '0.5rem', background: '#324D7E',
-          flexFlow: 'row nowrap', justifyContent: 'center', alignItems: 'center'
-        }}>
-          <h2 style={{ color: 'white', width: 'auto', textAlign: 'center' }}>Lista de proveedores</h2>
+        <div className='modalDiv'>
+          <h2 className='titleModal'>Lista de proveedores</h2>
         </div>
-        <form style={{
-          width: 'auto', height: 'auto', display: 'flex', flexFlow: 'column wrap',
-          padding: '0.5rem', justifyContent: 'center', alignItems: 'start'}} >
-
+        <form className='formModal'>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 500 }} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Dessert (100g serving)</TableCell>
+                  <TableCell align="right">Calories</TableCell>
+                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.calories}</TableCell>
+                    <TableCell align="right">{row.fat}</TableCell>
+                    <TableCell align="right">{row.carbs}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </form>
         <div className='btns'>
-          <button type="button" onClick={saveData} className='btnSave'>Agregar</button>
+          <button type="button" onClick={() => setAddSuppliersIsOpen(true)} className='btnSave'>Agregar</button>
           <button type="button" onClick={() => setModalSuppliersIsOpen(false)} className='btnCancel'>Cancelar</button>
         </div>
       </ModalSuppliers>
+      <AddSupplierModal isOpen={AddSuppliersIsOpen}
+        onRequestClose={() => setAddSuppliersIsOpen(false)}
+        contentLabel="Agregar proveedor"
+        style={{
+          content: {
+            width: '500px',
+            margin: 'auto',
+            padding: '0',
+            fontFamily: "Roboto",
+            fontWeight: "light",
+          }
+        }}>
+        <div className='modalDiv'>
+          <h2 className='titleModal'>Agregar proveedor</h2>
+        </div>
+        <form className='formModal'>
+          <TextField fullWidth id="filled-basic" label="Nombre proveedor" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Dirección legal" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Dirección sucursal" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Contacto" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Número de contacto local" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Dirección electrónica 1:" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Dirección electrónica 2:" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Nombre representante legal" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="NCR" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="NIT" variant="filled" margin="dense" size="small" />
+        </form>
+        <div className='btns'>
+          <button type="button" onClick={saveData} className='btnSave'>Agregar</button>
+          <button type="button" onClick={() => setAddSuppliersIsOpen(false)} className='btnCancel'>Cancelar</button>
+        </div>
+      </AddSupplierModal>
     </div>
   );
 }

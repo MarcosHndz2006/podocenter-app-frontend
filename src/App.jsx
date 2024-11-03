@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './Pages/Login'
 import Home from './Pages/Home'
 import Inventory from './Pages/Inventory'
+import Stands from './Pages/Stands'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
         <Route path="podocenter/auth" element={<Login/>}/>
         <Route path="podocenter/home" element={<Home/>}/>
         <Route path="podocenter/inventory" element={<Inventory/>}/>
+        <Route path="podocenter/stands" element={<Stands/>}/>
       </Routes>
     </BrowserRouter>
   )

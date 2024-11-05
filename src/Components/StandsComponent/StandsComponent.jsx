@@ -1,33 +1,42 @@
 import './StandsComponent.css'
 import HeaderGeneric from '../../Generics/HeaderGeneric/HeaderGeneric'
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import StandCard from '../../Generics/StandCard/StandCard'
+import { useState } from 'react'
+import { MdOutlineFilterNone } from "react-icons/md";
 
 function StandsComponent() {
+
+    const [stands, setStands] = useState([
+        <StandCard />,
+        <StandCard />,
+        <StandCard />,
+        <StandCard />
+    ])
+
+    const renderStands = () => {
+        if (stands.length == 0) {
+            return <MdOutlineFilterNone />
+        } else {
+            return stands
+        }
+    }
+
     return (
         <div className='standsComponentDiv'>
-            <HeaderGeneric username="@username" route="/podocenter/home">Almacenes y estanterías</HeaderGeneric>
+            <HeaderGeneric username="@username" route="/podocenter/inventory">Almacenes y estanterías</HeaderGeneric>
             <section className='standsContainer'>
-                
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ArrowDownwardIcon />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                    >
-                        <Typography>Accordion 1</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                            malesuada lacus ex, sit amet blandit leo lobortis eget.
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
+                <div className='warehousesContainer'>
+                    <h2>Almacenes</h2>
+                    {
+                        renderStands()
+                    }
+                </div>
+                <div className='shelvesContainer'>
+                    <h2>Estanterías</h2>
+                    {
+                        renderStands()
+                    }
+                </div>
             </section>
         </div>
     )

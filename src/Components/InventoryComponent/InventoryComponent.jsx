@@ -21,8 +21,10 @@ import './InventoryComponent.css';
 import Modal from 'react-modal'
 import ModalSuppliers from 'react-modal'
 import AddSupplierModal from 'react-modal'
+import OptionModal from 'react-modal'
+import ModalDocument from 'react-modal'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom' 
+import { useNavigate } from 'react-router-dom'
 
 function InventoryComponent() {
 
@@ -31,6 +33,8 @@ function InventoryComponent() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalSuppliersIsOpen, setModalSuppliersIsOpen] = useState(false);
   const [AddSuppliersIsOpen, setAddSuppliersIsOpen] = useState(false);
+  const [selectAddOptionModal, setSelectAddOptionModal] = useState(false);
+  const [documentModal, setdocumentModal] = useState(false);
   const [productData, setProductData] = useState({ name: '', price: '' });
   const [age, setAge] = useState('');
   const [value, setValue] = useState(null);
@@ -72,6 +76,31 @@ function InventoryComponent() {
     <div className='inventoryComponent'>
       <HeaderGeneric username="@username" route="/podocenter/home">Inventario</HeaderGeneric>
       <SearchInput />
+      <OptionModal isOpen={selectAddOptionModal}
+        onRequestClose={() => setSelectAddOptionModal(false)}
+        contentLabel="Opción agregar ítem"
+        style={{
+          content: {
+            width: '500px',
+            height: '200px',
+            margin: 'auto',
+            padding: '0',
+            fontFamily: "Roboto",
+            fontWeight: "light",
+          }
+        }}
+      >
+        <div className='btnsOption'>
+          <button type="button" onClick={() => {
+            setdocumentModal(true)
+            setSelectAddOptionModal(false)
+          }} className='btnSave'>Agregar documento de compra</button>
+          <button type="button" onClick={() => {
+            setSelectAddOptionModal(false)
+            setModalIsOpen(true)
+          }} className='btnCancel'>Agregar item a inventario</button>
+        </div>
+      </OptionModal>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -196,7 +225,7 @@ function InventoryComponent() {
       </section>
       <section className='buttonOptions'>
         <button className='generateReportButton'>Generar reporte</button>
-        <button className='AddItemButton' onClick={() => setModalIsOpen(true)}>Agregar item</button>
+        <button className='AddItemButton' onClick={() => setSelectAddOptionModal(true)}>Agregar item</button>
         <button className='suppliersButton' onClick={() => setModalSuppliersIsOpen(true)}>Ver proveedores</button>
       </section>
       <button className='btnStands' onClick={toStandsPage}>Administrar estanterías y almacenes</button>
@@ -284,6 +313,51 @@ function InventoryComponent() {
           <button type="button" onClick={() => setAddSuppliersIsOpen(false)} className='btnCancel'>Cancelar</button>
         </div>
       </AddSupplierModal>
+      <ModalDocument isOpen={documentModal}
+        onRequestClose={() => setdocumentModal(false)}
+        contentLabel="Documento de compra"
+        style={{
+          content: {
+            width: '500px',
+            margin: 'auto',
+            padding: '0',
+            fontFamily: "Roboto",
+            fontWeight: "light",
+          }
+        }}>
+        <div className='modalDiv'>
+          <h2 className='titleModal'>Documento de compra</h2>
+        </div>
+        <form className='formModal'>
+          <FormControl variant="filled" fullWidth margin="dense" size="small" >
+            <InputLabel id="demo-simple-select-filled-label">Código de proveedor</InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={age}
+              onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Medicamento</MenuItem>
+              <MenuItem value={20}>Insumo</MenuItem>
+              <MenuItem value={30}>Muestra medica sin valor</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField fullWidth id="filled-basic" label="Número de CCF" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Código de producto" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Presentación" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Cantidad" type="number" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Monto (bruto)" variant="filled" margin="dense" size="small" />
+          <TextField fullWidth id="filled-basic" label="Monto (IVA)" variant="filled" margin="dense" size="small" />
+        </form>
+        <div className='btns'>
+          <button type="button" onClick={() => setdocumentModal(false)} className='btnSave'>Agregar</button>
+          <button type="button" onClick={() => setdocumentModal(false)} className='btnCancel'>Cancelar</button>
+        </div>
+      </ModalDocument>
+
     </div>
   );
 }

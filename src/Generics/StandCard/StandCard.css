@@ -58,3 +58,36 @@
     transform: scale(1);
     transition: all 0.2s ease-in-out;
 }
+
+.ShowMore{
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+.ShowMore:hover{
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.formModal > article{
+    max-width: 500px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: start;
+    gap: 0.5rem;
+    padding: 0px 0px 0px 10px;
+}
+
+.formModal > article > p{
+    font-size: 14pt;
+}
+
+.formModal{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: start;
+    gap: 1rem;
+}

@@ -1,0 +1,45 @@
+/* sección de estilos del div general */
+.inventoryComponent{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: center;
+    background: #324d7e;
+    width: 100%;
+    height: 100%;
+    gap: 0.5rem;
+    overflow-y: scroll;
+}
+/* se oculta la scrollbar con esta opción */
+.inventoryComponent::-webkit-scrollbar{
+    display: none;
+}
+
+/* estilo del menú de filtros */
+.filterSection{
+    width: 900px;
+    border-radius: 5px;
+    height: auto;
+    margin: 0;
+    padding: 1rem 0px;
+    background-color: white;
+    color: #324d7e;
+    font-family: 'Montserrat';
+    font-size: 12pt;
+    font-weight: 500;   
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+    justify-content: start;
+    align-items: center;
+}
+
+/* estilos de los filtros */
+.filters{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: start;
+    gap: 1rem;
+    padding: 0 1rem;
+}

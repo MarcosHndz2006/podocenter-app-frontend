@@ -8,16 +8,25 @@
     width: 100%;
     height: 100%;
     gap: 0.5rem;
-    overflow-y: scroll;
 }
 /* se oculta la scrollbar con esta opción */
 .inventoryComponent::-webkit-scrollbar{
     display: none;
 }
 
+/* estilos del contenedor de inventario */
+.inventoryContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 /* estilo del menú de filtros */
 .filterSection{
-    width: 900px;
+    width: 250px;
     border-radius: 5px;
     height: auto;
     margin: 0;
@@ -42,4 +51,61 @@
     align-items: start;
     gap: 1rem;
     padding: 0 1rem;
+}
+
+/* estilos del contenedor de ítems de inventario */
+.itemsContainer{
+    width: 1150px;
+    height: 650px;
+    background: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0 0.2rem;
+}
+
+/* estilos del encabezado del contenedor de ítems de inventario */
+.itemsContainerHeader{
+    width: 100%;
+    height: 5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) 100px 1fr repeat(2, 100px);
+    grid-template-rows: 1fr;
+    font-family: 'Roboto';
+    font-size: 10pt;
+    align-items: center;
+}
+
+/* estilos del espacio de renderización de ítems de inventario */
+.itemsContainerElements{
+    width: 100%;
+    height: 86%;
+    border-top: 0.05px solid #324d7e;
+    border-bottom: 0.05px solid #324d7e;
+}
+
+/* estilos del pie del contenedor de ítems de inventario */
+.itemsContainerFooter{
+    width: 100%;
+    height: 8%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.2rem 0;
+}
+
+/* estilos para los modales */
+.modalDiv{
+    background: #324d7e;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+
+.titleModal{
+    font-weight: 500;
 }

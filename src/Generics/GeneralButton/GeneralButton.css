@@ -1,0 +1,28 @@
+.generalBtn{
+    background: #324d7e;
+    color: white;
+    border: 0px;
+    border-radius: 3px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    font-size: 11pt;
+    font-family: 'Montserrat';
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.generalBtn:hover{
+    background: white;
+    border: 1px solid #324d7e;
+    color: #324d7e;
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05);
+}
+
+.generalBtn:active{
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    background: rgb(203, 203, 203);
+}

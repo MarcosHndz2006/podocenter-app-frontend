@@ -1,193 +1,45 @@
-.inventoryComponent {
+/* sección de estilos del div general */
+.inventoryComponent{
     display: flex;
     flex-flow: column nowrap;
     justify-content: start;
     align-items: center;
-    gap: 1rem;
-    font-family: "Roboto";
-    font-weight: light;
-}
-
-.buttonOptions {
+    background: #324d7e;
     width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
-
-.dataSectionInventory {
-    width: 900px;
-    height: 425px;
-    border: 1px solid #62A6C9;
-}
-
-.buttonOptions>button {
-    width: 150px;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #324D7E;
-    color: white;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.buttonOptions>button:hover {
-    transform: scale(1.05);
-    transition: all 0.3s ease-in-out;
-}
-
-.buttonOptions>button:active {
-    background: #0a1b39;
-    transition: all 0.1s ease-in-out;
-}
-
-.modalDiv {
-    width: auto;
-    padding: 0.5rem;
-    background: #324D7E;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.titleModal {
-    color: white;
-    width: auto;
-    text-align: center;
-}
-
-.formModal {
-    width: auto;
-    height: auto;
-    display: flex;
-    flex-flow: column wrap;
-    padding: 0.5rem;
-    justify-content: center;
-    align-items: start;
-}
-
-.btns {
-    width: 100%;
-    padding: 10px 0;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-}
-
-.btnsOption {
-    width: 100%;
-    padding: 0;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
     height: 100%;
+    gap: 0.5rem;
+    overflow-y: scroll;
+}
+/* se oculta la scrollbar con esta opción */
+.inventoryComponent::-webkit-scrollbar{
+    display: none;
 }
 
-.btnsOption> button {
-    width: 200px;
-    height: 70px;
-}
-
-.btnStands {
-    background: #324D7E;
-    color: white;
-    padding: 10px;
-    margin: 0px;
-    box-shadow: 0;
-    border: 0;
+/* estilo del menú de filtros */
+.filterSection{
+    width: 900px;
     border-radius: 5px;
-    width: 200px;
-    font-size: 11pt;
-    font-family: 'Roboto';
-    font-weight: 400;
-    transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
+    height: auto;
+    margin: 0;
+    padding: 1rem 0px;
+    background-color: white;
+    color: #324d7e;
+    font-family: 'Montserrat';
+    font-size: 12pt;
+    font-weight: 500;   
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+    justify-content: start;
+    align-items: center;
 }
 
-.btnStands:hover {
-    transition: all 0.2s ease-in-out;
-    border: 1px solid #324D7E;
-    color: #324D7E;
-    background: white;
-    transition: all 0.2s ease-in-out;
-}
-
-.btnStands:active {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1);
-    background: rgb(163, 162, 162);
-
-}
-
-.btnSave {
-    background: #324D7E;
-    color: white;
-    padding: 10px;
-    margin: 5px;
-    box-shadow: 0;
-    border: 0;
-    border-radius: 5px;
-    width: 100px;
-    font-size: 11pt;
-    font-family: 'Roboto';
-    font-weight: 400;
-    transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-.btnSave:hover {
-    transition: all 0.2s ease-in-out;
-    border: 1px solid #324D7E;
-    color: #324D7E;
-    background: white;
-    transition: all 0.2s ease-in-out;
-}
-
-.btnSave:active {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1);
-    background: rgb(163, 162, 162);
-
-}
-
-.btnCancel {
-    background: #324D7E;
-    color: white;
-    padding: 10px;
-    margin: 5px;
-    box-shadow: 0;
-    border: 0;
-    border-radius: 5px;
-    width: 100px;
-    font-size: 11pt;
-    font-family: 'Roboto';
-    font-weight: 400;
-    transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-.btnCancel:hover {
-    transition: all 0.2s ease-in-out;
-    border: 1px solid #324D7E;
-    color: #324D7E;
-    background: white;
-    transition: all 0.2s ease-in-out;
-}
-
-.btnCancel:active {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1);
-    background: rgb(163, 162, 162);
-
+/* estilos de los filtros */
+.filters{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: start;
+    gap: 1rem;
+    padding: 0 1rem;
 }

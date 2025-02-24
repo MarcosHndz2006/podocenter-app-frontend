@@ -9,16 +9,15 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
 import Modal from 'react-modal'
-import ProviderModal from 'react-modal'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import box from '../../assets/img/open-box.png';
 import vacio from '../../assets/img/conjunto-vacio.png'
+import InventoryItem from '../../Generics/InventoryItem/InventoryItem';
+import arrow from '../../assets/img/right-arrow.png'
 //import de useState y useNavigate
 import { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
-
-
 
 function InventoryComponent() {
 
@@ -27,6 +26,64 @@ function InventoryComponent() {
     //variable para renderizar el encabezado del contenedor de items
     const titles = ["Nombre comercial", "Componente principal", "Clasificación"
         , "Vencimiento", "Casa farmacéutica", "Unidad", "Precio unitario"
+    ]
+
+    //variable que contiene los items a renderizar
+    const items = [
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />,
+        <InventoryItem name="Nombre 1" component="primer componente" 
+        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
+        unit="ml" price="$0.00" />
     ]
 
     //sección de variables de estado y navegación del componente
@@ -48,26 +105,28 @@ function InventoryComponent() {
     const handleChange = (event) => {
         setAge(event.target.value);
     };
-
+    
     /* función para el botón de accionar búsqueda */
     const search = () => {
         alert("buscando...")
     }
-
+    
     /* función para renderizar los títulos del encabezado del contenedor de ítems */
     const renderTitles = () => {
         return titles.map((title) => {
             return <p>{title}</p>
         })
     }
-
+    
     /* función de navegación a ventana de añadir proveedor */
     const nav = () => {
         navigate("/podocenter/provider/add")
     }
-
+    
     return (
         <div className='inventoryComponent'>
+            <img src={arrow} alt="normal arrow" className='rightArrow'/>
+            <img src={arrow} alt="normal arrow" className='leftArrow'/>
             {/* componente de encabezado */}
             <HeaderGeneric username="@username" route="/podocenter/home">Inventory</HeaderGeneric>
             {/* bloque donde está el menú para filtros y el contenedor de ítems */}
@@ -147,7 +206,7 @@ function InventoryComponent() {
                     </div>
                     {/* elementos renderizados */}
                     <div className='itemsContainerElements'>
-
+                        {items}
                     </div>
                     {/* botones para agregar items */}
                     <div className='itemsContainerFooter'>

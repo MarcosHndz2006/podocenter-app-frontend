@@ -1,0 +1,31 @@
+/* estilo del componente en general */
+
+.noneResultsComponent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat';
+    gap: 2rem;
+}
+
+/* estilo de la imagen del componente */
+
+.noneResultsComponent > img{
+    width: 220px;
+    height: 250px;
+}
+
+.noneResultsComponent > p:first-child{
+    font-size: 11pt;
+    font-weight: 400;
+    color: #324D7E;
+}
+
+.noneResultsComponent > p:last-child{
+    font-size: 14pt;
+    font-weight: 500;
+    color: #324D7E;
+}

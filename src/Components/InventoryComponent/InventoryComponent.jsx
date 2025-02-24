@@ -17,7 +17,8 @@ import InventoryItem from '../../Generics/InventoryItem/InventoryItem';
 import arrow from '../../assets/img/right-arrow.png'
 //import de useState y useNavigate
 import { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import NoneResults from '../../Generics/NoneResults/NoneResults';
 
 function InventoryComponent() {
 
@@ -30,60 +31,7 @@ function InventoryComponent() {
 
     //variable que contiene los items a renderizar
     const items = [
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />,
-        <InventoryItem name="Nombre 1" component="primer componente" 
-        clasification="ungüento" expiration="dd/mm/yyyy" house="san nicolás" 
-        unit="ml" price="$0.00" />
+
     ]
 
     //sección de variables de estado y navegación del componente
@@ -100,33 +48,43 @@ function InventoryComponent() {
 
     //sección de funciones
 
+    /* función para renderizar los ítems de inventario o la vista
+    por defecto en caso de no tener resultados */
+    const renderItems = () => {
+        if (items.length === 0) {
+            return <NoneResults/>
+        } else {
+            return items
+        }
+    }
+
     /* función para obtener el valor del select que tiene las clasificaciones 
     de los productos */
     const handleChange = (event) => {
         setAge(event.target.value);
     };
-    
+
     /* función para el botón de accionar búsqueda */
     const search = () => {
         alert("buscando...")
     }
-    
+
     /* función para renderizar los títulos del encabezado del contenedor de ítems */
     const renderTitles = () => {
         return titles.map((title) => {
             return <p>{title}</p>
         })
     }
-    
+
     /* función de navegación a ventana de añadir proveedor */
     const nav = () => {
         navigate("/podocenter/provider/add")
     }
-    
+
     return (
         <div className='inventoryComponent'>
-            <img src={arrow} alt="normal arrow" className='rightArrow'/>
-            <img src={arrow} alt="normal arrow" className='leftArrow'/>
+            <img src={arrow} alt="normal arrow" className='rightArrow' />
+            <img src={arrow} alt="normal arrow" className='leftArrow' />
             {/* componente de encabezado */}
             <HeaderGeneric username="@username" route="/podocenter/home">Inventory</HeaderGeneric>
             {/* bloque donde está el menú para filtros y el contenedor de ítems */}
@@ -206,7 +164,7 @@ function InventoryComponent() {
                     </div>
                     {/* elementos renderizados */}
                     <div className='itemsContainerElements'>
-                        {items}
+                        {renderItems()}
                     </div>
                     {/* botones para agregar items */}
                     <div className='itemsContainerFooter'>
@@ -305,11 +263,11 @@ function InventoryComponent() {
                             {/* bloque donde se mostrará el estado del ítem en inventario */}
                             <section className='stateSection'>
                                 <article>
-                                    <img src={box} alt="box"/>
+                                    <img src={box} alt="box" />
                                     <p>Estado</p>
                                 </article>
                                 <article>
-                                    <img src={vacio} alt="vacío"/>
+                                    <img src={vacio} alt="vacío" />
                                     <p>N/A</p>
                                 </article>
                             </section>

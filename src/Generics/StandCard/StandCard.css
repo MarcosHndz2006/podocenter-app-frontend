@@ -12,12 +12,14 @@
     padding: 0.5rem;
     font-family: 'Montserrat';
     font-weight: 400;
+    margin: 0 0.5rem;
 }
 
 .standCard > p {
     color: #324D7E;
     font-weight: 600;
     font-size: 11pt;
+
 }
 
 .infoCard {
@@ -37,6 +39,7 @@
 
 .infoCard > p{
     font-size: 10pt;
+    max-width: 200px;
 }
 
 .standCard >.infoCard > h3{

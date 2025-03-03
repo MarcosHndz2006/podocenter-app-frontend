@@ -14,4 +14,21 @@
     border-left: 0;
     border-right: 0;
     padding: 0.4rem 0;
+    position: relative;
+}
+
+/* estilo de la imagen por defecto */
+
+.dots {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.dots:hover {
+    transform: rotate(90deg);
+    transition: all 0.2s ease-in-out;
 }

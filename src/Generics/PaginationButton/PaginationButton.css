@@ -1,0 +1,25 @@
+/* estilos del componente que genera un botón de paginación */
+
+.paginationButtonComponent{
+    height: 50px;
+    width: 50px;
+    font-family: 'Montserrat';
+    font-size: 12pt;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px rgb(36, 36, 36);
+    background: white;
+    align-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.paginationButtonComponent:hover{
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.paginationButtonComponent:active{
+    background: rgb(154, 153, 153);
+    transition: all 0.2s ease-in-out;
+}

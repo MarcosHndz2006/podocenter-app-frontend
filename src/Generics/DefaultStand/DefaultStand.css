@@ -1,0 +1,40 @@
+/* estilos del componente */
+
+.defaultStandCard {
+    background: rgb(222, 222, 222);
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px rgb(36, 36, 36);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin: 0 0.5rem;
+}
+
+.defaultStandCard:hover{
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.defaultStandCard:active{
+    background: rgb(161, 161, 161);
+    transition: all 0.2s ease-in-out;
+}
+
+.defaultStandCard>p {
+    color: black;
+    font-size: 11pt;
+}
+
+.defaultStandCard>img {
+    width: 70px;
+    height: 70px;
+}

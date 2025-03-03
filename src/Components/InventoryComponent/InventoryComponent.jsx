@@ -31,7 +31,60 @@ function InventoryComponent() {
 
     //variable que contiene los items a renderizar
     const items = [
-
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />,
+        <InventoryItem name="nombre 1" component="componente 1"
+            clasification="ungüento" expiration="N/A" house="san nicolás"
+            unit="ml" price="$0.00" />
     ]
 
     //sección de variables de estado y navegación del componente
@@ -52,7 +105,7 @@ function InventoryComponent() {
     por defecto en caso de no tener resultados */
     const renderItems = () => {
         if (items.length === 0) {
-            return <NoneResults/>
+            return <NoneResults />
         } else {
             return items
         }
@@ -79,6 +132,11 @@ function InventoryComponent() {
     /* función de navegación a ventana de añadir proveedor */
     const nav = () => {
         navigate("/podocenter/provider/add")
+    }
+
+    /* función de navegación a ventana de almacenes y estanterías */
+    const stores = () => {
+        navigate("/podocenter/stands")
     }
 
     return (
@@ -170,6 +228,7 @@ function InventoryComponent() {
                     <div className='itemsContainerFooter'>
                         <GeneralButton event={() => setModalIsOpen(true)}>Nuevo ítem</GeneralButton>
                         <GeneralButton event={() => setProviderModalIsOpen(true)}>Proveedores</GeneralButton>
+                        <GeneralButton event={stores}>Almacenes</GeneralButton>
                     </div>
                 </section>
                 {/* sección de modales a usar */}

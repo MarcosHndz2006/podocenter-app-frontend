@@ -23,3 +23,7 @@
     background: rgb(154, 153, 153);
     transition: all 0.2s ease-in-out;
 }
+
+.paginationButtonComponent.clicked {
+    background-color: grey; /* Color gris al hacer clic */
+}

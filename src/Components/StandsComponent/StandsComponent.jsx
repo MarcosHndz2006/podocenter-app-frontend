@@ -3,11 +3,14 @@ import './StandsComponent.css'
 //imports de componentes o reutilizables
 import HeaderGeneric from '../../Generics/HeaderGeneric/HeaderGeneric'
 import StandCard from '../../Generics/StandCard/StandCard'
-//import de useState
-import { useState, useEffect } from 'react'
 import DefaultStore from '../../Generics/DefaultStore/DefaultStore'
 import DefaultStand from '../../Generics/DefaultStand/DefaultStand'
 import PaginationButton from '../../Generics/PaginationButton/PaginationButton'
+import Modal from 'react-modal'
+import TextField from '@mui/material/TextField';
+import GeneralButton from '../../Generics/GeneralButton/GeneralButton'
+//import de useState
+import { useState, useEffect } from 'react'
 
 function StandsComponent() {
 
@@ -69,46 +72,62 @@ function StandsComponent() {
         /* bucle utilizado para modificar el arreglo anteriormente
         declarado */
         for (let index = 0; index < stores.length; index++) {
-            buttons.push(<PaginationButton identifier={index + 1} event={modifyCurrentPage}/>)
+            buttons.push(<PaginationButton identifier={index + 1} event={modifyCurrentPage}
+                currentPage={currentPage} />)
         }
 
         /* retorno del arreglo modificado */
         return buttons
     }
 
+    /* función para modificar la página actual y mostrar el almacén
+    en base a la página en la que nos encontramos */
+
     const modifyCurrentPage = (id) => {
         setCurrentPage(id)
     }
+
+
 
     //sección de variables de estado y navegación del componente
 
     /* variable de estado usada para almacenar los cuadros de almacenes disponibles
     y renderizar de nuevo */
     const [stores, setStores] = useState([
-        { id: 1, name: "Almacén No. 1", stands: [<DefaultStand event={addStand} />, <StandCard/>] },
-        { id: 2, name: "Almacén No. 2", stands: [<DefaultStand event={addStand} />
-            , <StandCard/>, <StandCard/>, <StandCard/>
-        ] },
-        { id: 3, name: "Almacén No. 3", stands: [<DefaultStand event={addStand} />
-            , <StandCard/>
-        ] },
-        { id: 4, name: "Almacén No. 4", stands: [<DefaultStand event={addStand} />
-            , <StandCard/>, <StandCard/>, <StandCard/>
-        ] },
-        { id: 5, name: "Almacén No. 5", stands: [<DefaultStand event={addStand} />
-            , <StandCard/>, <StandCard/>
-        ] },
-        { id: 6, name: "Almacén No. 6", stands: [<DefaultStand event={addStand} />
-            , <StandCard/>, <StandCard/>, <StandCard/>
-        ] },
+        { id: 1, name: "Almacén No. 1", stands: [<DefaultStand event={addStand} />, <StandCard />] },
+        {
+            id: 2, name: "Almacén No. 2", stands: [<DefaultStand event={addStand} />
+                , <StandCard />, <StandCard />, <StandCard />
+            ]
+        },
+        {
+            id: 3, name: "Almacén No. 3", stands: [<DefaultStand event={addStand} />
+                , <StandCard />
+            ]
+        },
+        {
+            id: 4, name: "Almacén No. 4", stands: [<DefaultStand event={addStand} />
+                , <StandCard />, <StandCard />, <StandCard />
+            ]
+        },
+        {
+            id: 5, name: "Almacén No. 5", stands: [<DefaultStand event={addStand} />
+                , <StandCard />, <StandCard />
+            ]
+        },
+        {
+            id: 6, name: "Almacén No. 6", stands: [<DefaultStand event={addStand} />
+                , <StandCard />, <StandCard />, <StandCard />
+            ]
+        },
     ])
-
-    /*     useEffect(() => {
-        }, [stores]) */
 
     /* variable de estado usada para guardar la página actual que muestra
     el almacén asociado */
     const [currentPage, setCurrentPage] = useState(1)
+
+    /* variable para mostrar el modal para agregar un almacén */
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     return (
         <div className='standsComponent'>
@@ -117,12 +136,39 @@ function StandsComponent() {
             <div className='standsComponentContainer'>
                 {renderStores()}
                 <section className='btnsPaginationContainer'>
-                    <DefaultStore event={addStand} />
+                    <DefaultStore event={() => {setModalIsOpen(true)}} />
                     <div className='pagesButtons'>
                         {renderPaginationButtons()}
                     </div>
                 </section>
             </div>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                contentLabel="Agregar ítem"
+                style={{
+                    content: {
+                        width: '400px',
+                        margin: 'auto',
+                        padding: '0',
+                    }
+                }}
+            >
+                <div className='newProviderTitle'>
+                    <h2>Agregar almacén</h2>
+                </div>
+                {/* formulario con los inputs necesarios para agregar proveedor */}
+                <form className='newProviderForm'>
+                    <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth />
+                    <TextField id="standard-basic" label="Ubicación" variant="standard" fullWidth />
+                    <TextField id="standard-basic" label="Etiqueta/s" variant="standard" fullWidth />
+                    {/* sección de botones */}
+                    <div className='newProviderFooter'>
+                        <GeneralButton event={()=>{setModalIsOpen(false)}}>Agregar</GeneralButton>
+                        <GeneralButton event={()=>{setModalIsOpen(false)}}>Salir</GeneralButton>
+                    </div>
+                </form>
+            </Modal>
         </div>
     )
 }

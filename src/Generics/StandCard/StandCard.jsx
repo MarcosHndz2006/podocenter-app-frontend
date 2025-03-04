@@ -1,6 +1,9 @@
+//importe de archivo .css
 import './StandCard.css'
+//importes de componentes y reutilizables
 import Modal from 'react-modal'
 import { useState } from 'react'
+import GeneralButton from '../GeneralButton/GeneralButton';
 
 function StandCard() {
 
@@ -34,16 +37,21 @@ function StandCard() {
                         <p><b>No. de divisiones</b></p>
                         <p>3</p>
                     </article>
-                    <div className='btns'>
-                        <button type="button" className='btnSave'>Editar</button>
-                        <button type="button" onClick={() => setModalIsOpen(false)} className='btnCancel'>Cancelar</button>
+                    {/* sección de botones */}
+                    <div className='itemsContainerFooter'>
+                        <GeneralButton event={() => { setModalIsOpen(false) }}>Agregar</GeneralButton>
+                        <GeneralButton event={() => { setModalIsOpen(false) }}>Salir</GeneralButton>
                     </div>
                 </form>
             </Modal>
             <article className='infoCard'>
-                <h3>Card Title</h3>
-                <p>No. Card</p>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                <h3>Card Title No. Card</h3>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the
+                    1500s, when an unknown printer took a galley of type and scrambled
+                    it to make a type specimen book.
+                </p>
             </article>
             <p className="ShowMore" onClick={() => { setModalIsOpen(true) }}>Leer más</p>
         </div>

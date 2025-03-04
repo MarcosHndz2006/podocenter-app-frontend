@@ -8,16 +8,26 @@
     width: 100%;
     height: 100%;
     gap: 0.5rem;
-    overflow-y: scroll;
+    position: relative;
 }
 /* se oculta la scrollbar con esta opción */
 .inventoryComponent::-webkit-scrollbar{
     display: none;
 }
 
+/* estilos del contenedor de inventario */
+.inventoryContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 /* estilo del menú de filtros */
 .filterSection{
-    width: 900px;
+    width: 250px;
     border-radius: 5px;
     height: auto;
     margin: 0;
@@ -42,4 +52,216 @@
     align-items: start;
     gap: 1rem;
     padding: 0 1rem;
+}
+
+/* estilos del contenedor de ítems de inventario */
+.itemsContainer{
+    width: 1150px;
+    height: 650px;
+    background: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0 0.2rem;
+}
+
+/* estilos del encabezado del contenedor de ítems de inventario */
+.itemsContainerHeader{
+    width: 100%;
+    height: 5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) 100px 1fr repeat(2, 100px);
+    grid-template-rows: 1fr;
+    font-family: 'Roboto';
+    font-size: 10pt;
+    align-items: center;
+}
+
+/* estilos del espacio de renderización de ítems de inventario */
+.itemsContainerElements{
+    width: 100%;
+    height: 86%;
+    border-top: 0.05px solid #324d7e;
+    border-bottom: 0.05px solid #324d7e;
+    overflow-y: scroll;
+}
+
+.itemsContainerElements::-webkit-scrollbar{
+    display:none;
+}
+
+/* estilos del pie del contenedor de ítems de inventario */
+.itemsContainerFooter{
+    width: 100%;
+    height: 8%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.2rem 0;
+}
+
+/* estilos para los modales */
+.modalDiv{
+    background: #324d7e;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+
+.titleModal{
+    font-weight: 500;
+}
+
+/* estilo para el formulario del modal*/
+.modalForm{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding: 0 0.5rem 1rem 1rem;   
+}
+
+/* estilos de los bloques dentro del modal para agregar un ítem a inventario */
+.firstBlock{
+    display: flex; 
+    flex-flow: row wrap;
+    gap: 1rem;
+}
+
+.secondBlock{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+}
+
+.thirdBlock{
+    width: 48%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+
+.fourthBlock{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+}
+
+/* estilo del apartado donde se encuentra el estado del ítem de inventario */
+
+.stateSection{
+    width: 48%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    border: 1px solid #62A6C9;
+    padding: 0.5rem 0;
+}
+
+.stateSection > article:first-child > img{
+    width: 20px;
+    height: 20px;
+}
+
+.stateSection > article:first-child{
+    display: flex;
+    flex-flow: row nowrap;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 11pt;
+    gap: 0.2rem;
+    padding: 0 0.5rem;
+}
+
+.stateSection > article:last-child > img{
+    width: 50px;
+    height: 50px;
+}
+
+.stateSection > article:last-child{
+    display: flex;
+    flex-flow: column nowrap;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 11pt;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.stateAndBlock{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+}
+
+/* estilo para el contenedor de la lista de proveedores */
+.treeDiv{
+    width: 100%;
+    height: 475px;
+    overflow-y: scroll;
+    border: 1px solid #324d7e;
+}
+
+.treeDiv::-webkit-scrollbar{
+    display: none;
+}
+
+/* estilo de los botones de paginación */
+
+.rightArrow{
+    border: 1px solid #324d7e;
+    border-radius: 100%;
+    background: white;
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 44%;
+    right: 10px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.rightArrow:hover{
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.rightArrow:active{
+    background: gray;
+    transition: all 0.2s ease-in-out;
+}
+
+.leftArrow{
+    border: 1px solid #324d7e;
+    border-radius: 100%;
+    background: white;
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin: 0;
+    padding: 0;
+    transform: rotate(180deg);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.leftArrow:hover{
+    transform: scale(1.05) rotate(180deg);
+    transition: all 0.2s ease-in-out;
+}
+
+.leftArrow:active{
+    background: gray;
+    transition: all 0.2s ease-in-out;
 }

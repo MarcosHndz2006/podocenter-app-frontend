@@ -1,0 +1,33 @@
+/* estilos del componente */
+.defaultStoreComponent{
+    width: 200px;
+    height: 100px;
+    border-radius: 5px;
+    background: rgb(180, 180, 180);
+    font-family: 'Montserrat';
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin: 0 0.5rem;
+    flex-shrink: 0;
+}
+
+.defaultStoreComponent:active{
+    background: rgb(137, 137, 137);
+    transition: all 0.2s ease-in-out;
+}
+
+.defaultStoreComponent > p{
+    font-size: 10pt;
+    font-weight: 500;
+}
+
+.defaultStoreComponent > img{
+    width: 50px;
+    height: 50px;
+}
+

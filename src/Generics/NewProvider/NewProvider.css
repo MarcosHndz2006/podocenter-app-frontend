@@ -1,0 +1,49 @@
+/* estilo general del componente para agregar proveedor */
+
+.newProviderComponent {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.newProviderComponent::-webkit-scrollbar{
+    display: none;
+}
+
+/* estilo de cada uno de los bloques del componente */
+
+.newProviderTitle {
+    background: #324d7e;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+
+.newProviderTitle>h2 {
+    font-weight: 500;
+}
+
+.newProviderForm {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding: 0 0.5rem 1rem 1rem;
+}
+
+.newProviderFooter {
+    width: 100%;
+    height: 8%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.2rem 0;
+}

@@ -6,6 +6,7 @@ import Inventory from './Pages/Inventory'
 import Stands from './Pages/Stands'
 import Stocks from './Pages/Stocks'
 import AddProvider from './Pages/AddProvider'
+import Profile from './Pages/Profile'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="podocenter/stands" element={<Stands/>}/>
         <Route path="podocenter/stocks" element={<Stocks/>}/>
         <Route path="podocenter/provider/add" element={<AddProvider/>}/>
+        <Route path="podocenter/profile/my" element={<Profile/>}/>
       </Routes>
     </BrowserRouter>
   )

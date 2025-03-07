@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 /* import de useState */
 import { useState } from 'react'
 
-function ServiceCard({ name, description }) {
+function ServiceCard({ name, description}) {
 
     /* sección de variables */
 

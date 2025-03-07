@@ -1,6 +1,6 @@
-/* estilos del componente */
+/* estilos generales del componente */
 
-.spaceCardComponent {
+.spaceOptionComponent {
     width: 100px;
     height: 100px;
     font-style: 'Montserrat';
@@ -18,32 +18,20 @@
 
 /* estilos condicionados */
 
-.spaceCardComponent.occupied {
-    background: rgb(134, 134, 134);
-}
-
-.spaceCardComponent.occupied>p:last-child {
-    color: crimson;
-    font-weight: 500;
-}
-
-.spaceCardComponent.free {
+.spaceOptionComponent.free {
     background: white;
 }
 
-.spaceCardComponent.free>p:last-child {
+.spaceOptionComponent.free>p:last-child {
     color: green;
     font-weight: 500;
 }
 
-.spaceCardComponent.outService {
+.spaceOptionComponent.occupied{
     background: rgb(134, 134, 134);
 }
 
-/* estilos del contenedor del modal de espacios */
-
-.space-card-modal-container {
-    width: auto;
-    height: auto;
-    position: absolute;
+.spaceOptionComponent.occupied>p:last-child{
+    color: crimson;
+    font-weight: 500;
 }

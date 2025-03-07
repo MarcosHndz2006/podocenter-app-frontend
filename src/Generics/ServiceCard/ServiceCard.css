@@ -73,7 +73,7 @@
 }
 
 .serviceCardComponent.reprogram >.dirIcon{
-    color:rgb(255, 55, 0);
+    color:rgb(255, 174, 0);
 }
 
 .serviceCardComponent.reprogram>.contentSection>p:last-child {
@@ -96,4 +96,11 @@
     color: red;
     font-weight: 600;
     cursor: none
+}
+
+/* estilos del contenedor padre del modal de servicio */
+.service-card-modal-container{
+    position: absolute;
+    width: auto;
+    height: auto;
 }

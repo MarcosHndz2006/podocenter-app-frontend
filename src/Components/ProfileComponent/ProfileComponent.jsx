@@ -14,17 +14,17 @@ function ProfileComponent() {
 
     /* variable de estado usada para renderizar los espacios disponibles 
     y usados */
-    const [spaces, setSpaces] = useState([
-        { id: 1, name: "Espacio 1", description: "lorem ipsum dolor" },
-        { id: 2, name: "Espacio 2", description: "lorem ipsum dolor" },
-        { id: 3, name: "Espacio 3", description: "lorem ipsum dolor" },
-        { id: 4, name: "Espacio 4", description: "lorem ipsum dolor" },
-        { id: 5, name: "Espacio 5", description: "lorem ipsum dolor" },
-        { id: 1, name: "Espacio 1", description: "lorem ipsum dolor" },
-        { id: 2, name: "Espacio 2", description: "lorem ipsum dolor" },
-        { id: 3, name: "Espacio 3", description: "lorem ipsum dolor" },
-        { id: 4, name: "Espacio 4", description: "lorem ipsum dolor" },
-        { id: 5, name: "Espacio 5", description: "lorem ipsum dolor" }])
+    /*     const [spaces, setSpaces] = useState([
+            { id: 1, name: "Espacio 1", description: "lorem ipsum dolor" },
+            { id: 2, name: "Espacio 2", description: "lorem ipsum dolor" },
+            { id: 3, name: "Espacio 3", description: "lorem ipsum dolor" },
+            { id: 4, name: "Espacio 4", description: "lorem ipsum dolor" },
+            { id: 5, name: "Espacio 5", description: "lorem ipsum dolor" },
+            { id: 6, name: "Espacio 1", description: "lorem ipsum dolor" },
+            { id: 7, name: "Espacio 2", description: "lorem ipsum dolor" },
+            { id: 8, name: "Espacio 3", description: "lorem ipsum dolor" },
+            { id: 9, name: "Espacio 4", description: "lorem ipsum dolor" },
+            { id: 10, name: "Espacio 5", description: "lorem ipsum dolor" }]) */
 
     /* variable de estado usada para renderizar y almacenar
     los servicios totales */
@@ -34,20 +34,20 @@ function ProfileComponent() {
         { id: 3, name: "Espacio 3", description: "lorem ipsum dolor" },
         { id: 4, name: "Espacio 4", description: "lorem ipsum dolor" },
         { id: 5, name: "Espacio 5", description: "lorem ipsum dolor" },
-        { id: 1, name: "Espacio 1", description: "lorem ipsum dolor" },
-        { id: 2, name: "Espacio 2", description: "lorem ipsum dolor" },
-        { id: 3, name: "Espacio 3", description: "lorem ipsum dolor" },
+        { id: 6, name: "Espacio 1", description: "lorem ipsum dolor" },
+        { id: 7, name: "Espacio 2", description: "lorem ipsum dolor" },
+        { id: 8, name: "Espacio 3", description: "lorem ipsum dolor" },
     ])
 
     /* sección de funciones */
 
     /* función para renderizar los espacios totales */
-    const renderSpaces = () => {
-        return spaces.map((space) => {
-            return <SpaceCard key={space.id} name={space.name}
-                description={space.description} />
-        })
-    }
+    /*     const renderSpaces = () => {
+            return spaces.map((space) => {
+                return <SpaceCard key={space.id} name={space.name}
+                    description={space.description} />
+            })
+        } */
 
     /* función para renderizar los servicios totales */
     const renderServices = () => {
@@ -79,12 +79,13 @@ function ProfileComponent() {
                         {renderServices()}
                     </div>
                 </div>
-                <div className='spacesContainer'>
+                {/*                 <div className='spacesContainer'>
                     <h4>Espacios usados y disponibles</h4>
                     <div>
                         {renderSpaces()}
                     </div>
                 </div>
+ */}
             </section>
         </div>
     )

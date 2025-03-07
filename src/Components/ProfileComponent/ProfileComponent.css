@@ -1,0 +1,123 @@
+/* estilos del componente */
+
+.profileComponent {
+    width: 100%;
+    height: 150vh;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* estilo del contenedor de la información de usuario */
+
+.profileContainer {
+    width: 100%;
+    height: auto;
+    border: 3px solid #324d7e;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+/* estilo de la sección de información básica */
+
+.basicInformationSection {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    border: 3px solid #324d7e;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    padding: 1rem 0;
+}
+
+.userIcon {
+    width: 120px;
+    height: 120px;
+    margin: 0 0.5rem;
+    color: #324d7e;
+}
+
+.userInformation {
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-family: 'Montserrat';
+    font-size: 11pt;
+    gap: 0.4rem;
+}
+
+/* estilos del contenedor de servicios brindados, recibidos o agendados
+según el usuario */
+
+.servicesContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    border: 3px solid #324d7e;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    font-family: 'Montserrat';
+    padding: 0 0 1rem 0;
+}
+
+.servicesContainer>h4 {
+    margin: 0 0 0.5rem 0.5rem;
+}
+
+.servicesContainer>div {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0.5rem 0 0 0;
+    gap: 0.5rem;
+}
+
+/* estilos del contenedor de espacios ocupados y disponibles */
+
+.spacesContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    margin: 1rem 0;
+    border: 3px solid #324d7e;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    font-family: 'Montserrat';
+    padding: 0 0 1rem 0;
+}
+
+.spacesContainer>h4 {
+    margin: 0 0 0.5rem 0.5rem;
+}
+
+.spacesContainer>div {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0.5rem 0 0 0;
+    gap: 0.5rem;
+}

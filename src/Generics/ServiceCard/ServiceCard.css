@@ -1,0 +1,106 @@
+/* estilos del componente */
+.serviceCardComponent {
+    width: 120px;
+    height: 120px;
+    font-style: 'Montserrat';
+    font-size: 10pt;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0.5rem;
+    position: relative;
+}
+
+/* estilos del contenido del componente */
+
+.dirIcon {
+    width: 100%;
+    height: 100%;
+    color: #324d7e;
+    box-shadow: 1px 1px 4px rgb(36, 36, 36);
+}
+
+.contentSection {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 30%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.6rem;
+}
+
+/* estilos condicionados */
+
+.serviceCardComponent.next>.contentSection>p {
+    color: white;
+}
+
+.serviceCardComponent.next>.contentSection>p:last-child {
+    color: #324d7e;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.serviceCardComponent.reprogram>.contentSection>p {
+    color: white;
+}
+
+.serviceCardComponent.reprogram>.contentSection>p:last-child {
+    color: rgb(255, 55, 0);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.serviceCardComponent.success {
+    background: rgb(188, 188, 188);
+}
+
+.serviceCardComponent.success>.dirIcon {
+    color: green;
+}
+
+.serviceCardComponent.success>.contentSection>p {
+    color: white
+}
+
+.serviceCardComponent.success>.contentSection>p:last-child {
+    color: green;
+    font-weight: 600;
+    cursor: none;
+}
+
+.serviceCardComponent.reprogram >.dirIcon{
+    color:rgb(255, 174, 0);
+}
+
+.serviceCardComponent.reprogram>.contentSection>p:last-child {
+    font-weight: 500;
+}
+
+.serviceCardComponent.cancel {
+    background: rgb(188, 188, 188);
+}
+
+.serviceCardComponent.cancel>.dirIcon {
+    color: gray;
+}
+
+.serviceCardComponent.cancel>.contentSection>p {
+    color: black;
+}
+
+.serviceCardComponent.cancel>.contentSection>p:last-child {
+    color: red;
+    font-weight: 600;
+    cursor: none
+}
+
+/* estilos del contenedor padre del modal de servicio */
+.service-card-modal-container{
+    position: absolute;
+    width: auto;
+    height: auto;
+}

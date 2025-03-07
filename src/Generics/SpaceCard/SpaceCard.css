@@ -1,0 +1,49 @@
+/* estilos del componente */
+
+.spaceCardComponent {
+    width: 100px;
+    height: 100px;
+    font-style: 'Montserrat';
+    font-size: 10pt;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0.5rem;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgb(36, 36, 36);
+    cursor: pointer;
+}
+
+/* estilos condicionados */
+
+.spaceCardComponent.occupied {
+    background: rgb(134, 134, 134);
+}
+
+.spaceCardComponent.occupied>p:last-child {
+    color: crimson;
+    font-weight: 500;
+}
+
+.spaceCardComponent.free {
+    background: white;
+}
+
+.spaceCardComponent.free>p:last-child {
+    color: green;
+    font-weight: 500;
+}
+
+.spaceCardComponent.outService {
+    background: rgb(134, 134, 134);
+}
+
+/* estilos del contenedor del modal de espacios */
+
+.space-card-modal-container {
+    width: auto;
+    height: auto;
+    position: absolute;
+}

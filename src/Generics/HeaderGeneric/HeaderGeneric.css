@@ -1,4 +1,4 @@
-.headerGeneric{
+.headerGeneric {
     width: 100%;
     height: 45px;
     display: flex;
@@ -8,20 +8,54 @@
     background: white;
 }
 
-.headerGeneric > img{
+.headerGeneric>img {
     width: 30px;
     height: 30px;
     margin: 0 10px 0 0;
     cursor: pointer;
 }
 
-.headerGeneric{
+.headerGeneric {
     font-family: 'Montserrat';
     font-size: 16pt;
     font-weight: 500;
 }
 
-.headerGeneric > p{
+.headerGeneric>p {
     font-size: 10pt;
     margin: 0 0 0 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.headerGeneric>p:hover {
+    animation: wiggle 1.5s ease-in-out infinite;
+    transition: all 0.2s ease-in-out;
+}
+
+@keyframes wiggle {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateX(5px) rotate(5deg);
+    }
+
+    75% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+.headerGeneric>p:active {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
 }

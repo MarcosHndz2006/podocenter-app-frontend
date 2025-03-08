@@ -9,9 +9,10 @@ import logo from '../../assets/img/logo podocenter.png'
 import mysoft from '../../assets/img/my soft logo.png'
 
 function HomeComponent(){
+    const username = localStorage.getItem('username').slice(1,-1)
     return(
         <div className='homeComponent'>
-            <HeaderGeneric username="@username" route="/podocenter/auth">Home</HeaderGeneric>
+            <HeaderGeneric username={username} route="/podocenter/auth">Home</HeaderGeneric>
             <p>Selecciona una opción para comenzar a navegar</p>
             <img src={hand} alt="" height="30px" width="30px"/>
             <section className='menuOptionsContainer1'>

@@ -13,6 +13,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="*" element={<Login/>}/>
+
         <Route path="podocenter/auth" element={<Login/>}/>
         <Route path="podocenter/home" element={<Home/>}/>
         <Route path="podocenter/inventory" element={<Inventory/>}/>

@@ -8,16 +8,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { updateServiceState } from '../../services/serviceService';
 /* import de useState */
 import { useState } from 'react'
 
-function ServiceCard({ name, description}) {
+function ServiceCard({id, name, description , currentstate }) {
 
     /* sección de variables */
 
     /* variable de estado para mostrar si el servicio ya ha sido
     brindado o no, si ha sido reagendado o cancelado*/
-    const [state, setState] = useState(1)
+    const [state, setState] = useState(currentstate)
 
     /* variable de estado para desplegar el modal al hacer click
     sobre el estado del servicio */
@@ -47,21 +48,36 @@ function ServiceCard({ name, description}) {
     };
 
     /* función para cambiar el estado a reprogramado */
-    const reprogram = () => {
-        setState(2)
-        handleClose()
+    const reprogram = async () => {
+        try {
+            await updateServiceState(id, 2);
+            setState(2);
+            handleClose();
+        } catch (error) {
+            console.error('Error updating service state:', error);
+        }
     }
 
     /* función para cambiar el estado a finalizado */
-    const close = () => {
-        setState(3)
-        handleClose()
+    const close = async () => {
+        try {
+            await updateServiceState(id, 3);
+            setState(3);
+            handleClose();
+        } catch (error) {
+            console.error('Error updating service state:', error);
+        }
     }
 
     /* función para cambiar el estado a cancelado */
-    const cancel = () => {
-        setState(4)
-        handleClose()
+    const cancel = async () => {
+        try {
+            await updateServiceState(id, 4);
+            setState(4);
+            handleClose();
+        } catch (error) {
+            console.error('Error updating service state:', error);
+        }
     }
 
     return (

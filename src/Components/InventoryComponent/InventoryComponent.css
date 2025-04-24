@@ -69,7 +69,7 @@
     width: 100%;
     height: 5%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 100px 1fr repeat(2, 100px);
+    grid-template-columns: repeat(4, 1fr) 100px 1fr repeat(2, 100px);
     grid-template-rows: 1fr;
     font-family: 'Roboto';
     font-size: 10pt;
@@ -264,4 +264,8 @@
 .leftArrow:active{
     background: gray;
     transition: all 0.2s ease-in-out;
+}
+
+.editProviderBtn {
+    color: #324d7e;
 }

@@ -4,7 +4,7 @@ const db = require('../db/connection');
 // Get all providers
 exports.getAllProviders = async(req, res, next) => {
     try {
-        const providers = await db('providers').select('*');
+        const providers = await db('proveedor').select('*');
         res.status(200).json({
             status: 'success',
             data: providers

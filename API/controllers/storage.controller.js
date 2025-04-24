@@ -5,7 +5,7 @@ class StorageController {
     async createStorage(req, res) {
         const storage = req.body;
         try {
-            const [idStorage] = await knex('storage').insert(storage).returning('idStorage');
+            const [idStorage] = await knex('almacen').insert(storage).returning('idStorage');
             res.status(201).json({ idStorage, ...storage });
         } catch (error) {
             res.status(500).json({ message: 'Error creating storage', error });
@@ -15,7 +15,7 @@ class StorageController {
     // Get all storage entries
     async getAllStorage(req, res) {
         try {
-            const storage = await knex('storage').select('*');
+            const storage = await knex('almacen').select('*');
             res.json(storage);
         } catch (error) {
             res.status(500).json({ message: 'Error retrieving storage', error });

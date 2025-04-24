@@ -4,7 +4,7 @@
     width: 100%;
     height: 5%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 100px 1fr repeat(2, 100px);
+    grid-template-columns: repeat(4, 1fr) 100px 1fr repeat(2, 100px);
     grid-template-rows: 1fr;
     font-family: 'Roboto';
     font-size: 10pt;
@@ -23,7 +23,7 @@
     width: 20px;
     height: 20px;
     position: absolute;
-    left: 15px;
+    left: 5px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
@@ -31,4 +31,70 @@
 .dots:hover {
     transform: rotate(90deg);
     transition: all 0.2s ease-in-out;
+}
+
+/* estilos de los iconos de estado */
+
+.checkIcon {
+    width: 50px;
+    height: 50px;
+    color: green;
+    animation: bounce-scale 5s ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.cautionIcon {
+    width: 50px;
+    height: 50px;
+    color: orange;
+    animation: bounce-scale 5s ease-in;
+    animation-iteration-count: infinite;
+}
+
+.dangerIcon {
+    width: 50px;
+    height: 50px;
+    color: red;
+    animation: bounce-scale 5s ease-in;
+    animation-iteration-count: infinite;
+}
+
+@keyframes bounce-scale {
+    0% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(1.01);
+    }
+
+    20% {
+        transform: scale(1.02);
+    }
+
+    30% {
+        transform: scale(1.03);
+    }
+
+    40% {
+        transform: scale(1.04);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    60% {
+        transform: scale(1.04);
+    }
+    70% {
+        transform: scale(1.03);
+    }
+    80% {
+        transform: scale(1.02);
+    }
+    90% {
+        transform: scale(1.01);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

@@ -9,7 +9,7 @@ module.exports = {
             port: process.env.DB_PORT || 3306,
             user: process.env.DB_USER || 'root',
             password: process.env.DB_PASSWORD || 'MarcosHndz2006',
-            database: process.env.DB_NAME || 'podocenter'
+            database: process.env.DB_NAME || 'podocenterdb'
         },
         migrations: {
             directory: './db/migrations'

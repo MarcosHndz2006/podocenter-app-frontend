@@ -7,6 +7,7 @@ import Stands from './Pages/Stands'
 import Stocks from './Pages/Stocks'
 import AddProvider from './Pages/AddProvider'
 import Profile from './Pages/Profile'
+import Buys from './Pages/Buys'
 
 function App() {
 
@@ -14,7 +15,6 @@ function App() {
     <BrowserRouter>
       <Routes>
       <Route path="*" element={<Login/>}/>
-
         <Route path="podocenter/auth" element={<Login/>}/>
         <Route path="podocenter/home" element={<Home/>}/>
         <Route path="podocenter/inventory" element={<Inventory/>}/>
@@ -22,6 +22,7 @@ function App() {
         <Route path="podocenter/stocks" element={<Stocks/>}/>
         <Route path="podocenter/provider/add" element={<AddProvider/>}/>
         <Route path="podocenter/profile/my" element={<Profile/>}/>
+        <Route path="podocenter/buys" element={<Buys/>}/>
       </Routes>
     </BrowserRouter>
   )

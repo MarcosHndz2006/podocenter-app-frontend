@@ -5,7 +5,7 @@ import Modal from 'react-modal'
 import { useState } from 'react'
 import GeneralButton from '../GeneralButton/GeneralButton';
 
-function StandCard() {
+function StandCard({ levels, divisions, name, full, almacen }) {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -26,16 +26,20 @@ function StandCard() {
                 }}
             >
                 <div className='modalDiv'>
-                    <h2 className='titleModal'>Card Title</h2>
+                    <h2 className='titleModal'>Estante {name}</h2>
                 </div>
                 <form className='formModal'>
                     <article>
                         <p><b>No. de niveles</b></p>
-                        <p>33</p>
+                        <p>{levels}</p>
                     </article>
                     <article>
                         <p><b>No. de divisiones</b></p>
-                        <p>3</p>
+                        <p>{divisions}</p>
+                    </article>
+                    <article>
+                        <p><b>Ubicación</b></p>
+                        <p>Almacen {almacen}</p>
                     </article>
                     {/* sección de botones */}
                     <div className='itemsContainerFooter'>
@@ -45,12 +49,9 @@ function StandCard() {
                 </form>
             </Modal>
             <article className='infoCard'>
-                <h3>Card Title No. Card</h3>
+                <h3>Estante {name}</h3>
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the
-                    1500s, when an unknown printer took a galley of type and scrambled
-                    it to make a type specimen book.
+                    {full == 0 ? 'Espacio disponible' : 'Lleno'}.
                 </p>
             </article>
             <p className="ShowMore" onClick={() => { setModalIsOpen(true) }}>Leer más</p>

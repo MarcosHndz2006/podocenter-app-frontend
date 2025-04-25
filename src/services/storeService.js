@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api/storage/storage'; // Replace with your actual API base URL
+const API_BASE_URL = 'http://localhost:3000/api/storage/shelfs'; // Replace with your actual API base URL
 
 // Function to create a new store
 export const createStore = async(storeData) => {

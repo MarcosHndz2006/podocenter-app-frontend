@@ -27,19 +27,24 @@ function StandsComponent() {
     location: '',
     tags: ''
   });
+  const [shelfs, setShelfs] = useState([])
 
   useEffect(() => {
     const fetchStores = async () => {
       try {
         const fetchedStores = await getAllStores();
-        setStores(fetchedStores);
+        /* console.log(fetchedStores)
+        fetchedStores.map(str => console.log(str)) */
+        setStores(fetchedStores)
+        const shelfsList = fetchedStores.map(str => { return str.shelfs })
+        setShelfs(shelfsList)
       } catch (error) {
         console.error('Error fetching stores:', error);
       }
     };
 
     fetchStores();
-  }, []);
+  }, [currentPage, shelfs]);
 
   // Función para manejar cambios en los inputs
   const handleChange = (event) => {
@@ -102,7 +107,7 @@ function StandsComponent() {
 
   // Función para renderizar almacenes
   const renderStores = () => {
-    const element = stores.find((str) => (str.idStorage == currentPage ? str : false));
+    const element = stores.find((str) => (str.storage.id_almacen == currentPage ? str.storage : false));
 
     if (!element) {
       return <p>No se encontraron almacenes.</p>;
@@ -110,9 +115,19 @@ function StandsComponent() {
 
     return (
       <section className='storesContainer'>
-        <h3>{element.name}</h3>
-        <section className='standsContainer' id={element.idStorage}>
-          {element.stands}
+        <h3>almacén {element.storage.nombre_almacen}</h3>
+        <section className='standsContainer' id={element.storage.id_almacen}>
+          {
+            shelfs.map(shelf => {
+              return shelf.map(s => {
+                if (s.id_almacen == currentPage) {
+                  return <StandCard key={s.id_estante} levels={s.niveles}
+                    divisions={s.divisiones} name={s.nombre_estante}
+                    full={s.lleno} almacen={element.storage.nombre_almacen} />
+                }
+              })
+            })
+          }
         </section>
       </section>
     );
@@ -126,7 +141,7 @@ function StandsComponent() {
       buttons.push(
         <PaginationButton
           key={index}
-          identifier={stores[index].idStorage}
+          identifier={stores[index].storage.id_almacen}
           event={modifyCurrentPage}
           currentPage={currentPage}
         />
@@ -139,6 +154,7 @@ function StandsComponent() {
   // Función para modificar la página actual y mostrar el almacén en base a la página en la que nos encontramos
   const modifyCurrentPage = (id) => {
     setCurrentPage(id);
+    setShelfs([])
   };
 
   return (

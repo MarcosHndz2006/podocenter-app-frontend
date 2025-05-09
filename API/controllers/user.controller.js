@@ -44,7 +44,7 @@ exports.getAllUsers = async (req, res, next) => {
             .join('rol', 'usuario.id_rol', 'rol.id_rol')
             .select('usuario.id_usuario', 'usuario.nombres', 'usuario.apellidos',
                 'usuario.username', 'usuario.cuenta_abono', 'usuario.cuenta_ahorro',
-                'rol.nombre_puesto', 'rol.unidad_servicio',
+                'rol.nombre_puesto', 'rol.unidad_servicio', 'rol.id_rol',
                 'rol.costo_unidad_servicio');
 
         res.status(200).json({

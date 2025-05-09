@@ -3,28 +3,25 @@ import './SpaceCard.css'
 /* imports de componentes o reutilizables */
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Modal from 'react-modal'
 /* import de useState */
 import { useState } from 'react'
+import { updateSpaceState } from '../../services/spacesService';
+import EndComponent from '../EndComponent/EndComponent';
+import GeneralButton from '../GeneralButton/GeneralButton';
+import ListItemText from '@mui/material/ListItemText';
 
-function SpaceCard({ name, description }) {
+function SpaceCard({ id, name, description, currentState, cost }) {
 
     /* sección de variables */
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-
     /* variable de estado usada para mostrar el estado de un espacio */
-    const [state, setState] = useState(1)
+    const [state, setState] = useState(currentState)
+
+    /* variable de estado usada para abrir el modal */
+    const [openSpace, setOpenSpace] = useState(false)
 
     /* sección de funciones */
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     /* función retornar un valor a la clase en base al estado; si está 
     disponible, reservado o fuera de servicio */
@@ -38,31 +35,75 @@ function SpaceCard({ name, description }) {
         }
     }
 
-    /* función para cambiar el estado del componente */
-    const changeState = (newState) => {
-        setState(newState)
-        openModalSpace(false)
+    /* función para renderizar el estado del espacio */
+
+    const renderState = () => {
+        switch (state) {
+            case 1: return "Libre"
+            case 2: return "Ocupado"
+            case 3: return "Fuera de servicio"
+            default: return ""
+        }
+    }
+
+    /* función para liberar el espacio */
+    const free = async () => {
+        setState(1)
+        const response = await updateSpaceState(id, 1)
+        console.log(response)
+    }
+
+    /* función para reservar el espacio */
+    const reserve = async () => {
+        setState(2)
+        const response = await updateSpaceState(id, 2)
+        console.log(response)
+    }
+
+    /* función para inhabilitar el espacio */
+    const outService = async () => {
+        setState(3)
+        const response = await updateSpaceState(id, 3)
+        console.log(response)
     }
 
     return (
-        <div className={`spaceCardComponent ${spaceState()} `}
-            onClick={handleClick}>
+        <div className={`spaceCardComponent ${spaceState()} `}>
+            <div className='spaceCardBtns'>
+                {(state == 1) ? "" : <button onClick={free}>Liberar</button>}
+                {(state == 2) ? "" : <button onClick={reserve}>Reservar</button>}
+                {(state == 3) ? "" : <button onClick={outService}>Inhabilitar</button>}
+                <button onClick={() => setOpenSpace(true)}>Información</button>
+            </div>
             <p>{name}</p>
             <p>{description}</p>
             <p>{spaceState()}</p>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
+            <Modal
+                isOpen={openSpace}
+                onRequestClose={() => setOpenSpace(false)}
+                contentLabel='Vista detallada de espacio'
+                style={{
+                    content: {
+                        width: '600px',
+                        margin: 'auto',
+                        padding: '0'
+                    }
+                }}
+            >
+                <div className='modalDiv'>
+                    <h2 className='titleModal'>Espacio {name}</h2>
+                </div>
+                <form className='modalForm'>
+                    <ListItemText primary={`No. de espacio: ${id}`} />
+                    <ListItemText primary={`${description}`} />
+                    <ListItemText primary={`Costo por unidad de servicio: ${cost}`} />
+                    <ListItemText primary={`Estado actual: ${renderState()}`} />
+                </form>
+                <div className='btnsFooter'>
+                    <GeneralButton event={() => setOpenSpace(false)}>Editar</GeneralButton>
+                </div>
+                <EndComponent />
+            </Modal>
         </div>
     )
 }

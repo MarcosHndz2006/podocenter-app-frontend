@@ -1,7 +1,7 @@
 /* estilos del componente */
 .serviceCardComponent {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
     font-style: 'Montserrat';
     font-size: 10pt;
     display: flex;
@@ -20,6 +20,7 @@
     height: 100%;
     color: #324d7e;
     box-shadow: 1px 1px 4px rgb(36, 36, 36);
+    cursor: pointer;
 }
 
 .contentSection {
@@ -39,9 +40,8 @@
 }
 
 .serviceCardComponent.next>.contentSection>p:last-child {
-    color: #324d7e;
+    color: white;
     font-weight: 600;
-    cursor: pointer;
 }
 
 .serviceCardComponent.reprogram>.contentSection>p {
@@ -51,7 +51,6 @@
 .serviceCardComponent.reprogram>.contentSection>p:last-child {
     color: rgb(255, 55, 0);
     font-weight: 500;
-    cursor: pointer;
 }
 
 .serviceCardComponent.success {
@@ -60,6 +59,7 @@
 
 .serviceCardComponent.success>.dirIcon {
     color: green;
+    cursor: pointer;
 }
 
 .serviceCardComponent.success>.contentSection>p {
@@ -67,13 +67,14 @@
 }
 
 .serviceCardComponent.success>.contentSection>p:last-child {
-    color: green;
+    color: white;
     font-weight: 600;
     cursor: none;
 }
 
-.serviceCardComponent.reprogram >.dirIcon{
-    color:rgb(255, 174, 0);
+.serviceCardComponent.reprogram>.dirIcon {
+    color: rgb(255, 174, 0);
+    cursor: pointer;
 }
 
 .serviceCardComponent.reprogram>.contentSection>p:last-child {
@@ -86,6 +87,7 @@
 
 .serviceCardComponent.cancel>.dirIcon {
     color: gray;
+    cursor: pointer;
 }
 
 .serviceCardComponent.cancel>.contentSection>p {
@@ -99,8 +101,69 @@
 }
 
 /* estilos del contenedor padre del modal de servicio */
-.service-card-modal-container{
+.service-card-modal-container {
     position: absolute;
     width: auto;
     height: auto;
+}
+
+/* estilos de los botones del servicio */
+.serviceCardBtns {
+    width: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.serviceCardBtns>button {
+    border: 1px solid #324D7E;
+    border-radius: 5px;
+    background: white;
+    color: #324D7E;
+    font-size: 8pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    padding: 0.2rem;
+}
+
+.serviceCardBtns>button:hover {
+    border: 0px;
+    background: #324D7E;
+    color: white;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.serviceCardBtns>button:active {
+    background: #283e66;
+    transition: all 0.2s ease-in-out;
+}
+
+/* estilos del modal de cada servicio */
+
+.userIconId {
+    margin: 5px 0;
+    width: 50px;
+    height: 50px;
+    color: #324D7E;
+}
+
+.userAssignedInfo {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Montserrat';
+    font-size: 12pt;
+}
+
+.userAssignedInfo>article>p:first-child {
+    font-weight: bolder;
+}
+
+.userAssignedInfo>article>p {
+    margin: 2px 0;
 }

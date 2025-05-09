@@ -2,6 +2,9 @@
 import './ServiceCard.css'
 /* imports de componentes o reutilizables */
 import { GoFileDirectoryFill } from "react-icons/go";
+import { FaCircleUser } from "react-icons/fa6";
+import Modal from 'react-modal';
+import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,8 +14,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { updateServiceState } from '../../services/serviceService';
 /* import de useState */
 import { useState } from 'react'
+import GeneralButton from '../GeneralButton/GeneralButton';
+import EndComponent from '../EndComponent/EndComponent';
 
-function ServiceCard({id, name, description , currentstate }) {
+function ServiceCard({ id, name, description, currentstate, username,
+    space, clasification, subclasification, unit, price }) {
 
     /* sección de variables */
 
@@ -33,6 +39,16 @@ function ServiceCard({id, name, description , currentstate }) {
             case 2: return "reprogram"
             case 3: return "success"
             case 4: return "cancel"
+            default: return ""
+        }
+    }
+
+    const renderState = () => {
+        switch (state) {
+            case 1: return "A realizar"
+            case 2: return "Reprogramado"
+            case 3: return "Finalizado"
+            case 4: return "Cancelado"
             default: return ""
         }
     }
@@ -82,13 +98,53 @@ function ServiceCard({id, name, description , currentstate }) {
 
     return (
         <div className={`serviceCardComponent ${serviceState()}`}>
-            <GoFileDirectoryFill className='dirIcon' />
+            <GoFileDirectoryFill className='dirIcon' onClick={() => { setOpen(true) }} />
             <section className='contentSection'>
+                {(state == 3 || state == 4) ? '' : <div className='serviceCardBtns'>
+                    <button onClick={reprogram}>Reprogramar</button>
+                    <button onClick={close}>Finalizar</button>
+                    <button onClick={cancel}>Cancelar</button>
+                </div>}
                 <p>{name}</p>
                 <p>{description}</p>
-                <p onClick={handleClickOpen}>{serviceState()}</p>
+                <p>{serviceState()}</p>
             </section>
-            <Dialog
+            <Modal
+                isOpen={open}
+                onRequestClose={() => setOpen(false)}
+                contentLabel='Vista detallada de servicio'
+                style={{
+                    content: {
+                        width: '600px',
+                        margin: 'auto',
+                        padding: '0'
+                    }
+                }}
+            >
+                <div className='modalDiv'>
+                    <h2 className='titleModal'>Servicio {name}</h2>
+                </div>
+                <form className='modalForm'>
+                    <section className='userAssignedInfo'>
+                        <FaCircleUser className='userIconId' />
+                        <article>
+                            <p>Encargado</p>
+                            <p>{username}</p>
+                        </article>
+                    </section>
+                    <ListItemText primary={`Espacio a utilizar: ${space}`} />
+                    <ListItemText primary={`Clasificación del servicio: ${clasification}`} />
+                    <ListItemText primary={`Subclasificación del servicio: ${subclasification}`} />
+                    <ListItemText primary={`Unidad de operación: ${unit}`} />
+                    <ListItemText primary={`Precio unitario: ${price}`} />
+                    <ListItemText primary={`Estado actual del servicio: ${renderState()}`} />
+                </form>
+                <div className='btnsFooter'>
+                    <GeneralButton event={() => setOpen(false)}>Editar</GeneralButton>
+                </div>
+                <EndComponent/>
+            </Modal>
+            {/* <Dialog
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
@@ -109,7 +165,7 @@ function ServiceCard({id, name, description , currentstate }) {
                     </Button>
                     <Button onClick={cancel}>Cancelar</Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
         </div>
     )
 }

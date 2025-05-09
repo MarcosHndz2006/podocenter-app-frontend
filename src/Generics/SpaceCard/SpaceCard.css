@@ -1,8 +1,8 @@
 /* estilos del componente */
 
 .spaceCardComponent {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     font-style: 'Montserrat';
     font-size: 10pt;
     display: flex;
@@ -12,6 +12,7 @@
     gap: 0.5rem;
     margin: 0 0.5rem;
     border-radius: 3px;
+    padding: 0.5rem;
     box-shadow: 1px 1px 4px rgb(36, 36, 36);
     cursor: pointer;
 }
@@ -19,7 +20,7 @@
 /* estilos condicionados */
 
 .spaceCardComponent.occupied {
-    background: rgb(134, 134, 134);
+    background: rgb(174, 174, 174);
 }
 
 .spaceCardComponent.occupied>p:last-child {
@@ -33,11 +34,15 @@
 
 .spaceCardComponent.free>p:last-child {
     color: green;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .spaceCardComponent.outService {
-    background: rgb(134, 134, 134);
+    background: rgb(174, 174, 174);
+}
+
+.spaceCardComponent.spaceCardComponent.outService>p:last-child {
+    font-weight: 600;
 }
 
 /* estilos del contenedor del modal de espacios */
@@ -46,4 +51,39 @@
     width: auto;
     height: auto;
     position: absolute;
+}
+
+/* estilos de la sección de botones que cambian el estado del espacio */
+
+.spaceCardBtns {
+    width: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.spaceCardBtns>button {
+    border: 1px solid #324D7E;
+    border-radius: 5px;
+    background: white;
+    color: #324D7E;
+    font-size: 8pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    padding: 0.2rem;
+}
+
+.spaceCardBtns>button:hover {
+    border: 0px;
+    background: #324D7E;
+    color: white;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.spaceCardBtns>button:active{
+    background: #283e66;
+    transition: all 0.2s ease-in-out;
 }

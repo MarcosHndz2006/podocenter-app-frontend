@@ -3,18 +3,18 @@ const router = express.Router();
 const spacesController = require('../controllers/spaces.controller');
 
 // Create a new space
-router.post('/spaces', spacesController.createSpace);
+router.post('/', spacesController.createSpace);
 
 // Get all spaces
-router.get('/spaces', spacesController.getAllSpaces);
-
-// Get a space by ID
-router.get('/spaces/:idSpaces', spacesController.getSpaceById);
+router.get('/', spacesController.getAllSpaces);
 
 // Update a space by ID
-router.put('/spaces/:idSpaces', spacesController.updateSpace);
+router.put('/update', spacesController.updateSpace);
+
+// Get a space by ID
+router.get('/:idSpaces', spacesController.getSpaceById);
 
 // Delete a space by ID
-router.delete('/spaces/:idSpaces', spacesController.deleteSpace);
+router.delete('/:idSpaces', spacesController.deleteSpace);
 
 module.exports = router;

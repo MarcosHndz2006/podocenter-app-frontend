@@ -1,5 +1,5 @@
 /* sección de estilos del div general */
-.inventoryComponent{
+.inventoryComponent {
     display: flex;
     flex-flow: column nowrap;
     justify-content: start;
@@ -10,13 +10,14 @@
     gap: 0.5rem;
     position: relative;
 }
+
 /* se oculta la scrollbar con esta opción */
-.inventoryComponent::-webkit-scrollbar{
+.inventoryComponent::-webkit-scrollbar {
     display: none;
 }
 
 /* estilos del contenedor de inventario */
-.inventoryContainer{
+.inventoryContainer {
     width: 100%;
     height: 100%;
     display: flex;
@@ -26,7 +27,7 @@
 }
 
 /* estilo del menú de filtros */
-.filterSection{
+.filterSection {
     width: 250px;
     border-radius: 5px;
     height: auto;
@@ -36,7 +37,7 @@
     color: #324d7e;
     font-family: 'Montserrat';
     font-size: 12pt;
-    font-weight: 500;   
+    font-weight: 500;
     display: flex;
     flex-flow: column nowrap;
     gap: 0.5rem;
@@ -45,7 +46,7 @@
 }
 
 /* estilos de los filtros */
-.filters{
+.filters {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
@@ -55,7 +56,7 @@
 }
 
 /* estilos del contenedor de ítems de inventario */
-.itemsContainer{
+.itemsContainer {
     width: 1150px;
     height: 650px;
     background: white;
@@ -65,7 +66,7 @@
 }
 
 /* estilos del encabezado del contenedor de ítems de inventario */
-.itemsContainerHeader{
+.itemsContainerHeader {
     width: 100%;
     height: 5%;
     display: grid;
@@ -77,7 +78,7 @@
 }
 
 /* estilos del espacio de renderización de ítems de inventario */
-.itemsContainerElements{
+.itemsContainerElements {
     width: 100%;
     height: 86%;
     border-top: 0.05px solid #324d7e;
@@ -85,12 +86,12 @@
     overflow-y: scroll;
 }
 
-.itemsContainerElements::-webkit-scrollbar{
-    display:none;
+.itemsContainerElements::-webkit-scrollbar {
+    display: none;
 }
 
 /* estilos del pie del contenedor de ítems de inventario */
-.itemsContainerFooter{
+.itemsContainerFooter {
     width: 100%;
     height: 8%;
     display: flex;
@@ -102,7 +103,7 @@
 }
 
 /* estilos para los modales */
-.modalDiv{
+.modalDiv {
     background: #324d7e;
     color: white;
     display: flex;
@@ -112,39 +113,39 @@
     font-size: 10pt;
 }
 
-.titleModal{
+.titleModal {
     font-weight: 500;
 }
 
 /* estilo para el formulario del modal*/
-.modalForm{
+.modalForm {
     display: flex;
     flex-flow: column nowrap;
     gap: 1rem;
-    padding: 0 0.5rem 1rem 1rem;   
+    padding: 0 0.5rem 1rem 1rem;
 }
 
 /* estilos de los bloques dentro del modal para agregar un ítem a inventario */
-.firstBlock{
-    display: flex; 
+.firstBlock {
+    display: flex;
     flex-flow: row wrap;
     gap: 1rem;
 }
 
-.secondBlock{
+.secondBlock {
     display: flex;
     flex-flow: row nowrap;
     gap: 1rem;
 }
 
-.thirdBlock{
+.thirdBlock {
     width: 48%;
     display: flex;
     flex-flow: column nowrap;
     gap: 1rem;
 }
 
-.fourthBlock{
+.fourthBlock {
     display: flex;
     flex-flow: row wrap;
     gap: 1rem;
@@ -152,7 +153,7 @@
 
 /* estilo del apartado donde se encuentra el estado del ítem de inventario */
 
-.stateSection{
+.stateSection {
     width: 48%;
     display: flex;
     flex-flow: column nowrap;
@@ -161,12 +162,12 @@
     padding: 0.5rem 0;
 }
 
-.stateSection > article:first-child > img{
+.stateSection>article:first-child>img {
     width: 20px;
     height: 20px;
 }
 
-.stateSection > article:first-child{
+.stateSection>article:first-child {
     display: flex;
     flex-flow: row nowrap;
     font-family: 'Montserrat';
@@ -176,12 +177,12 @@
     padding: 0 0.5rem;
 }
 
-.stateSection > article:last-child > img{
+.stateSection>article:last-child>img {
     width: 50px;
     height: 50px;
 }
 
-.stateSection > article:last-child{
+.stateSection>article:last-child {
     display: flex;
     flex-flow: column nowrap;
     font-family: 'Montserrat';
@@ -194,7 +195,7 @@
     align-items: center;
 }
 
-.stateAndBlock{
+.stateAndBlock {
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -202,20 +203,20 @@
 }
 
 /* estilo para el contenedor de la lista de proveedores */
-.treeDiv{
+.treeDiv {
     width: 100%;
     height: 475px;
     overflow-y: scroll;
     border: 1px solid #324d7e;
 }
 
-.treeDiv::-webkit-scrollbar{
+.treeDiv::-webkit-scrollbar {
     display: none;
 }
 
 /* estilo de los botones de paginación */
 
-.rightArrow{
+.rightArrow {
     border: 1px solid #324d7e;
     border-radius: 100%;
     background: white;
@@ -230,17 +231,17 @@
     transition: all 0.2s ease-in-out;
 }
 
-.rightArrow:hover{
+.rightArrow:hover {
     transform: scale(1.05);
     transition: all 0.2s ease-in-out;
 }
 
-.rightArrow:active{
+.rightArrow:active {
     background: gray;
     transition: all 0.2s ease-in-out;
 }
 
-.leftArrow{
+.leftArrow {
     border: 1px solid #324d7e;
     border-radius: 100%;
     background: white;
@@ -256,16 +257,24 @@
     transition: all 0.2s ease-in-out;
 }
 
-.leftArrow:hover{
+.leftArrow:hover {
     transform: scale(1.05) rotate(180deg);
     transition: all 0.2s ease-in-out;
 }
 
-.leftArrow:active{
+.leftArrow:active {
     background: gray;
     transition: all 0.2s ease-in-out;
 }
 
 .editProviderBtn {
     color: #324d7e;
+}
+
+.deleteProviderBtn {
+    color: red;
+    font-size: 12pt;
+    font-family: 'Montserrat';
+    margin: 0;
+    cursor: pointer;
 }

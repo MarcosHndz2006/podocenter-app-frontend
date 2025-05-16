@@ -35,6 +35,20 @@ export const createInventoryItem = async (itemData) => {
     }
 };
 
+// Function to update an inventory item
+export const updateInventoryItem = async (itemData) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/update`, itemData,
+            {
+                headers: { 'Content-Type': 'application/json' }
+            })
+        return response.data
+    } catch (error) {
+        console.error("Error updating inventory item: ", error)
+        throw error
+    }
+}
+
 // Function to get clasifications
 export const getClasifications = async () => {
     try {

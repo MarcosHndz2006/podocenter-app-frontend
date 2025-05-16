@@ -16,10 +16,11 @@ import arrow from '../../assets/img/right-arrow.png';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NoneResults from '../../Generics/NoneResults/NoneResults';
-import { getAllInventoryItems, createInventoryItem, getClasifications, getUnits, getFarmacehouses } from '../../services/inventoryService';
+import { getAllInventoryItems, createInventoryItem, getClasifications, getUnits, getFarmacehouses, deleteInventoryItem } from '../../services/inventoryService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAllProviders } from '../../services/providerService';
+import { deleteProvider, getAllProviders } from '../../services/providerService';
+import { getAllShelfs } from '../../services/shelfService';
 
 function InventoryComponent() {
 
@@ -57,6 +58,9 @@ function InventoryComponent() {
   en db */
   const [farmacehouses, setFarmacehouses] = useState([])
 
+  /* variable de estado para almacenar los estantes disponibles y llenos */
+  const [shelfs, setShelfs] = useState([])
+
   /* variable usada para almacenar y enviar los datos de un nuevo item
   mediante una nueva requesta a la api */
   const [newItem, setNewItem] = useState({
@@ -70,7 +74,8 @@ function InventoryComponent() {
     unit: '',
     farmacehouse: '',
     price: '',
-    quantity: ''
+    quantity: '',
+    shelf: ''
   });
 
   /* variable usada para filtrar los items en base a los valores obtenidos
@@ -143,12 +148,23 @@ function InventoryComponent() {
       }
     }
 
+    //función para obtener los estantes disponibles
+    const fetchShelfs = async () => {
+      try {
+        const fetchedShelfs = await getAllShelfs()
+        setShelfs(fetchedShelfs.data)
+      } catch (error) {
+        console.error("Error fetching shelfs: ", error)
+      }
+    }
+
     //llamadas de todas y c/u de las funciones anteriores
     fetchItems();
     fetchProviders();
     fetchProductClasifications();
     fetchProductUnits();
     fetchProductFarmacehouses();
+    fetchShelfs();
   }, []);
 
   //funciones CRUD y de filtrado
@@ -180,6 +196,7 @@ function InventoryComponent() {
 
 
   const handleNewItemChange = (event) => {
+    console.log(event.target.name, event.target.value)
     const { name, value } = event.target;
     setNewItem((prevItem) => ({
       ...prevItem,
@@ -190,9 +207,9 @@ function InventoryComponent() {
   /* función para añadir el nuevo elemento a inventario */
   const AddItem = async (event) => {
     event.preventDefault();
-    console.log(newItem);
+    //    console.log(newItem);
     try {
-      await createInventoryItem(newItem);
+      let result = await createInventoryItem(newItem);
       toast.success('Item agregado correctamente', {
         position: 'top-center'
       });
@@ -228,9 +245,48 @@ function InventoryComponent() {
   });
 
   /* función para eliminar un producto de inventario */
-  const handleDelete = (itemId) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  const handleDelete = async (itemId) => {
+    try {
+      await deleteInventoryItem(itemId);
+      toast.success('Item eliminado con éxito', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
   };
+
+  /* función para eliminar un proveedor */
+  const deleteOneProvider = async (idProvider) => {
+    try {
+      await deleteProvider(idProvider)
+      toast.success('Item eliminado con éxito', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error("Error deleting provider: ", error)
+    }
+  }
 
   /* función para limpiar los filtros */
   const cleanFilters = () => {
@@ -296,10 +352,22 @@ function InventoryComponent() {
     return titles.map((title, index) => <p key={index}>{title}</p>);
   };
 
+  /* función para renderizar los estantes disponibles */
+  const renderShelfs = () => {
+    return shelfs.map(shelf => {
+      if (shelf.lleno == 0) {
+        return <MenuItem key={shelf.id_estante} value={shelf.id_estante}>
+          {shelf.nombre_estante}
+        </MenuItem>
+      }
+    })
+  }
+
   /* función para renderizar las clasificaciones de los productos de inventario */
   const renderClasifications = () => {
     return clasifications.map((clas) => {
-      return <MenuItem key={`${clas.id_clasificacion_producto}`} value={`${clas.nombre_clasificacion_producto}`}>
+      return <MenuItem key={`${clas.id_clasificacion_producto}`}
+        value={`${clas.id_clasificacion_producto}`}>
         {clas.nombre_clasificacion_producto}
       </MenuItem>
     })
@@ -308,7 +376,7 @@ function InventoryComponent() {
   /* función para renderizar las unidades de los productos de inventario */
   const renderUnits = () => {
     return units.map((unit) => {
-      return <MenuItem key={`${unit.id_unidad}`} value={`${unit.nombre_unidad}`}>
+      return <MenuItem key={`${unit.id_unidad}`} value={`${unit.id_unidad}`}>
         {unit.nombre_unidad}
       </MenuItem>
     })
@@ -318,7 +386,7 @@ function InventoryComponent() {
   const renderFarmacehouses = () => {
     return farmacehouses.map((farmacehouse) => {
       return <MenuItem key={`${farmacehouse.id_casa_farmaceutica}`}
-        value={`${farmacehouse.nombre_casa_farmaceutica}`} >
+        value={`${farmacehouse.id_casa_farmaceutica}`} >
         {farmacehouse.nombre_casa_farmaceutica}
       </MenuItem>
     })
@@ -335,6 +403,10 @@ function InventoryComponent() {
   const stores = () => {
     navigate('/podocenter/stands');
   };
+
+  const editProvider = (identifier) => {
+    navigate(`/podocenter/provider/edit/${identifier}`)
+  }
 
   return (
     <div className='inventoryComponent'>
@@ -605,6 +677,21 @@ function InventoryComponent() {
                 value={newItem.quantity}
                 onChange={handleNewItemChange}
               />
+              <FormControl sx={{ width: '48%' }}>
+                <InputLabel id='demo-simple-select-label-shelf'>Estantes disponibles</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  value={newItem.shelf}
+                  label='Estantes disponibles'
+                  name='shelf'
+                  onChange={handleNewItemChange}
+                >
+                  {
+                    renderShelfs()
+                  }
+                </Select>
+              </FormControl>
             </section>
             <div className='itemsContainerFooter'>
               <GeneralButton event={() => AddItem()}>Añadir</GeneralButton>
@@ -642,7 +729,16 @@ function InventoryComponent() {
                     <TreeItem itemId={`provider-${provider.id_proveedor}-legalRep`} label={`Representante legal: ${provider.representante_legal}`} />
                     <TreeItem itemId={`provider-${provider.id_proveedor}-nit`} label={`NIT: ${provider.nit}`} />
                     <TreeItem itemId={`provider-${provider.id_proveedor}-ncr`} label={`NRC: ${provider.ncr}`} />
-                    <TreeItem itemId={`provider-${provider.id_proveedor}-edit`} label="Editar proveedor" className='editProviderBtn'/>
+                    <TreeItem itemId={`provider-${provider.id_proveedor}-edit`} label={
+                      <span onClick={() => editProvider(provider.id_proveedor)} className="editProviderBtn">
+                        Editar proveedor
+                      </span>
+                    } className='editProviderBtn' />
+                    <TreeItem itemId={`provider-${provider.id_proveedor}-delete`} label={
+                      <span onClick={() => deleteOneProvider(provider.id_proveedor)} className="deleteProviderBtn">
+                        Eliminar proveedor
+                      </span>
+                    } className='deleteProviderBtn' />
                   </TreeItem>
                 ))}
               </SimpleTreeView>
@@ -658,4 +754,4 @@ function InventoryComponent() {
   );
 }
 
-export default InventoryComponent;
+export default InventoryComponent

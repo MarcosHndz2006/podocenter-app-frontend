@@ -9,11 +9,16 @@ import PaginationButton from '../../Generics/PaginationButton/PaginationButton';
 import Modal from 'react-modal';
 import TextField from '@mui/material/TextField';
 import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 // Import de useState y useEffect
 import { useState, useEffect } from 'react';
 import { createStore, getAllStores } from '../../services/storeService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createShelf } from '../../services/shelfService';
 
 function StandsComponent() {
   const username = localStorage.getItem('username').slice(1, -1);
@@ -22,12 +27,24 @@ function StandsComponent() {
   const [stores, setStores] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalStandOpen, setModalStandOpen] = useState(false);
   const [newStore, setNewStore] = useState({
-    name: '',
-    location: '',
-    tags: ''
+    nombre_almacen: '',
+    ubicacion: '',
+    etiquetas: '',
+    lleno: 0
   });
+
   const [shelfs, setShelfs] = useState([])
+
+  const [newShelf, setNewShelf] = useState({
+    nombre_estante: '',
+    niveles: '',
+    divisiones: '',
+    etiquetas: null,
+    lleno: '0',
+    id_almacen: ''
+  })
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -55,6 +72,15 @@ function StandsComponent() {
     }));
   };
 
+  // Función para agregar valores al nuevo estante
+  const handleShelfChange = (e) => {
+    const { name, value } = e.target
+    setNewShelf(shelf => ({
+      ...shelf,
+      [name]: value
+    }))
+  }
+
   // Función para agregar un nuevo almacén
   const handleAddStore = async (event) => {
     event.preventDefault();
@@ -62,7 +88,7 @@ function StandsComponent() {
       const createdStore = await createStore(newStore);
       setStores((prevStores) => [
         ...prevStores,
-        { idStorage: createdStore.idStorage, name: createdStore.name, stands: [<DefaultStand event={addStand} />] }
+        { id_almacen: createdStore.id_almacen, nombre_almacen: createdStore.nombre_almacen, stands: [<DefaultStand event={addStand} />] }
       ]);
       toast.success('Almacén creado con éxito', {
         position: 'top-center',
@@ -89,21 +115,34 @@ function StandsComponent() {
   };
 
   // Función utilizada para actualizar el estado de la variable que contiene los estantes de cada almacén
-  const addStand = (id) => {
-    const element = stores.find((str) => (str.idStorage == id ? str : false));
-    console.log(element);
+  const addStand = async () => {
+    try {
+      const result = await createShelf(newShelf);
+      toast.success('Estante agregado correctamente', {
+        position: 'top-center'
+      });
+      setModalStandOpen(false);
 
-    const newElement = {
-      idStorage: element.idStorage,
-      name: element.name,
-      stands: [...element.stands, <StandCard />]
+      /* wait 3 seconds */
+      setTimeout(() => {
+        /* reload */
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error('Error agregando el estante:', error);
+      toast.error('Error agregando el estante');
     };
-    console.log(newElement);
+  }
 
-    setStores((stores) => {
-      return stores.map((str) => (str.idStorage == id ? newElement : str));
-    });
-  };
+  // Función para renderizar lista de almacenes
+  const renderStorages = () => {
+    return stores.map(str => {
+      return <MenuItem key={str.storage.id_almacen}
+        value={str.storage.id_almacen}>
+        {str.storage.nombre_almacen}
+      </MenuItem>
+    })
+  }
 
   // Función para renderizar almacenes
   const renderStores = () => {
@@ -117,6 +156,7 @@ function StandsComponent() {
       <section className='storesContainer'>
         <h3>almacén {element.storage.nombre_almacen}</h3>
         <section className='standsContainer' id={element.storage.id_almacen}>
+          <DefaultStand event={() => { setModalStandOpen(true) }} />
           {
             shelfs.map(shelf => {
               return shelf.map(s => {
@@ -141,7 +181,7 @@ function StandsComponent() {
       buttons.push(
         <PaginationButton
           key={index}
-          identifier={stores[index].storage.id_almacen}
+          identifier={index + 1}
           event={modifyCurrentPage}
           currentPage={currentPage}
         />
@@ -190,8 +230,8 @@ function StandsComponent() {
             label='Nombre'
             variant='standard'
             fullWidth
-            name='name'
-            value={newStore.name}
+            name='nombre_almacen'
+            value={newStore.nombre_almacen}
             onChange={handleChange}
           />
           <TextField
@@ -199,8 +239,8 @@ function StandsComponent() {
             label='Ubicación'
             variant='standard'
             fullWidth
-            name='location'
-            value={newStore.location}
+            name='ubicacion'
+            value={newStore.ubicacion}
             onChange={handleChange}
           />
           <TextField
@@ -208,13 +248,86 @@ function StandsComponent() {
             label='Etiqueta/s'
             variant='standard'
             fullWidth
-            name='tags'
-            value={newStore.tags}
+            name='etiquetas'
+            value={newStore.etiquetas}
             onChange={handleChange}
           />
           <div className='newProviderFooter'>
             <GeneralButton type='submit'>Agregar</GeneralButton>
             <GeneralButton event={() => setModalIsOpen(false)}>Salir</GeneralButton>
+          </div>
+        </form>
+      </Modal>
+      <Modal
+        isOpen={modalStandOpen}
+        onRequestClose={() => setModalStandOpen(false)}
+        contentLabel='Agregar estante'
+        style={{
+          content: {
+            width: '400px',
+            margin: 'auto',
+            padding: '0'
+          }
+        }}
+      >
+        <div className='newProviderTitle'>
+          <h2>Agregar Estante</h2>
+        </div>
+        <form className='newProviderForm' onSubmit={addStand}>
+          <TextField
+            id='standard-basic'
+            label='Nombre'
+            variant='standard'
+            fullWidth
+            name='nombre_estante'
+            value={newShelf.nombre_estante}
+            onChange={handleShelfChange}
+          />
+          <TextField
+            id='standard-basic'
+            label='Niveles'
+            variant='standard'
+            fullWidth
+            name='niveles'
+            value={newShelf.niveles}
+            onChange={handleShelfChange}
+          />
+          <TextField
+            id='standard-basic'
+            label='Divisiones'
+            variant='standard'
+            fullWidth
+            name='divisiones'
+            value={newShelf.divisiones}
+            onChange={handleShelfChange}
+          />
+          <TextField
+            id='standard-basic'
+            label='Etiquetas'
+            variant='standard'
+            fullWidth
+            name='etiquetas'
+            value={newShelf.etiquetas}
+            onChange={handleShelfChange}
+          />
+          <FormControl sx={{ width: '98%' }}>
+            <InputLabel id='demo-simple-select-label'>Almacenes</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={newShelf.id_almacen}
+              label='id_almacen'
+              name='id_almacen'
+              onChange={handleShelfChange}
+            >
+              {
+                renderStorages()
+              }
+            </Select>
+          </FormControl>
+          <div className='newProviderFooter'>
+            <GeneralButton type='submit'>Agregar</GeneralButton>
+            <GeneralButton event={() => setModalStandOpen(false)}>Salir</GeneralButton>
           </div>
         </form>
       </Modal>

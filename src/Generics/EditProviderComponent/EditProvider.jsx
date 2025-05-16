@@ -1,16 +1,33 @@
-// Import de archivo .css
-import './NewProvider.css';
+import './EditProvider.css'
 // Importes de componentes o reutilizables
 import TextField from '@mui/material/TextField';
 import GeneralButton from '../GeneralButton/GeneralButton';
 // Import de useState y useNavigate
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createProvider } from '../../services/providerService';
+import { createProvider, getProviderById, updateProvider } from '../../services/providerService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom'
 
-function NewProvider() {
+function EditProvider() {
+
+    /* variable para uso de useEffect */
+    const { identifier } = useParams();
+
+    useEffect(() => {
+        const fetchProvider = async () => {
+            try {
+                const fetchProvider = await getProviderById(identifier)
+                setProvider(fetchProvider.data)
+            } catch (error) {
+                console.error("Error fetching provider: ", error)
+            }
+        }
+
+        fetchProvider()
+    }, [])
+
     // Sección de variables de estado y navegación del componente
     const [provider, setProvider] = useState({
         nombre_proveedor: '',
@@ -42,8 +59,8 @@ function NewProvider() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await createProvider(provider);
-            toast.success('Proveedor creado con éxito', {
+            await updateProvider(provider.id_proveedor, provider);
+            toast.success('Proveedor editado con éxito', {
                 position: 'top-center',
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -57,11 +74,11 @@ function NewProvider() {
                 navigate('/podocenter/inventory');
             }
 
-                , 2000);
+                , 1000);
 
         } catch (error) {
-            console.error('Error creando el proveedor:', error);
-            toast.error('Error creando el proveedor', {
+            console.error('Error editando el proveedor:', error);
+            toast.error('Error editando el proveedor', {
                 position: 'top-center',
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -80,13 +97,13 @@ function NewProvider() {
 
     return (
         /* Componente para agregar un nuevo proveedor */
-        <div className='newProviderComponent'>
+        <div className='editProviderComponent'>
             <ToastContainer />
-            <div className='newProviderTitle'>
+            <div className='editProviderTitle'>
                 <h2>Agregar proveedor</h2>
             </div>
             {/* Formulario con los inputs necesarios para agregar proveedor */}
-            <form className='newProviderForm' onSubmit={handleSubmit}>
+            <form className='editProviderForm' onSubmit={handleSubmit}>
                 <TextField
                     id='standard-basic'
                     label='Nombre proveedor'
@@ -187,13 +204,13 @@ function NewProvider() {
                     onChange={handleChange}
                 />
                 {/* Sección de botones */}
-                <div className='newProviderFooter'>
-                    <GeneralButton type='submit' event={handleSubmit}>Agregar</GeneralButton>
+                <div className='editProviderFooter'>
+                    <GeneralButton type='submit' event={handleSubmit}>Guardar</GeneralButton>
                     <GeneralButton event={inventory}>Salir</GeneralButton>
                 </div>
             </form>
         </div>
-    );
+    )
 }
 
-export default NewProvider;
+export default EditProvider

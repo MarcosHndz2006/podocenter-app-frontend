@@ -61,7 +61,7 @@ exports.getItemById = async (req, res, next) => {
 exports.createItem = async (req, res, next) => {
     try {
         const itemData = req.body;
-
+        console.log(itemData)
         // Validate required fields
         if (!itemData.comercialName) {
             return res.status(400).json({
@@ -70,7 +70,21 @@ exports.createItem = async (req, res, next) => {
             });
         }
 
-        const [id] = await db('producto').insert(itemData);
+        const [id] = await db('producto').insert({
+            nombre_comercial: itemData.comercialName,
+            componente_principal: itemData.principalComponent,
+            componente_secundario: itemData.secondaryComponent,
+            presentacion: itemData.Presentation,
+            precio_unitario: itemData.price,
+            id_unidad: itemData.unit,
+            vencimiento: itemData.expDate,
+            lote: itemData.lot,
+            cuenta_cargo: null,
+            id_clasificacion_producto: itemData.Clasiffication,
+            id_casa_farmaceutica: itemData.farmacehouse,
+            id_estante: itemData.shelf,
+            existencias: itemData.quantity
+        });
         const newItem = await db('producto').where('id_producto', id).first();
 
         res.status(201).json({
@@ -85,10 +99,9 @@ exports.createItem = async (req, res, next) => {
 // Update an item
 exports.updateItem = async (req, res, next) => {
     try {
-        const { id } = req.params;
         const itemData = req.body;
-
-        const updated = await db('producto').where('id_producto', id).update(itemData);
+        console.log(itemData)
+        const updated = await db('producto').where('id_producto', itemData.id_producto).update(itemData);
 
         if (!updated) {
             return res.status(404).json({
@@ -97,7 +110,7 @@ exports.updateItem = async (req, res, next) => {
             });
         }
 
-        const updatedItem = await db('producto').where('id_producto', id).first();
+        const updatedItem = await db('producto').where('id_producto', itemData.id_producto)
 
         res.status(200).json({
             status: 'success',

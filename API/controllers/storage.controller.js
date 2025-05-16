@@ -5,8 +5,8 @@ const knex = require('../db/connection'); // Assuming you have a database connec
 exports.createStorage = async (req, res) => {
     const storage = req.body;
     try {
-        const [idStorage] = await knex('almacen').insert(storage).returning('idStorage');
-        res.status(201).json({ idStorage, ...storage });
+        const [id_almacen] = await knex('almacen').insert(storage);
+        res.status(201).json({ id_almacen, ...storage });
     } catch (error) {
         res.status(500).json({ message: 'Error creating storage', error });
     }

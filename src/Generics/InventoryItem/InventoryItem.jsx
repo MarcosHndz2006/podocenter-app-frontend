@@ -20,7 +20,7 @@ import vacio from '../../assets/img/conjunto-vacio.png';
 import { CiCircleCheck } from "react-icons/ci";
 import { GoAlert } from "react-icons/go";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import { deleteInventoryItem, createInventoryItem } from '../../services/inventoryService';
+import { deleteInventoryItem, createInventoryItem, updateInventoryItem } from '../../services/inventoryService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
@@ -34,23 +34,24 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [newItem, setNewItem] = useState({
-    comercialName: name,
-    principalComponent: component,
-    secondaryComponent: secondaryComponent,
-    Clasiffication: clasification,
-    Presentation: Presentation,
-    lot: lot,
-    expDate: expDate,
-    unit: unit,
-    farmacehouse: house,
-    price: price,
-    quantity: quantity
+    id_producto: id,
+    nombre_comercial: name,
+    componente_principal: component,
+    componente_secundario: secondaryComponent,
+    id_clasificacion_producto: clasification,
+    presentacion: Presentation,
+    lote: lot,
+    vencimiento: expDate,
+    id_unidad: unit,
+    id_casa_farmaceutica: house,
+    precio_unitario: price,
+    existencias: quantity
   });
 
   const renderState = () => {
     return (quantity > 20) ? <CiCircleCheck className='checkIcon' /> :
-      (quantity <= 20 && quantity > 10) ? <GoAlert className='cautionIcon'/> : 
-      <IoAlertCircleOutline className='dangerIcon'/>
+      (quantity <= 20 && quantity > 10) ? <GoAlert className='cautionIcon' /> :
+        <IoAlertCircleOutline className='dangerIcon' />
   }
 
   const handleClickOpen = () => {
@@ -71,34 +72,14 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
   };
 
   const deleteItem = async () => {
-    console.log('Item deleted:', id);
-
-    try {
-      await deleteInventoryItem(id);
-      onDelete(id);
-      setOpen(false);
-      toast.success('Item eliminado con éxito', {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    } catch (error) {
-      console.error('Error deleting item:', error);
-    }
+    onDelete(id)
+    setOpen(false);
   };
 
-  const createItem = async (e) => {
+  const updateItem = async (e) => {
     e.preventDefault();
     try {
-      await createInventoryItem(newItem);
+      await updateInventoryItem(newItem);
       toast.success('Item creado con éxito', {
         position: 'top-center',
         autoClose: 5000,
@@ -133,7 +114,7 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
       <Dialog
         fullScreen={fullScreen}
         open={open}
-        onClose={handleClose}
+        onClose={() => { setOpen(false) }}
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title'>{'Seleccione la opción a ejecutar'}</DialogTitle>
@@ -179,8 +160,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Nombre comercial'
               variant='standard'
               sx={{ width: '48%' }}
-              name='comercialName'
-              value={newItem.comercialName}
+              name='nombre_comercial'
+              value={newItem.nombre_comercial}
               onChange={handleChange}
             />
             <TextField
@@ -188,8 +169,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Componente principal'
               variant='standard'
               sx={{ width: '48%' }}
-              name='principalComponent'
-              value={newItem.principalComponent}
+              name='componente_principal'
+              value={newItem.componente_principal}
               onChange={handleChange}
             />
             <TextField
@@ -197,8 +178,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Componente secundario'
               variant='standard'
               sx={{ width: '48%' }}
-              name='secondaryComponent'
-              value={newItem.secondaryComponent}
+              name='componente_secundario'
+              value={newItem.componente_secundario}
               onChange={handleChange}
             />
           </section>
@@ -208,14 +189,15 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                value={newItem.Clasiffication}
+                value={newItem.id_clasificacion_producto}
                 label='Clasificación'
-                name='Clasiffication'
+                name='id_clasificacion_producto'
                 onChange={handleChange}
               >
                 {
                   clasifications.map(clas => {
-                    return <MenuItem key={`${clas.id_clasificacion_producto}`} value={`${clas.nombre_clasificacion_producto}`}>
+                    return <MenuItem key={`${clas.id_clasificacion_producto}`}
+                      value={`${clas.id_clasificacion_producto}`}>
                       {clas.nombre_clasificacion_producto}
                     </MenuItem>
                   })
@@ -227,8 +209,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Presentación'
               variant='standard'
               sx={{ width: '48%' }}
-              name='Presentation'
-              value={newItem.Presentation}
+              name='presentacion'
+              value={newItem.presentacion}
               onChange={handleChange}
             />
           </section>
@@ -239,8 +221,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                 label='Lote'
                 variant='standard'
                 fullWidth
-                name='lot'
-                value={newItem.lot}
+                name='lote'
+                value={newItem.lote}
                 onChange={handleChange}
               />
               <article className='inputDate'>
@@ -250,8 +232,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                   id='standard-basic'
                   variant='standard'
                   type='date'
-                  name='expDate'
-                  value={newItem.expDate}
+                  name='vencimiento'
+                  value={newItem.vencimiento}
                   onChange={handleChange}
                 />
               </article>
@@ -260,14 +242,14 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
-                  value={newItem.unit}
+                  value={newItem.id_unidad}
                   label='Unidad'
-                  name='unit'
+                  name='id_unidad'
                   onChange={handleChange}
                 >
                   {
                     units.map(unit => {
-                      return <MenuItem key={`${unit.id_unidad}`} value={`${unit.nombre_unidad}`}>
+                      return <MenuItem key={`${unit.id_unidad}`} value={`${unit.id_unidad}`}>
                         {unit.nombre_unidad}
                       </MenuItem>
                     })
@@ -294,15 +276,15 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                value={newItem.farmacehouse}
+                value={newItem.id_casa_farmaceutica}
                 label='Casa farmaceutica'
-                name='farmacehouse'
+                name='id_casa_farmaceutica'
                 onChange={handleChange}
               >
                 {
                   farmacehouses.map((farmacehouse) => {
                     return <MenuItem key={`${farmacehouse.id_casa_farmaceutica}`}
-                      value={`${farmacehouse.nombre_casa_farmaceutica}`} >
+                      value={`${farmacehouse.id_casa_farmaceutica}`} >
                       {farmacehouse.nombre_casa_farmaceutica}
                     </MenuItem>
                   })
@@ -314,8 +296,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Precio unitario'
               variant='standard'
               sx={{ width: '48%' }}
-              name='price'
-              value={newItem.price}
+              name='precio_unitario'
+              value={newItem.precio_unitario}
               onChange={handleChange}
             />
             <TextField
@@ -323,13 +305,13 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Existencias'
               variant='standard'
               sx={{ width: '48%' }}
-              name='quantity'
-              value={newItem.quantity}
+              name='existencias'
+              value={newItem.existencias}
               onChange={handleChange}
             />
           </section>
           <div className='itemsContainerFooter'>
-            <GeneralButton event={(e) => createItem(e)}>Editar</GeneralButton>
+            <GeneralButton event={(e) => updateItem(e)}>Editar</GeneralButton>
             <GeneralButton event={() => setModalIsOpen(false)}>Cancelar</GeneralButton>
           </div>
         </form>

@@ -13,6 +13,7 @@
     font-family: 'Montserrat';
     font-weight: 400;
     margin: 0 0.5rem;
+    position: relative;
 }
 
 .standCard>p {
@@ -109,4 +110,29 @@
     align-items: center;
     gap: 1rem;
     padding: 0.2rem 0;
+}
+
+/* estilo del botón para eliminar */
+
+.standDeleteBtn {
+    color: red;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.standDeleteBtn:hover{
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+    color: rgb(214, 1, 1);
+}
+
+.standDeleteBtn:active{
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    color: red;
 }

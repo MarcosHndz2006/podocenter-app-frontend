@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AiFillCodeSandboxCircle } from 'react-icons/ai';
 
 const API_BASE_URL = 'http://localhost:3000/api/shelves'; // Replace with your actual API base URL
 
@@ -31,6 +32,17 @@ export const getAllShelfs = async () => {
         return response.data
     } catch (error) {
         console.error("error fetching shelfs: ", error)
+        throw error
+    }
+}
+
+// Function to delete a shelf
+export const deleteShelf = async (id) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/${id}`)
+        return response
+    } catch (error) {
+        console.error("Error deleting shelf: ", error)
         throw error
     }
 }

@@ -13,12 +13,13 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { TiDelete } from "react-icons/ti";
 // Import de useState y useEffect
 import { useState, useEffect } from 'react';
-import { createStore, getAllStores } from '../../services/storeService';
+import { createStore, deleteStore, getAllStores } from '../../services/storeService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createShelf } from '../../services/shelfService';
+import { createShelf, deleteShelf } from '../../services/shelfService';
 
 function StandsComponent() {
   const username = localStorage.getItem('username').slice(1, -1);
@@ -134,6 +135,44 @@ function StandsComponent() {
     };
   }
 
+  /* Función para eliminar un almacén */
+  const deleteStorage = async (id) => {
+    try {
+      const result = await deleteStore(id);
+      toast.success('Almacen eliminado correctamente', {
+        position: 'top-center'
+      });
+
+      /* wait 3 seconds */
+      setTimeout(() => {
+        /* reload */
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error('Error eliminando el estante:', error);
+      toast.error('Error eliminando el estante');
+    };
+  }
+
+  // Función para eliminar un estante
+  const deleteOneShelf = async (id) => {
+    try {
+      const result = await deleteShelf(id);
+      toast.success('Almacen eliminado correctamente', {
+        position: 'top-center'
+      });
+
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error('Error eliminando el estante:', error);
+      toast.error('Error eliminando el estante');
+    };
+
+  }
+
   // Función para renderizar lista de almacenes
   const renderStorages = () => {
     return stores.map(str => {
@@ -154,6 +193,7 @@ function StandsComponent() {
 
     return (
       <section className='storesContainer'>
+        <TiDelete className='storeDeleteBtn' onClick={() => deleteStorage(element.storage.id_almacen)} />
         <h3>almacén {element.storage.nombre_almacen}</h3>
         <section className='standsContainer' id={element.storage.id_almacen}>
           <DefaultStand event={() => { setModalStandOpen(true) }} />
@@ -163,7 +203,9 @@ function StandsComponent() {
                 if (s.id_almacen == currentPage) {
                   return <StandCard key={s.id_estante} levels={s.niveles}
                     divisions={s.divisiones} name={s.nombre_estante}
-                    full={s.lleno} almacen={element.storage.nombre_almacen} />
+                    full={s.lleno} almacen={element.storage.nombre_almacen}
+                    id={s.id_estante}
+                    event={() => deleteOneShelf(s.id_estante)} />
                 }
               })
             })
@@ -181,7 +223,7 @@ function StandsComponent() {
       buttons.push(
         <PaginationButton
           key={index}
-          identifier={index + 1}
+          identifier={stores[index].storage.id_almacen}
           event={modifyCurrentPage}
           currentPage={currentPage}
         />

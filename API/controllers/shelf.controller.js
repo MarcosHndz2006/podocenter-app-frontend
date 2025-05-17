@@ -91,20 +91,29 @@ exports.updateShelf = async (req, res, next) => {
 exports.deleteShelf = async (req, res, next) => {
     try {
         const { id } = req.params;
+        let deleted
+        const products = await db('producto').where('id_estante', id).select('*')
 
-        const deleted = await db('estante').where('id_estante', id).del();
+        if (products.length == 0) {
 
-        if (!deleted) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'Shelf not found'
-            });
+            deleted = await db('estante').where('id_estante', id).del();
+            if (!deleted) {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'Shelf not found'
+                });
+            } else {
+                res.status(200).json({
+                    status: 'success',
+                    message: 'Shelf deleted successfully'
+                });
+            }
+
+        } else {
+            return res.status(400).json({ message: "Shelf contains products, can't delete" })
         }
 
-        res.status(200).json({
-            status: 'success',
-            message: 'Shelf deleted successfully'
-        });
+
     } catch (error) {
         next(error);
     }

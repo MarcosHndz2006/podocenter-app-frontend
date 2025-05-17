@@ -4,13 +4,20 @@ import './StandCard.css'
 import Modal from 'react-modal'
 import { useState } from 'react'
 import GeneralButton from '../GeneralButton/GeneralButton';
+import { TiDelete } from "react-icons/ti";
 
-function StandCard({ levels, divisions, name, full, almacen }) {
+function StandCard({ levels, divisions, name, full, almacen, event, id }) {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
+    /* función para enviar la confirmación de eliminación del estante */
+    const handleDelete = (e) => {
+        event(e.target.parentElement.id)
+    }
+
     return (
-        <div className='standCard'>
+        <div className='standCard' id={id}>
+            <TiDelete className='standDeleteBtn' onClick={handleDelete} />
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}

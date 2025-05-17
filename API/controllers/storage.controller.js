@@ -77,13 +77,24 @@ exports.updateStorage = async (req, res) => {
 // Delete a storage entry by ID
 exports.deleteStorage = async (req, res) => {
     const { idStorage } = req.params;
+
     try {
-        const result = await knex('almacen').where({ idStorage }).del();
-        if (result) {
-            res.json({ message: 'Storage deleted successfully' });
+        let result
+        const shelfs = await knex('estante').where('id_almacen', idStorage).select('*')
+
+        if (shelfs.length == 0) {
+            result = await knex('almacen').where('id_almacen', idStorage).del();
+
+            if (result) {
+                res.json({ message: 'Storage deleted successfully' });
+            } else {
+                res.status(404).json({ message: 'Storage not found' });
+            }
+
         } else {
-            res.status(404).json({ message: 'Storage not found' });
+            return res.status(400).json({ message: "The storage contains some shelfs" })
         }
+
     } catch (error) {
         res.status(500).json({ message: 'Error deleting storage', error });
     }

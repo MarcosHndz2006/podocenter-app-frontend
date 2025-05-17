@@ -87,3 +87,28 @@
     gap: 0.5rem;
 
 }
+
+/* estilo del botón para eliminar el almacen */
+
+.storeDeleteBtn {
+    color: red;
+    position: absolute;
+    right: 10px;
+    top: 60px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.storeDeleteBtn:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+    color: rgb(214, 1, 1);
+}
+
+.storeDeleteBtn:active {
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    color: red;
+}

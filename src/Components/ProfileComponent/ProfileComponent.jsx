@@ -12,13 +12,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
-import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 /* import de useState y useEffect */
 import { useState, useEffect } from 'react'
 import { getAllUsers, getUserById } from '../../services/userServices';
-import { createService, getAllServiceClasifications, getAllServices, getAllServiceSubclasification, getServicesByUserId } from '../../services/serviceService';
+import { createService, deleteService, getAllServiceClasifications, getAllServices, getAllServiceSubclasification, getServicesByUserId } from '../../services/serviceService';
 import { TextField } from '@mui/material';
-import { createSpace, getAllSpaces } from '../../services/spacesService';
+import { createSpace, deleteSpace, getAllSpaces } from '../../services/spacesService';
 import EndComponent from '../../Generics/EndComponent/EndComponent';
 
 function ProfileComponent() {
@@ -160,6 +160,7 @@ function ProfileComponent() {
                 subclasification={service.nombre_subclasificacion}
                 unit={service.unidad_servicio}
                 price={service.precio_unitario}
+                event={deleteOneService}
 
             />
         })
@@ -174,6 +175,7 @@ function ProfileComponent() {
                 description={`Unidad de servicio: ${space.unidad_servicio_espacio}`}
                 currentState={space.id_estado_espacio}
                 cost={space.costo_unidad_servicio_espacio}
+                event={deleteOneSpace}
             />
         })
     }
@@ -256,38 +258,104 @@ function ProfileComponent() {
 
     }
 
+    /* función para eliminar un servicio */
+    const deleteOneService = async (id) => {
+        try {
+            const result = await deleteService(id)
+            console.log(result)
+            toast.success('Servicio eliminado con éxito', {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            toast.error(`${error}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        }
+    }
+
     /* función para agregar un nuevo espacio */
     const addSpace = async () => {
         const result = await createSpace(space)
 
         if (result.data.message == "OK") {
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
+            toast.success('Espacio agregado con éxito', {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } else {
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
+            toast.success('No se puede agregar el espacio', {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+    }
+
+    /* función para eliminar un espacio */
+    const deleteOneSpace = async (id) => {
+        try {
+            const result = await deleteSpace(id)
+            console.log(result)
+            toast.success('Espacio eliminado con éxito', {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            toast.error(`${error}`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            }); 
+
         }
     }
 
@@ -328,7 +396,7 @@ function ProfileComponent() {
                         ) : (
                             <p>Cargando información del usuario...</p>
                         )}
-                    </article>
+                    </article>2
                 </div>
                 <div className='servicesContainer'>
                     <h4>Servicios agendados y solicitados</h4>
@@ -460,7 +528,7 @@ function ProfileComponent() {
                         contentLabel='Añadir nuevo espacio'
                         style={{
                             content: {
-                                width: '900px',
+                                width: '500px',
                                 margin: 'auto',
                                 padding: '0'
                             }

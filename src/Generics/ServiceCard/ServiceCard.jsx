@@ -5,20 +5,15 @@ import { GoFileDirectoryFill } from "react-icons/go";
 import { FaCircleUser } from "react-icons/fa6";
 import Modal from 'react-modal';
 import ListItemText from '@mui/material/ListItemText';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { updateServiceState } from '../../services/serviceService';
+import { TiDelete } from "react-icons/ti";
 /* import de useState */
 import { useState } from 'react'
 import GeneralButton from '../GeneralButton/GeneralButton';
 import EndComponent from '../EndComponent/EndComponent';
 
 function ServiceCard({ id, name, description, currentstate, username,
-    space, clasification, subclasification, unit, price }) {
+    space, clasification, subclasification, unit, price, event }) {
 
     /* sección de variables */
 
@@ -96,8 +91,13 @@ function ServiceCard({ id, name, description, currentstate, username,
         }
     }
 
+    const handleDelete = () => {
+        event(id)
+    }
+
     return (
         <div className={`serviceCardComponent ${serviceState()}`}>
+            <TiDelete className='serviceDeleteBtn' onClick={handleDelete}/>
             <GoFileDirectoryFill className='dirIcon' onClick={() => { setOpen(true) }} />
             <section className='contentSection'>
                 {(state == 3 || state == 4) ? '' : <div className='serviceCardBtns'>

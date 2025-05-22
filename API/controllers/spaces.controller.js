@@ -41,7 +41,7 @@ class SpacesController {
     async getSpaceById(req, res) {
         const { idSpaces } = req.params;
         try {
-            const space = await knex('espacio').where({ idSpaces }).first();
+            const space = await knex('espacio').where('id_espacio', idSpaces).first();
             if (space) {
                 res.json(space);
             } else {
@@ -68,18 +68,68 @@ class SpacesController {
         }
     }
 
+    // Update info space
+    async updateInfoSpace(req, res, next) {
+        const spaceInfo = req.body
+        const id = req.params.id
+
+        try {
+            const service = await knex('servicio').where('id_espacio', id).select('*')
+            let result
+            if (service.length != 0) {
+                if (spaceInfo.id_estado_espacio == 1 || spaceInfo.id_estado_espacio == 3) {
+                    return res.status(409)
+                        .json({ message: "No se puede actualizar el estado del espacio porque está siendo ocupado por un servicio" })
+                } else {
+                    result = await knex('espacio').where('id_espacio', id).update(spaceInfo)
+                    return res.status(200).json({ message: "OK, actualizado" })
+                }
+            } else {
+                result = await knex('espacio').where('id_espacio', id).update(spaceInfo)
+                return res.status(200).json({ message: "OK, actualizado" })
+            }
+        } catch (error) {
+            next(error)
+            return res.status(500).json({ message: "Falla del servidor", error: error })
+        }
+    }
+
     // Delete a space entry by ID
     async deleteSpace(req, res) {
         const { idSpaces } = req.params;
         try {
-            const result = await knex('espacio').where({ idSpaces }).del();
-            if (result) {
-                res.json({ message: 'Space deleted successfully' });
+
+            const service = await knex('servicio').where('id_espacio', idSpaces).select('*')
+
+            if (service.length == 0) {
+                const result = await knex('espacio').where('id_espacio', idSpaces).del();
+                console.log(result)
+                if (result) {
+                    res.status(200).json({ message: 'Space deleted successfully' });
+                } else {
+                    res.status(404).json({ message: 'Space not found' });
+                }
             } else {
-                res.status(404).json({ message: 'Space not found' });
+                return res.status(404).json({ message: "No se puede eliminar el espacio porque está siendo usado en un servicio" })
             }
         } catch (error) {
             res.status(500).json({ message: 'Error deleting space', error });
+        }
+    }
+
+    async getSpaceStates(req, res, next) {
+        try {
+            let states = await knex('estado_espacio').select('*')
+
+            if (states.length == 0) {
+                return res.status(404).json({ message: "Estados no encontrados" })
+            }
+
+            return res.status(200).json({ message: "Estados encontrados", data: states })
+
+        } catch (error) {
+            next(error)
+            return res.status(500).json({ message: "error in server", error: error })
         }
     }
 }

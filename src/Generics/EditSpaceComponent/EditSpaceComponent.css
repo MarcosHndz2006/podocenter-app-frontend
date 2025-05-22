@@ -1,0 +1,49 @@
+.editSpaceComponent {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.editSpaceComponent::-webkit-scrollbar {
+    display: none;
+}
+
+.editSpaceTitle {
+    background: #324d7e;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-size: 10pt;
+}
+
+.editSpaceTitle>h2 {
+    font-weight: 500;
+}
+
+.editSpaceForm {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding: 0 0.5rem 1rem 1rem;
+}
+
+.editSpaceForm > p{
+    font-family: 'Montserrat';
+}
+
+.editSpaceFooter {
+    width: 100%;
+    height: 8%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.2rem 0;
+}

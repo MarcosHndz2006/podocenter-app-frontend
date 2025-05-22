@@ -74,3 +74,14 @@ export const getAllServiceSubclasification = async () => {
         throw error
     }
 }
+
+// Function to delete a service
+export const deleteService = async (id) => {
+    try{
+        const response = await axios.delete(`${API_BASE_URL}/${id}`)
+        return response
+    }catch(error){
+        console.error("Error deleting service: ", error)
+        throw error
+    }
+}

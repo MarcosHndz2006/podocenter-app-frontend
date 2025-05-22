@@ -15,6 +15,7 @@
     padding: 0.5rem;
     box-shadow: 1px 1px 4px rgb(36, 36, 36);
     cursor: pointer;
+    position:relative;
 }
 
 /* estilos condicionados */
@@ -83,7 +84,32 @@
     transition: all 0.2s ease-in-out;
 }
 
-.spaceCardBtns>button:active{
+.spaceCardBtns>button:active {
     background: #283e66;
     transition: all 0.2s ease-in-out;
+}
+
+/* estilos del botón para eliminar */
+
+.spaceDeleteBtn {
+    color: red;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.spaceDeleteBtn:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+    color: rgb(214, 1, 1);
+}
+
+.spaceDeleteBtn:active {
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    color: red;
 }

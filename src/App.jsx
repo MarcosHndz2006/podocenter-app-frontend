@@ -9,6 +9,7 @@ import AddProvider from './Pages/AddProvider'
 import Profile from './Pages/Profile'
 import Buys from './Pages/Buys'
 import EditProvider from './Pages/EditProvider'
+import EditSpace from './Pages/EditSpace'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="podocenter/profile/my" element={<Profile/>}/>
         <Route path="podocenter/buys" element={<Buys/>}/>
         <Route path="podocenter/provider/edit/:identifier" element={<EditProvider/>}/>
+        <Route path="podocenter/space/edit/:identifier" element={<EditSpace/>}/>
       </Routes>
     </BrowserRouter>
   )

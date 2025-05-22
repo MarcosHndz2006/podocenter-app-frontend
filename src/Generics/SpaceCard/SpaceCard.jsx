@@ -1,8 +1,6 @@
 /* import de archivo .css */
 import './SpaceCard.css'
 /* imports de componentes o reutilizables */
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Modal from 'react-modal'
 /* import de useState */
 import { useState } from 'react'
@@ -10,10 +8,15 @@ import { updateSpaceState } from '../../services/spacesService';
 import EndComponent from '../EndComponent/EndComponent';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import ListItemText from '@mui/material/ListItemText';
+import { TiDelete } from "react-icons/ti";
+import { useNavigate } from 'react-router-dom';
 
-function SpaceCard({ id, name, description, currentState, cost }) {
+function SpaceCard({ id, name, description, currentState, cost, event }) {
 
     /* sección de variables */
+
+    /* variable de navegación */
+    const navigate = useNavigate()
 
     /* variable de estado usada para mostrar el estado de un espacio */
     const [state, setState] = useState(currentState)
@@ -50,14 +53,12 @@ function SpaceCard({ id, name, description, currentState, cost }) {
     const free = async () => {
         setState(1)
         const response = await updateSpaceState(id, 1)
-        console.log(response)
     }
 
     /* función para reservar el espacio */
     const reserve = async () => {
         setState(2)
         const response = await updateSpaceState(id, 2)
-        console.log(response)
     }
 
     /* función para inhabilitar el espacio */
@@ -67,8 +68,19 @@ function SpaceCard({ id, name, description, currentState, cost }) {
         console.log(response)
     }
 
+    /* función para confirmar la eliminación */
+    const handleDelete = () => {
+        event(id)
+    }
+
+    /* función para ir a la pagina de edición de espacio */
+    const editSpace = (identifier) => {
+        navigate(`/podocenter/space/edit/${identifier}`)
+    }
+
     return (
         <div className={`spaceCardComponent ${spaceState()} `}>
+            <TiDelete className='spaceDeleteBtn' onClick={handleDelete} />
             <div className='spaceCardBtns'>
                 {(state == 1) ? "" : <button onClick={free}>Liberar</button>}
                 {(state == 2) ? "" : <button onClick={reserve}>Reservar</button>}
@@ -100,7 +112,7 @@ function SpaceCard({ id, name, description, currentState, cost }) {
                     <ListItemText primary={`Estado actual: ${renderState()}`} />
                 </form>
                 <div className='btnsFooter'>
-                    <GeneralButton event={() => setOpenSpace(false)}>Editar</GeneralButton>
+                    <GeneralButton event={() => { editSpace(id) }}>Editar</GeneralButton>
                 </div>
                 <EndComponent />
             </Modal>

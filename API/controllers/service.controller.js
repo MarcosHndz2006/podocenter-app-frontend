@@ -63,6 +63,9 @@ exports.createService = async (req, res, next) => {
                 id_estado: 1
             })
 
+        /* cambiando el estado del espacio ocupado por el nuevo servicio */
+        const spaceOccupied = await db('espacio').where('id_espacio', serviceData.id_espacio).update('id_estado_espacio', 2)
+
         if (!result) {
             return res.status(404).json({ message: "failed in create service" })
         }

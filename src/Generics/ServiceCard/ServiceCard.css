@@ -167,3 +167,27 @@
 .userAssignedInfo>article>p {
     margin: 2px 0;
 }
+
+/* estilos del botón de eliminar */
+.serviceDeleteBtn {
+    color: red;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.serviceDeleteBtn:hover{
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+    color: rgb(214, 1, 1);
+}
+
+.serviceDeleteBtn:active{
+    transform: scale(1);
+    transition: all 0.2s ease-in-out;
+    color: red;
+}

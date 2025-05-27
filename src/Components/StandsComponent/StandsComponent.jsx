@@ -149,8 +149,8 @@ function StandsComponent() {
         window.location.reload();
       }, 1000);
     } catch (error) {
-      console.error('Error eliminando el estante:', error);
-      toast.error('Error eliminando el estante');
+      console.error('Error eliminando el almacén:', error);
+      toast.error(`Error: ${error.response.data.message}`);
     };
   }
 
@@ -158,7 +158,7 @@ function StandsComponent() {
   const deleteOneShelf = async (id) => {
     try {
       const result = await deleteShelf(id);
-      toast.success('Almacen eliminado correctamente', {
+      toast.success('Estante eliminado correctamente', {
         position: 'top-center'
       });
 
@@ -168,7 +168,7 @@ function StandsComponent() {
       }, 1000);
     } catch (error) {
       console.error('Error eliminando el estante:', error);
-      toast.error('Error eliminando el estante');
+      toast.error(`Error eliminando el estante: ${error.response.data.message}`);
     };
 
   }

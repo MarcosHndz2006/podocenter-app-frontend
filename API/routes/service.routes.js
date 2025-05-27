@@ -9,6 +9,7 @@ router.get('/subclasifications', serviceController.getServiceSubclasifications)
 router.get('/', serviceController.getAllServices);
 router.post('/', serviceController.createService);
 router.put('/update', serviceController.updateService);
+router.post('/updateService/:identifier', serviceController.updateInfoService)
 router.get('/:id', serviceController.getServiceById);
 router.delete('/:id', serviceController.deleteService);
 router.get('/user/:userId', serviceController.getServicesByUserId);

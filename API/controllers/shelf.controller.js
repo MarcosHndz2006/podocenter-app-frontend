@@ -110,7 +110,7 @@ exports.deleteShelf = async (req, res, next) => {
             }
 
         } else {
-            return res.status(400).json({ message: "Shelf contains products, can't delete" })
+            return res.status(400).json({ message: "No se puede eliminar el estante, contiene productos" })
         }
 
 

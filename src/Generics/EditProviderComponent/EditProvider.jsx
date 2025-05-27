@@ -98,7 +98,6 @@ function EditProvider() {
     return (
         /* Componente para agregar un nuevo proveedor */
         <div className='editProviderComponent'>
-            <ToastContainer />
             <div className='editProviderTitle'>
                 <h2>Agregar proveedor</h2>
             </div>

@@ -77,11 +77,34 @@ export const getAllServiceSubclasification = async () => {
 
 // Function to delete a service
 export const deleteService = async (id) => {
-    try{
+    try {
         const response = await axios.delete(`${API_BASE_URL}/${id}`)
         return response
-    }catch(error){
+    } catch (error) {
         console.error("Error deleting service: ", error)
+        throw error
+    }
+}
+
+// Function to get a service by id
+export const getServiceById = async (id) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/${id}`)
+        return response.data
+    } catch (error) {
+        console.error("Error fetching service by id: ", error)
+        throw error
+    }
+}
+
+export const updateServiceInfo = async (identifier, serviceInfo) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/updateService/${identifier}`
+            , serviceInfo, { headers: { 'Content-Type': 'application/json' } }
+        )
+        return response
+    } catch (error) {
+        console.error("Error updating service info: ", error)
         throw error
     }
 }

@@ -12,7 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /* import de useState y useEffect */
 import { useState, useEffect } from 'react'
 import { getAllUsers, getUserById } from '../../services/userServices';
@@ -225,36 +226,16 @@ function ProfileComponent() {
     /* función para agregar un nuevo servicio */
     const addService = async () => {
         const result = await createService(service)
+        try {
+            toast.success('Servicio añadido con éxito');
 
-        if (result.data.message == "OK") {
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
-        } else {
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            toast.error(`Error: ${error.response.data.message}`);
         }
+
 
     }
 
@@ -262,32 +243,13 @@ function ProfileComponent() {
     const deleteOneService = async (id) => {
         try {
             const result = await deleteService(id)
-            console.log(result)
-            toast.success('Servicio eliminado con éxito', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined
-            });
+            toast.success('Servicio eliminado con éxito');
 
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
         } catch (error) {
-            toast.error(`${error}`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            });
+            toast.error(`Error: ${error}`);
         }
     }
 
@@ -296,29 +258,13 @@ function ProfileComponent() {
         const result = await createSpace(space)
 
         if (result.data.message == "OK") {
-            toast.success('Espacio agregado con éxito', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined
-            });
+            toast.success('Espacio agregado con éxito');
 
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
         } else {
-            toast.success('No se puede agregar el espacio', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined
-            });
+            toast.error('No se puede agregar el espacio');
 
             setTimeout(() => {
                 window.location.reload();
@@ -330,31 +276,13 @@ function ProfileComponent() {
     const deleteOneSpace = async (id) => {
         try {
             const result = await deleteSpace(id)
-            console.log(result)
-            toast.success('Espacio eliminado con éxito', {
-                position: 'top-center',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined
-            });
+            toast.success('Espacio eliminado con éxito');
 
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
         } catch (error) {
-            toast.error(`${error}`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            }); 
+            toast.error(`Error: ${error.response.data.message}`);
 
         }
     }
@@ -396,7 +324,7 @@ function ProfileComponent() {
                         ) : (
                             <p>Cargando información del usuario...</p>
                         )}
-                    </article>2
+                    </article>
                 </div>
                 <div className='servicesContainer'>
                     <h4>Servicios agendados y solicitados</h4>
@@ -565,6 +493,7 @@ function ProfileComponent() {
                     </Modal>
                 </div>}
             </section>
+            <ToastContainer />
         </div>
     )
 }

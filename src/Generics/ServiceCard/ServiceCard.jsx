@@ -11,11 +11,15 @@ import { TiDelete } from "react-icons/ti";
 import { useState } from 'react'
 import GeneralButton from '../GeneralButton/GeneralButton';
 import EndComponent from '../EndComponent/EndComponent';
+import { useNavigate } from 'react-router-dom'
 
 function ServiceCard({ id, name, description, currentstate, username,
     space, clasification, subclasification, unit, price, event }) {
 
     /* sección de variables */
+
+    /* variable de navegación */
+    const navigate = useNavigate()
 
     /* variable de estado para mostrar si el servicio ya ha sido
     brindado o no, si ha sido reagendado o cancelado*/
@@ -91,13 +95,19 @@ function ServiceCard({ id, name, description, currentstate, username,
         }
     }
 
+    /* función para confirmar la eliminación del servicio */
     const handleDelete = () => {
         event(id)
     }
 
+    /* función para redireccionar a la edición de servicio */
+    const editService = (identifier) => {
+        navigate(`/podocenter/service/edit/${identifier}`)
+    }
+
     return (
         <div className={`serviceCardComponent ${serviceState()}`}>
-            <TiDelete className='serviceDeleteBtn' onClick={handleDelete}/>
+            <TiDelete className='serviceDeleteBtn' onClick={handleDelete} />
             <GoFileDirectoryFill className='dirIcon' onClick={() => { setOpen(true) }} />
             <section className='contentSection'>
                 {(state == 3 || state == 4) ? '' : <div className='serviceCardBtns'>
@@ -140,9 +150,9 @@ function ServiceCard({ id, name, description, currentstate, username,
                     <ListItemText primary={`Estado actual del servicio: ${renderState()}`} />
                 </form>
                 <div className='btnsFooter'>
-                    <GeneralButton event={() => setOpen(false)}>Editar</GeneralButton>
+                    <GeneralButton event={() => { editService(id) }}>Editar</GeneralButton>
                 </div>
-                <EndComponent/>
+                <EndComponent />
             </Modal>
             {/* <Dialog
                 open={open}

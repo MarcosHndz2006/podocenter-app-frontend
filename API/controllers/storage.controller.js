@@ -92,7 +92,7 @@ exports.deleteStorage = async (req, res) => {
             }
 
         } else {
-            return res.status(400).json({ message: "The storage contains some shelfs" })
+            return res.status(400).json({ message: "El almacén contiene estantes en uso" })
         }
 
     } catch (error) {

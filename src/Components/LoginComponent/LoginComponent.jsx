@@ -3,7 +3,6 @@ import Logo from '../../assets/img/logo podocenter.png'
 import officer from '../../assets/img/policia.png'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react';
 import { authUser } from '../../services/userServices';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,39 +19,20 @@ function LoginComponent() {
     const redirect = async () => {
 
         const user = await authUser(username, password)
-        console.log(user.data[0].id_rol)
-        if (user.length != 0) {
 
+        try {
+            console.log(user)
             localStorage.setItem('userid', JSON.stringify(user.data[0].id_usuario));
             localStorage.setItem('username', JSON.stringify(user.data[0].username));
             localStorage.setItem('rolid', JSON.stringify(user.data[0].id_rol));
 
             navigate('/podocenter/home')
+            toast.success('acceso exitoso');
 
-            toast.success('acceso exitoso', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            })
-
-        } else {
-
-            toast.error('Usuario o contraseña incorrectos', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+        } catch (error) {
+            console.log(user)
+            toast.error(`Error: ${error.response.data.message}`);
         }
-
     }
 
     return (

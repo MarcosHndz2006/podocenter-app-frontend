@@ -94,7 +94,8 @@ function ProfileComponent() {
                     setServices(servicesData.data.data)
                 } else {
                     servicesData = await getServicesByUserId(userid);
-                    setServices(servicesData.data.data);
+                    console.log(servicesData.data)
+                    setServices(servicesData.data);
                 }
             } catch (error) {
                 console.error('Error fetching services:', error);
@@ -177,6 +178,7 @@ function ProfileComponent() {
                 currentState={space.id_estado_espacio}
                 cost={space.costo_unidad_servicio_espacio}
                 event={deleteOneSpace}
+                rolUser={user.id_rol}
             />
         })
     }

@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { TiDelete } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
 
-function SpaceCard({ id, name, description, currentState, cost, event }) {
+function SpaceCard({ id, name, description, currentState, cost, event, rolUser }) {
 
     /* sección de variables */
 
@@ -78,15 +78,27 @@ function SpaceCard({ id, name, description, currentState, cost, event }) {
         navigate(`/podocenter/space/edit/${identifier}`)
     }
 
+    /* función para renderizar componentes en base al rol del usuario */
+    const userRolRender = () => {
+        switch (rolUser) {
+            case 1: {
+                return true
+            }
+            default: {
+                return ''
+            }
+        }
+    }
+
     return (
         <div className={`spaceCardComponent ${spaceState()} `}>
-            <TiDelete className='spaceDeleteBtn' onClick={handleDelete} />
-            <div className='spaceCardBtns'>
+            {userRolRender() && <TiDelete className='spaceDeleteBtn' onClick={handleDelete} />}
+            {userRolRender() && <div className='spaceCardBtns'>
                 {(state == 1) ? "" : <button onClick={free}>Liberar</button>}
                 {(state == 2) ? "" : <button onClick={reserve}>Reservar</button>}
                 {(state == 3) ? "" : <button onClick={outService}>Inhabilitar</button>}
                 <button onClick={() => setOpenSpace(true)}>Información</button>
-            </div>
+            </div>}
             <p>{name}</p>
             <p>{description}</p>
             <p>{spaceState()}</p>
@@ -111,9 +123,9 @@ function SpaceCard({ id, name, description, currentState, cost, event }) {
                     <ListItemText primary={`Costo por unidad de servicio: ${cost}`} />
                     <ListItemText primary={`Estado actual: ${renderState()}`} />
                 </form>
-                <div className='btnsFooter'>
+                {userRolRender() && <div className='btnsFooter'>
                     <GeneralButton event={() => { editSpace(id) }}>Editar</GeneralButton>
-                </div>
+                </div>}
                 <EndComponent />
             </Modal>
         </div>

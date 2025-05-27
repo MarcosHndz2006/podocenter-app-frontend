@@ -20,8 +20,7 @@ exports.authUser = async (req, res, next) => {
 
         if (!user || user.length == 0) {
             return res.status(404).json({
-                data: [],
-                message: "not found"
+                message: "Usuario no encontrado, revise que colocó bien sus credenciales"
             })
         } else {
             return res.status(200).json({
@@ -64,7 +63,7 @@ exports.getUserById = async (req, res, next) => {
         const user = await db('usuario')
             .join('rol', 'usuario.id_rol', 'rol.id_rol')
             .where('id_usuario', id)
-            .select('usuario.*', 'rol.*' )
+            .select('usuario.*', 'rol.*')
             .first();
 
         if (!user) {

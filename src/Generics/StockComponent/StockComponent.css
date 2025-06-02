@@ -1,0 +1,24 @@
+/* estilos del component */
+.stockComponent {
+    width: 275px;
+    height: auto;
+}
+
+.void{
+    background: rgb(96, 96, 96);
+}
+
+/* estilos del ícono de producto */
+.productIcon {
+    width: 50px;
+    height: 60px;
+    color: #324d7e;
+}
+
+.productTitleSpace {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0 0;
+}

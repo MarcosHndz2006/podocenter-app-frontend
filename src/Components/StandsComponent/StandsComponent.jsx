@@ -20,6 +20,7 @@ import { createStore, deleteStore, getAllStores } from '../../services/storeServ
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createShelf, deleteShelf } from '../../services/shelfService';
+import Pagination from '@mui/material/Pagination';
 
 function StandsComponent() {
   const username = localStorage.getItem('username').slice(1, -1);
@@ -185,7 +186,9 @@ function StandsComponent() {
 
   // Función para renderizar almacenes
   const renderStores = () => {
-    const element = stores.find((str) => (str.storage.id_almacen == currentPage ? str.storage : false));
+    const arrayPosition = currentPage - 1
+    console.log(stores[arrayPosition])
+    const element = stores[arrayPosition];
 
     if (!element) {
       return <p>No se encontraron almacenes.</p>;
@@ -200,7 +203,7 @@ function StandsComponent() {
           {
             shelfs.map(shelf => {
               return shelf.map(s => {
-                if (s.id_almacen == currentPage) {
+                if (element.storage.nombre_almacen == s.nombre_estante.slice(0, 1)) {
                   return <StandCard key={s.id_estante} levels={s.niveles}
                     divisions={s.divisiones} name={s.nombre_estante}
                     full={s.lleno} almacen={element.storage.nombre_almacen}
@@ -215,27 +218,27 @@ function StandsComponent() {
     );
   };
 
-  // Función para renderizar los botones de paginación
-  const renderPaginationButtons = () => {
-    let buttons = [];
-
-    for (let index = 0; index < stores.length; index++) {
-      buttons.push(
-        <PaginationButton
-          key={index}
-          identifier={stores[index].storage.id_almacen}
-          event={modifyCurrentPage}
-          currentPage={currentPage}
-        />
-      );
-    }
-
-    return buttons;
-  };
+  /*   // Función para renderizar los botones de paginación
+    const renderPaginationButtons = () => {
+      let buttons = [];
+  
+      for (let index = 0; index < stores.length; index++) {
+        buttons.push(
+          <PaginationButton
+            key={index}
+            identifier={stores[index].storage.id_almacen}
+            event={modifyCurrentPage}
+            currentPage={currentPage}
+          />
+        );
+      }
+  
+      return buttons;
+    }; */
 
   // Función para modificar la página actual y mostrar el almacén en base a la página en la que nos encontramos
-  const modifyCurrentPage = (id) => {
-    setCurrentPage(id);
+  const modifyCurrentPage = (e, value) => {
+    setCurrentPage(value);
     setShelfs([])
   };
 
@@ -248,7 +251,10 @@ function StandsComponent() {
         {renderStores()}
         <section className='btnsPaginationContainer'>
           <DefaultStore event={() => setModalIsOpen(true)} />
-          <div className='pagesButtons'>{renderPaginationButtons()}</div>
+          <div className='pagesButtons'>
+            <Pagination count={stores.length} size="large"
+              onChange={modifyCurrentPage} variant="outlined" shape="rounded"/>
+          </div>
         </section>
       </div>
       <Modal

@@ -13,8 +13,24 @@
     border-top: 0;
     border-left: 0;
     border-right: 0;
-    padding: 0.4rem 0;
+    padding: 0.4rem 0.4rem;
     position: relative;
+}
+
+/* estilo de los párrafos de renderización */
+
+i {
+    color: rgb(108, 108, 108);
+}
+
+/* estilo del item cuando no hay existencias */
+
+.vacio {
+    background: rgb(249, 74, 74);
+}
+
+.caution{
+    background: rgb(245, 180, 58)
 }
 
 /* estilo de la imagen por defecto */
@@ -26,6 +42,7 @@
     left: 5px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    margin: 0 0 0 5px;
 }
 
 .dots:hover {
@@ -79,21 +96,27 @@
     40% {
         transform: scale(1.04);
     }
+
     50% {
         transform: scale(1.05);
     }
+
     60% {
         transform: scale(1.04);
     }
+
     70% {
         transform: scale(1.03);
     }
+
     80% {
         transform: scale(1.02);
     }
+
     90% {
         transform: scale(1.01);
     }
+
     100% {
         transform: scale(1);
     }

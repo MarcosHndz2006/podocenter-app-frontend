@@ -6,13 +6,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
+import { Pagination } from '@mui/material';
 import Modal from 'react-modal';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import box from '../../assets/img/open-box.png';
 import vacio from '../../assets/img/conjunto-vacio.png';
 import InventoryItem from '../../Generics/InventoryItem/InventoryItem';
-import arrow from '../../assets/img/right-arrow.png';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NoneResults from '../../Generics/NoneResults/NoneResults';
@@ -38,7 +38,6 @@ function InventoryComponent() {
 
   /* variable usada para almacenar los proveedores provenientes de la api */
   const [providers, setProviders] = useState([]);
-  const [age, setAge] = useState('');
 
   /* variable usada para abrir el modal para agregar un item de inventario */
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -92,6 +91,9 @@ function InventoryComponent() {
     farmacehouse: '',
     price: ''
   });
+
+  // variable de estado para almacenar el valor de la página actual
+  const [page, setPage] = useState(1)
 
   /* sección de funciones */
 
@@ -219,7 +221,7 @@ function InventoryComponent() {
       setTimeout(() => {
         /* reload */
         window.location.reload();
-      }, 3000);
+      }, 500);
 
       setItems((prevItems) => [...prevItems, newItem]);
     } catch (error) {
@@ -313,7 +315,12 @@ function InventoryComponent() {
     if (filteredItems.length === 0) {
       return <NoneResults />;
     } else {
-      return filteredItems.map((item) => (
+      const initialIndex = page * 13 - 13
+      const finalIndex = page * 13
+      console.log(initialIndex)
+      const toRenderItems = filteredItems.slice(initialIndex, finalIndex)
+
+      return toRenderItems.map((item) => (
         <InventoryItem
           key={`${item.id_producto}`}
           id={item.id_producto}
@@ -321,11 +328,14 @@ function InventoryComponent() {
           component={item.componente_principal}
           secondaryComponent={item.componente_secundario}
           clasification={item.nombre_clasificacion_producto}
+          clasificationId={item.id_clasificacion_producto}
           Presentation={item.presentacion}
           lot={item.lote}
           expDate={item.vencimiento}
           house={item.nombre_casa_farmaceutica}
+          houseId={item.id_casa_farmaceutica}
           unit={item.nombre_unidad}
+          unitId={item.id_unidad}
           price={item.precio_unitario}
           onDelete={handleDelete}
           units={units}
@@ -404,14 +414,23 @@ function InventoryComponent() {
     navigate('/podocenter/stands');
   };
 
+  /* función para navegar a editar proveedor */
   const editProvider = (identifier) => {
     navigate(`/podocenter/provider/edit/${identifier}`)
   }
 
+  /* función para obtener el valor de paginación */
+  const paginationHandle = (e, value) => {
+    setPage(value)
+  }
+
+  /* función para retornar el tamaño de los botones de paginación */
+  const paginationSize = () => {
+    return Math.ceil(items.length / 13)
+  }
+
   return (
     <div className='inventoryComponent'>
-      <img src={arrow} alt='normal arrow' className='rightArrow' />
-      <img src={arrow} alt='normal arrow' className='leftArrow' />
       <HeaderGeneric username={username} route='/podocenter/home'>
         Inventory
       </HeaderGeneric>
@@ -517,6 +536,7 @@ function InventoryComponent() {
           <div className='itemsContainerHeader'>{renderTitles()}</div>
           <div className='itemsContainerElements'>{renderItems()}</div>
           <div className='itemsContainerFooter'>
+            <Pagination count={paginationSize()} size="large" onChange={paginationHandle} />
             <GeneralButton event={() => setModalIsOpen(true)}>Nuevo ítem</GeneralButton>
             <GeneralButton event={() => setProviderModalIsOpen(true)}>Proveedores</GeneralButton>
             <GeneralButton event={stores}>Almacenes</GeneralButton>
@@ -750,6 +770,7 @@ function InventoryComponent() {
           </form>
         </Modal>
       </div>
+      <ToastContainer />
     </div>
   );
 }

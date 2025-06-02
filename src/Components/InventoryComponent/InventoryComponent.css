@@ -62,7 +62,7 @@
     background: white;
     border: none;
     border-radius: 5px;
-    padding: 0 0.2rem;
+    padding: 0;
 }
 
 /* estilos del encabezado del contenedor de ítems de inventario */
@@ -212,59 +212,6 @@
 
 .treeDiv::-webkit-scrollbar {
     display: none;
-}
-
-/* estilo de los botones de paginación */
-
-.rightArrow {
-    border: 1px solid #324d7e;
-    border-radius: 100%;
-    background: white;
-    height: 35px;
-    width: 35px;
-    position: absolute;
-    top: 44%;
-    right: 10px;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-.rightArrow:hover {
-    transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
-}
-
-.rightArrow:active {
-    background: gray;
-    transition: all 0.2s ease-in-out;
-}
-
-.leftArrow {
-    border: 1px solid #324d7e;
-    border-radius: 100%;
-    background: white;
-    height: 35px;
-    width: 35px;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    margin: 0;
-    padding: 0;
-    transform: rotate(180deg);
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-.leftArrow:hover {
-    transform: scale(1.05) rotate(180deg);
-    transition: all 0.2s ease-in-out;
-}
-
-.leftArrow:active {
-    background: gray;
-    transition: all 0.2s ease-in-out;
 }
 
 .editProviderBtn {

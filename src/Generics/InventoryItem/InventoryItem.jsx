@@ -16,18 +16,17 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import box from '../../assets/img/open-box.png';
-import vacio from '../../assets/img/conjunto-vacio.png';
 import { CiCircleCheck } from "react-icons/ci";
 import { GoAlert } from "react-icons/go";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import { deleteInventoryItem, createInventoryItem, updateInventoryItem } from '../../services/inventoryService';
+import { updateInventoryItem } from '../../services/inventoryService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function InventoryItem({ id, name, component, secondaryComponent, clasification,
   Presentation, lot, expDate, house, unit, price, onDelete, units, clasifications,
-  farmacehouses, quantity }) {
+  farmacehouses, quantity, clasificationId, houseId, unitId }) {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -38,12 +37,12 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
     nombre_comercial: name,
     componente_principal: component,
     componente_secundario: secondaryComponent,
-    id_clasificacion_producto: clasification,
+    id_clasificacion_producto: clasificationId,
     presentacion: Presentation,
     lote: lot,
     vencimiento: expDate,
-    id_unidad: unit,
-    id_casa_farmaceutica: house,
+    id_unidad: unitId,
+    id_casa_farmaceutica: houseId,
     precio_unitario: price,
     existencias: quantity
   });
@@ -92,7 +91,7 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
       setModalIsOpen(false);
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 500);
 
     } catch (error) {
       console.error('Error creating item:', error);
@@ -108,8 +107,14 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
     }
   };
 
+  /* función para alterar el color del ítem de inventario en base 
+  a la cantidad de existencias disponibles */
+  const renderAvailability = () => {
+    return (quantity == 0) ? 'vacio' : (quantity <= 20) ? 'caution' : ''
+  }
+
   return (
-    <div className='inventoryItemComponent'>
+    <div className={`inventoryItemComponent ${renderAvailability()}`}>
       <img src={list} alt='botones de despliegue de opciones' className='dots' onClick={handleClickOpen} />
       <Dialog
         fullScreen={fullScreen}
@@ -132,9 +137,9 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
       </Dialog>
       <p>{name}</p>
       <p>{component}</p>
-      <p>{secondaryComponent}</p>
+      <p>{secondaryComponent || <i>no registrado</i>}</p>
       <p>{clasification}</p>
-      <p>{expDate}</p>
+      <p>{expDate || <i>no registrada</i>}</p>
       <p>{house}</p>
       <p>{unit}</p>
       <p>$ {price}</p>
@@ -316,6 +321,7 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
           </div>
         </form>
       </Modal>
+      <ToastContainer />
     </div>
   );
 }

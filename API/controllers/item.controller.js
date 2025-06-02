@@ -101,7 +101,20 @@ exports.updateItem = async (req, res, next) => {
     try {
         const itemData = req.body;
         console.log(itemData)
-        const updated = await db('producto').where('id_producto', itemData.id_producto).update(itemData);
+        const updated = await db('producto').where('id_producto', itemData.id_producto).update({
+            id_producto: itemData.id_producto,
+            nombre_comercial: itemData.nombre_comercial,
+            componente_principal: itemData.componente_principal,
+            componente_secundario: itemData.componente_secundario,
+            id_clasificacion_producto: itemData.id_clasificacion_producto,
+            presentacion: itemData.presentacion,
+            lote: itemData.lote,
+            vencimiento: itemData.vencimiento,
+            id_unidad: itemData.id_unidad,
+            id_casa_farmaceutica: itemData.id_casa_farmaceutica,
+            precio_unitario: itemData.precio_unitario,
+            existencias: itemData.existencias
+        });
 
         if (!updated) {
             return res.status(404).json({

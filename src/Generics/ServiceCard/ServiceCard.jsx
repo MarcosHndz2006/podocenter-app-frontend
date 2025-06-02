@@ -154,28 +154,6 @@ function ServiceCard({ id, name, description, currentstate, username,
                 </div>
                 <EndComponent />
             </Modal>
-            {/* <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"¿Desea modificar el servicio?"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Seleccione una opción
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={reprogram}>Reprogramar</Button>
-                    <Button onClick={close}>
-                        Finalizar
-                    </Button>
-                    <Button onClick={cancel}>Cancelar</Button>
-                </DialogActions>
-            </Dialog> */}
         </div>
     )
 }

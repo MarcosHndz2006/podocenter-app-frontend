@@ -2,9 +2,9 @@
 const db = require('../db/connection');
 
 // Get all shelves
-exports.getAllShelves = async(req, res, next) => {
+exports.getAllShelves = async (req, res, next) => {
     try {
-        const shelves = await db('shelf').select('*');
+        const shelves = await db('estante').select('*');
         res.status(200).json({
             status: 'success',
             data: shelves
@@ -15,10 +15,10 @@ exports.getAllShelves = async(req, res, next) => {
 };
 
 // Get a single shelf by ID
-exports.getShelfById = async(req, res, next) => {
+exports.getShelfById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const shelf = await db('shelf').where('idShelf', id).first();
+        const shelf = await db('estante').where('id_estante', id).first();
 
         if (!shelf) {
             return res.status(404).json({
@@ -37,20 +37,20 @@ exports.getShelfById = async(req, res, next) => {
 };
 
 // Create a new shelf
-exports.createShelf = async(req, res, next) => {
+exports.createShelf = async (req, res, next) => {
     try {
         const shelfData = req.body;
 
         // Validate required fields
-        if (!shelfData.name || !shelfData.levelsNumber) {
+        if (!shelfData.nombre_estante || !shelfData.niveles) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Shelf name and levels number are required'
             });
         }
 
-        const [id] = await db('shelf').insert(shelfData);
-        const newShelf = await db('shelf').where('idShelf', id).first();
+        const [id] = await db('estante').insert(shelfData);
+        const newShelf = await db('estante').where('id_estante', id);
 
         res.status(201).json({
             status: 'success',
@@ -62,12 +62,12 @@ exports.createShelf = async(req, res, next) => {
 };
 
 // Update a shelf
-exports.updateShelf = async(req, res, next) => {
+exports.updateShelf = async (req, res, next) => {
     try {
         const { id } = req.params;
         const shelfData = req.body;
 
-        const updated = await db('shelf').where('idShelf', id).update(shelfData);
+        const updated = await db('estante').where('id_estante', id).update(shelfData);
 
         if (!updated) {
             return res.status(404).json({
@@ -76,7 +76,7 @@ exports.updateShelf = async(req, res, next) => {
             });
         }
 
-        const updatedShelf = await db('shelf').where('idShelf', id).first();
+        const updatedShelf = await db('estante').where('id_estante', id).first();
 
         res.status(200).json({
             status: 'success',
@@ -88,33 +88,42 @@ exports.updateShelf = async(req, res, next) => {
 };
 
 // Delete a shelf
-exports.deleteShelf = async(req, res, next) => {
+exports.deleteShelf = async (req, res, next) => {
     try {
         const { id } = req.params;
+        let deleted
+        const products = await db('producto').where('id_estante', id).select('*')
 
-        const deleted = await db('shelf').where('idShelf', id).del();
+        if (products.length == 0) {
 
-        if (!deleted) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'Shelf not found'
-            });
+            deleted = await db('estante').where('id_estante', id).del();
+            if (!deleted) {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'Shelf not found'
+                });
+            } else {
+                res.status(200).json({
+                    status: 'success',
+                    message: 'Shelf deleted successfully'
+                });
+            }
+
+        } else {
+            return res.status(400).json({ message: "No se puede eliminar el estante, contiene productos" })
         }
 
-        res.status(200).json({
-            status: 'success',
-            message: 'Shelf deleted successfully'
-        });
+
     } catch (error) {
         next(error);
     }
 };
 
 // Get shelves by storage ID
-exports.getShelvesByStorageId = async(req, res, next) => {
+exports.getShelvesByStorageId = async (req, res, next) => {
     try {
         const { storageId } = req.params;
-        const shelves = await db('shelf').where('idStorage', storageId).select('*');
+        const shelves = await db('estante').where('id_almacen', storageId).select('*');
 
         res.status(200).json({
             status: 'success',
@@ -126,9 +135,9 @@ exports.getShelvesByStorageId = async(req, res, next) => {
 };
 
 // Get available shelves (not full)
-exports.getAvailableShelves = async(req, res, next) => {
+exports.getAvailableShelves = async (req, res, next) => {
     try {
-        const shelves = await db('shelf').where('full', 0).select('*');
+        const shelves = await db('estante').where('full', 0).select('*');
 
         res.status(200).json({
             status: 'success',

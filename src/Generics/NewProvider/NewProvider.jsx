@@ -13,16 +13,17 @@ import 'react-toastify/dist/ReactToastify.css';
 function NewProvider() {
     // Sección de variables de estado y navegación del componente
     const [provider, setProvider] = useState({
-        name: '',
-        address: '',
-        contact: '',
-        localContact: '',
-        MovilContact: '',
-        mainEmail: '',
-        secondaryEmail: '',
-        legalRepresentative: '',
-        NCR: '',
-        NIT: ''
+        nombre_proveedor: '',
+        direccion_legal: '',
+        direccion_sucursal: '',
+        contacto: '',
+        contacto_local: '',
+        contacto_movil: '',
+        correo_1: '',
+        correo_2: '',
+        representante_legal: '',
+        ncr: '',
+        nit: ''
     });
 
     // Variable de navegación
@@ -57,7 +58,7 @@ function NewProvider() {
             }
 
                 , 2000);
-                    
+
         } catch (error) {
             console.error('Error creando el proveedor:', error);
             toast.error('Error creando el proveedor', {
@@ -91,8 +92,8 @@ function NewProvider() {
                     label='Nombre proveedor'
                     variant='standard'
                     fullWidth
-                    name='name'
-                    value={provider.name}
+                    name='nombre_proveedor'
+                    value={provider.nombre_proveedor}
                     onChange={handleChange}
                 />
                 <TextField
@@ -100,8 +101,17 @@ function NewProvider() {
                     label='Dirección legal'
                     variant='standard'
                     fullWidth
-                    name='address'
-                    value={provider.address}
+                    name='direccion_legal'
+                    value={provider.direccion_legal}
+                    onChange={handleChange}
+                />
+                <TextField
+                    id='standard-basic'
+                    label='Dirección sucursal'
+                    variant='standard'
+                    fullWidth
+                    name='direccion_sucursal'
+                    value={provider.direccion_sucursal}
                     onChange={handleChange}
                 />
                 <TextField
@@ -109,8 +119,8 @@ function NewProvider() {
                     label='Contacto'
                     variant='standard'
                     fullWidth
-                    name='contact'
-                    value={provider.contact}
+                    name='contacto'
+                    value={provider.contacto}
                     onChange={handleChange}
                 />
                 <TextField
@@ -118,8 +128,8 @@ function NewProvider() {
                     label='Contacto local'
                     variant='standard'
                     fullWidth
-                    name='localContact'
-                    value={provider.localContact}
+                    name='contacto_local'
+                    value={provider.contacto_local}
                     onChange={handleChange}
                 />
                 <TextField
@@ -127,8 +137,8 @@ function NewProvider() {
                     label='Contacto móvil'
                     variant='standard'
                     fullWidth
-                    name='MovilContact'
-                    value={provider.MovilContact}
+                    name='contacto_movil'
+                    value={provider.contacto_movil}
                     onChange={handleChange}
                 />
                 <TextField
@@ -136,8 +146,8 @@ function NewProvider() {
                     label='Dirección electrónica 1'
                     variant='standard'
                     fullWidth
-                    name='mainEmail'
-                    value={provider.mainEmail}
+                    name='correo_1'
+                    value={provider.correo_1}
                     onChange={handleChange}
                 />
                 <TextField
@@ -145,8 +155,8 @@ function NewProvider() {
                     label='Dirección electrónica 2'
                     variant='standard'
                     fullWidth
-                    name='secondaryEmail'
-                    value={provider.secondaryEmail}
+                    name='correo_2'
+                    value={provider.correo_2}
                     onChange={handleChange}
                 />
                 <TextField
@@ -154,8 +164,8 @@ function NewProvider() {
                     label='Nombre representante legal'
                     variant='standard'
                     fullWidth
-                    name='legalRepresentative'
-                    value={provider.legalRepresentative}
+                    name='representante_legal'
+                    value={provider.representante_legal}
                     onChange={handleChange}
                 />
                 <TextField
@@ -163,8 +173,8 @@ function NewProvider() {
                     label='NCR'
                     variant='standard'
                     fullWidth
-                    name='NCR'
-                    value={provider.NCR}
+                    name='ncr'
+                    value={provider.ncr}
                     onChange={handleChange}
                 />
                 <TextField
@@ -172,13 +182,13 @@ function NewProvider() {
                     label='NIT'
                     variant='standard'
                     fullWidth
-                    name='NIT'
-                    value={provider.NIT}
+                    name='nit'
+                    value={provider.nit}
                     onChange={handleChange}
                 />
                 {/* Sección de botones */}
                 <div className='newProviderFooter'>
-                    <GeneralButton type='submit'>Agregar</GeneralButton>
+                    <GeneralButton type='submit' event={handleSubmit}>Agregar</GeneralButton>
                     <GeneralButton event={inventory}>Salir</GeneralButton>
                 </div>
             </form>

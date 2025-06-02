@@ -1,8 +1,26 @@
-.stocksComponent{
+.stocksComponent {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     background: #324d7e;
-    
+
+}
+
+/* estilos del footer */
+
+.stocksContainer {
+    background: white;
+    height:80%
+}
+
+.footerStocks {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 5px 0;
 }

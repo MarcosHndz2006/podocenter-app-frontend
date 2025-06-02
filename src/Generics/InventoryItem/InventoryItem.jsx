@@ -16,30 +16,42 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import box from '../../assets/img/open-box.png';
-import vacio from '../../assets/img/conjunto-vacio.png';
-import { deleteInventoryItem, createInventoryItem } from '../../services/inventoryService';
+import { CiCircleCheck } from "react-icons/ci";
+import { GoAlert } from "react-icons/go";
+import { IoAlertCircleOutline } from "react-icons/io5";
+import { updateInventoryItem } from '../../services/inventoryService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-function InventoryItem({ id, name, component, secondaryComponent, clasification, Presentation, lot, expDate, house, unit, price, onDelete }) {
+function InventoryItem({ id, name, component, secondaryComponent, clasification,
+  Presentation, lot, expDate, house, unit, price, onDelete, units, clasifications,
+  farmacehouses, quantity, clasificationId, houseId, unitId }) {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [newItem, setNewItem] = useState({
-    comercialName: name,
-    principalComponent: component,
-    secondaryComponent: secondaryComponent,
-    Clasiffication: clasification,
-    Presentation: Presentation,
-    lot: lot,
-    expDate: expDate,
-    unit: unit,
-    farmacehouse: house,
-    price: price
+    id_producto: id,
+    nombre_comercial: name,
+    componente_principal: component,
+    componente_secundario: secondaryComponent,
+    id_clasificacion_producto: clasificationId,
+    presentacion: Presentation,
+    lote: lot,
+    vencimiento: expDate,
+    id_unidad: unitId,
+    id_casa_farmaceutica: houseId,
+    precio_unitario: price,
+    existencias: quantity
   });
+
+  const renderState = () => {
+    return (quantity > 20) ? <CiCircleCheck className='checkIcon' /> :
+      (quantity <= 20 && quantity > 10) ? <GoAlert className='cautionIcon' /> :
+        <IoAlertCircleOutline className='dangerIcon' />
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -59,34 +71,14 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
   };
 
   const deleteItem = async () => {
-    console.log('Item deleted:', id);
-
-    try {
-      await deleteInventoryItem(id);
-      onDelete(id);
-      setOpen(false);
-      toast.success('Item eliminado con éxito', {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    } catch (error) {
-      console.error('Error deleting item:', error);
-    }
+    onDelete(id)
+    setOpen(false);
   };
 
-  const createItem = async (e) => {
+  const updateItem = async (e) => {
     e.preventDefault();
     try {
-      await createInventoryItem(newItem);
+      await updateInventoryItem(newItem);
       toast.success('Item creado con éxito', {
         position: 'top-center',
         autoClose: 5000,
@@ -97,10 +89,10 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
         progress: undefined
       });
       setModalIsOpen(false);
-        setTimeout(() => {
-            window.location.reload();
-        }, 3000);
-        
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+
     } catch (error) {
       console.error('Error creating item:', error);
       toast.error('Error creando el item', {
@@ -115,13 +107,19 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
     }
   };
 
+  /* función para alterar el color del ítem de inventario en base 
+  a la cantidad de existencias disponibles */
+  const renderAvailability = () => {
+    return (quantity == 0) ? 'vacio' : (quantity <= 20) ? 'caution' : ''
+  }
+
   return (
-    <div className='inventoryItemComponent'>
+    <div className={`inventoryItemComponent ${renderAvailability()}`}>
       <img src={list} alt='botones de despliegue de opciones' className='dots' onClick={handleClickOpen} />
       <Dialog
         fullScreen={fullScreen}
         open={open}
-        onClose={handleClose}
+        onClose={() => { setOpen(false) }}
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title'>{'Seleccione la opción a ejecutar'}</DialogTitle>
@@ -139,15 +137,16 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
       </Dialog>
       <p>{name}</p>
       <p>{component}</p>
+      <p>{secondaryComponent || <i>no registrado</i>}</p>
       <p>{clasification}</p>
-      <p>{expDate}</p>
+      <p>{expDate || <i>no registrada</i>}</p>
       <p>{house}</p>
       <p>{unit}</p>
-      <p>{price}</p>
+      <p>$ {price}</p>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        contentLabel='Agregar ítem'
+        contentLabel='Editar item'
         style={{
           content: {
             width: '900px',
@@ -157,7 +156,7 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
         }}
       >
         <div className='modalDiv'>
-          <h2 className='titleModal'>Agregar ítem a inventario</h2>
+          <h2 className='titleModal'>Editar item </h2>
         </div>
         <form className='modalForm'>
           <section className='firstBlock'>
@@ -166,8 +165,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Nombre comercial'
               variant='standard'
               sx={{ width: '48%' }}
-              name='comercialName'
-              value={newItem.comercialName}
+              name='nombre_comercial'
+              value={newItem.nombre_comercial}
               onChange={handleChange}
             />
             <TextField
@@ -175,8 +174,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Componente principal'
               variant='standard'
               sx={{ width: '48%' }}
-              name='principalComponent'
-              value={newItem.principalComponent}
+              name='componente_principal'
+              value={newItem.componente_principal}
               onChange={handleChange}
             />
             <TextField
@@ -184,8 +183,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               label='Componente secundario'
               variant='standard'
               sx={{ width: '48%' }}
-              name='secondaryComponent'
-              value={newItem.secondaryComponent}
+              name='componente_secundario'
+              value={newItem.componente_secundario}
               onChange={handleChange}
             />
           </section>
@@ -195,34 +194,30 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                value={newItem.Clasiffication}
+                value={newItem.id_clasificacion_producto}
                 label='Clasificación'
-                name='Clasiffication'
+                name='id_clasificacion_producto'
                 onChange={handleChange}
               >
-                <MenuItem value='1'>Medicamento</MenuItem>
-                <MenuItem value='2'>Insumo</MenuItem>
-                <MenuItem value='3'>Muestra sin valor</MenuItem>
+                {
+                  clasifications.map(clas => {
+                    return <MenuItem key={`${clas.id_clasificacion_producto}`}
+                      value={`${clas.id_clasificacion_producto}`}>
+                      {clas.nombre_clasificacion_producto}
+                    </MenuItem>
+                  })
+                }
               </Select>
             </FormControl>
-            <FormControl sx={{ width: '48%' }}>
-              <InputLabel id='demo-simple-select-label'>Presentación</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                value={newItem.Presentation}
-                label='Presentación'
-                name='Presentation'
-                onChange={handleChange}
-              >
-                <MenuItem value='1'>Grageas</MenuItem>
-                <MenuItem value='2'>Pomada</MenuItem>
-                <MenuItem value='3'>Gel</MenuItem>
-                <MenuItem value='4'>Líquido</MenuItem>
-                <MenuItem value='5'>Pastilla</MenuItem>
-                <MenuItem value='6'>Suspensión</MenuItem>
-              </Select>
-            </FormControl>
+            <TextField
+              id='standard-basic'
+              label='Presentación'
+              variant='standard'
+              sx={{ width: '48%' }}
+              name='presentacion'
+              value={newItem.presentacion}
+              onChange={handleChange}
+            />
           </section>
           <div className='stateAndBlock'>
             <section className='thirdBlock'>
@@ -231,8 +226,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                 label='Lote'
                 variant='standard'
                 fullWidth
-                name='lot'
-                value={newItem.lot}
+                name='lote'
+                value={newItem.lote}
                 onChange={handleChange}
               />
               <article className='inputDate'>
@@ -242,8 +237,8 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                   id='standard-basic'
                   variant='standard'
                   type='date'
-                  name='expDate'
-                  value={newItem.expDate}
+                  name='vencimiento'
+                  value={newItem.vencimiento}
                   onChange={handleChange}
                 />
               </article>
@@ -252,16 +247,18 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
-                  value={newItem.unit}
+                  value={newItem.id_unidad}
                   label='Unidad'
-                  name='unit'
+                  name='id_unidad'
                   onChange={handleChange}
                 >
-                  <MenuItem value='1'>unidad</MenuItem>
-                  <MenuItem value='2'>ml</MenuItem>
-                  <MenuItem value='3'>gr</MenuItem>
-                  <MenuItem value='4'>metro</MenuItem>
-                  <MenuItem value='5'>yarda</MenuItem>
+                  {
+                    units.map(unit => {
+                      return <MenuItem key={`${unit.id_unidad}`} value={`${unit.id_unidad}`}>
+                        {unit.nombre_unidad}
+                      </MenuItem>
+                    })
+                  }
                 </Select>
               </FormControl>
             </section>
@@ -271,55 +268,60 @@ function InventoryItem({ id, name, component, secondaryComponent, clasification,
                 <p>Estado</p>
               </article>
               <article>
-                <img src={vacio} alt='vacío' />
-                <p>N/A</p>
+                {renderState()}
+                {(quantity > 20) ? <p>Disponibles {quantity}</p> :
+                  (quantity > 10 && quantity <= 20) ? <p>Quedan pocas existencias, en total {quantity}</p> :
+                    <p>Existencias a punto de acabarse, quedan {quantity}</p>}
               </article>
             </section>
           </div>
           <section className='fourthBlock'>
-            <TextField
-              id='standard-basic'
-              label='Casa farmacéutica'
-              variant='standard'
-              sx={{ width: '48%' }}
-              name='farmacehouse'
-              value={newItem.farmacehouse}
-              onChange={handleChange}
-            />
+            <FormControl sx={{ width: '48%' }}>
+              <InputLabel id='demo-simple-select-label'>Casa farmaceutica</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={newItem.id_casa_farmaceutica}
+                label='Casa farmaceutica'
+                name='id_casa_farmaceutica'
+                onChange={handleChange}
+              >
+                {
+                  farmacehouses.map((farmacehouse) => {
+                    return <MenuItem key={`${farmacehouse.id_casa_farmaceutica}`}
+                      value={`${farmacehouse.id_casa_farmaceutica}`} >
+                      {farmacehouse.nombre_casa_farmaceutica}
+                    </MenuItem>
+                  })
+                }
+              </Select>
+            </FormControl>
             <TextField
               id='standard-basic'
               label='Precio unitario'
               variant='standard'
               sx={{ width: '48%' }}
-              name='price'
-              value={newItem.price}
+              name='precio_unitario'
+              value={newItem.precio_unitario}
               onChange={handleChange}
             />
             <TextField
               id='standard-basic'
-              label='Cuenta de cargo'
+              label='Existencias'
               variant='standard'
               sx={{ width: '48%' }}
-              name='accountCharge'
-              value={newItem.accountCharge}
-              onChange={handleChange}
-            />
-            <TextField
-              id='standard-basic'
-              label='Cuenta de abono'
-              variant='standard'
-              sx={{ width: '48%' }}
-              name='accountDebit'
-              value={newItem.accountDebit}
+              name='existencias'
+              value={newItem.existencias}
               onChange={handleChange}
             />
           </section>
           <div className='itemsContainerFooter'>
-            <GeneralButton event={(e) => createItem(e)}>Editar</GeneralButton>
+            <GeneralButton event={(e) => updateItem(e)}>Editar</GeneralButton>
             <GeneralButton event={() => setModalIsOpen(false)}>Cancelar</GeneralButton>
           </div>
         </form>
       </Modal>
+      <ToastContainer />
     </div>
   );
 }

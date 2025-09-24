@@ -9,7 +9,7 @@ exports.getAllBuys = async(req, res, next) => {
             status: 'success',
             data: buys
         });
-    } catch (error) {
+    } catch (error) {   
         next(error);
     }
 };

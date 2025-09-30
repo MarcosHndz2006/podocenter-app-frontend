@@ -14,7 +14,7 @@ exports.authUser = async (req, res, next) => {
                 password: infoUser.password
             })
             .select('usuario.id_usuario', 'usuario.nombres', 'usuario.apellidos',
-                'usuario.username', 'usuario.cuenta_abono', 'usuario.cuenta_ahorro',
+                'usuario.username', 'usuario.cuenta_abono', 'usuario.cuenta_cargo',
                 'usuario.id_rol', 'rol.nombre_puesto', 'rol.unidad_servicio',
                 'rol.costo_unidad_servicio')
 

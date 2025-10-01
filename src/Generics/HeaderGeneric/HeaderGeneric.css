@@ -22,7 +22,7 @@
 }
 
 .headerGeneric>p {
-    font-size: 10pt;
+    font-size: 15pt;
     margin: 0 0 0 10px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -32,6 +32,7 @@
     animation: wiggle 1.5s ease-in-out infinite;
     transition: all 0.2s ease-in-out;
 }
+
 
 @keyframes wiggle {
     0% {

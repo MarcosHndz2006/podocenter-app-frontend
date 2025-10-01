@@ -1,26 +1,4 @@
-import './InventoryComponent.css';
-import HeaderGeneric from '../../Generics/HeaderGeneric/HeaderGeneric';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
-import { Pagination } from '@mui/material';
-import Modal from 'react-modal';
-import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import box from '../../assets/img/open-box.png';
-import vacio from '../../assets/img/conjunto-vacio.png';
-import InventoryItem from '../../Generics/InventoryItem/InventoryItem';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import NoneResults from '../../Generics/NoneResults/NoneResults';
-import { getAllInventoryItems, createInventoryItem, getClasifications, getUnits, getFarmacehouses, deleteInventoryItem } from '../../services/inventoryService';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { deleteProvider, getAllProviders } from '../../services/providerService';
-import { getAllShelfs } from '../../services/shelfService';
+
 
 function InventoryComponent() {
 

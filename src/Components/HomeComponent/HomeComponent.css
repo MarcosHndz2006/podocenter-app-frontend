@@ -16,6 +16,8 @@
     color: white;
     font-family: 'Montserrat';
     font-size: 13pt;
+    align-self: flex-start;
+    margin-left: 46%;
 }
 
 .menuOptionsContainer1{

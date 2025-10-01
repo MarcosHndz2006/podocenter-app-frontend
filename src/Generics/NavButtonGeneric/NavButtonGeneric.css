@@ -4,7 +4,7 @@
     font-family: 'Montserrat';
     font-size: 13pt;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     padding: 0.5rem 1rem;
     cursor: pointer;
     display: flex;
@@ -15,7 +15,7 @@
     font-family: 'Montserrat';
     font-weight: 600;
     font-size: 14pt;
-    width: 250px;
+    width: 280px;
     height: 250px;
     transition: all 0.2s ease-in-out;
 }

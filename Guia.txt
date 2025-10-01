@@ -1,0 +1,9 @@
+#levantar el backend 
+Primero de se debe llenar la base de datos con informacion previa
+
+-dirigirse a la carpeta API y usar 'npm install'
+-luego correr la API 'npm run dev 
+
+#levantar frontend
+-desde la raiz se puede usar 'npm install'
+-luego correr el frontend 'npm run dev'

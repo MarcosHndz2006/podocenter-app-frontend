@@ -18,7 +18,7 @@ function HomeComponent() {
     /* Nota: la función slice es para quitar las comillas dobles del valor */
     const [rol, setRol] = useState(localStorage.getItem('rolid'))
 
-    /* variable de estado usada para renderizar los botones en base al rol */
+    /* variable de estado usada para renderizar los botones en base al rol del usuario*/
     const [buttons, setButtons] = useState([
         { inventory: '' },
         { stocks: '' },

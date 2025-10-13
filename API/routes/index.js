@@ -26,6 +26,8 @@ router.use('/spaces', spacesRoutes);
 router.use('/storage', storageRoutes);
 router.use('/users', userRoutes);
 
+'http://localhost:3000/api/buys/updateBuy'
+
 // Home route
 router.get('/', (req, res) => {
     res.json({ message: 'PodoCenter API' });

@@ -101,7 +101,7 @@ function Home(){
                 </NavButtonGeneric>}
             </section>
             <section className='menuOptionsContainer2'>
-                {buttons[2].payments && <NavButtonGeneric route="/podocenter/payments">
+                {buttons[2].payments && <NavButtonGeneric route="/podocenter/buys">
                     <img src={cobros} alt="inventario.png" width="150px" height="150px" />
                     <p>Cobros</p>
                 </NavButtonGeneric>}

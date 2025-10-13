@@ -4,7 +4,6 @@ const db = require('../db/connection');
 // Get all items
 exports.getAllItems = async (req, res, next) => {
     try {
-        const items = await db('producto').select('*');
 
         const itemsToRender = await db('producto')
             .join('casa_farmaceutica', 'producto.id_casa_farmaceutica',
@@ -13,18 +12,21 @@ exports.getAllItems = async (req, res, next) => {
                 'clasificacion_producto.id_clasificacion_producto'
             )
             .join('unidad', 'producto.id_unidad', 'unidad.id_unidad')
-            .select('*')
-
+            .select('producto.id_producto', 'producto.nombre_comercial', 'producto.componente_principal', 'producto.componente_secundario', 'producto.vencimiento',
+                'producto.lote', 'producto.existencias', 'producto.precio_unitario', 'producto.presentacion', 'producto.id_unidad', 'producto.id_estante', 'producto.id_clasificacion_producto',
+                'producto.id_casa_farmaceutica', 'casa_farmaceutica.nombre_casa_farmaceutica', 'clasificacion_producto.nombre_clasificacion_producto', 'unidad.nombre_unidad'
+            )
 
         res.status(200).json({
             status: 'success',
             data: itemsToRender
         });
 
-
-
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        })
     }
 };
 
@@ -39,7 +41,10 @@ exports.getItemById = async (req, res, next) => {
                 'clasificacion_producto.id_clasificacion_producto'
             )
             .join('unidad', 'producto.id_unidad', 'unidad.id_unidad')
-            .where('id_producto', id).first();
+            .where('id_producto', id).select('producto.id_producto', 'producto.nombre_comercial', 'producto.componente_principal', 'producto.componente_secundario', 'producto.vencimiento',
+                'producto.lote', 'producto.existencias', 'producto.precio_unitario', 'producto.presentacion', 'producto.id_unidad', 'producto.id_estante', 'producto.id_clasificacion_producto',
+                'producto.id_casa_farmaceutica', 'casa_farmaceutica.nombre_casa_farmaceutica', 'clasificacion_producto.nombre_clasificacion_producto', 'unidad.nombre_unidad'
+            ).first();
 
         if (!item) {
             return res.status(404).json({
@@ -54,55 +59,61 @@ exports.getItemById = async (req, res, next) => {
         });
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        })
     }
 };
 
 // Create a new item
 exports.createItem = async (req, res, next) => {
     try {
-        const itemData = req.body;
-        console.log(itemData)
-        // Validate required fields
-        if (!itemData.comercialName) {
+        const { itemData } = req.body;
+
+        if (!itemData) {
             return res.status(400).json({
-                status: 'error',
-                message: 'Commercial name is required'
-            });
+                message: 'No ha provisto información correcta para crear un producto, revise la información que intenta almacenar'
+            })
         }
 
         const [id] = await db('producto').insert({
-            nombre_comercial: itemData.comercialName,
-            componente_principal: itemData.principalComponent,
-            componente_secundario: itemData.secondaryComponent,
-            presentacion: itemData.Presentation,
-            precio_unitario: itemData.price,
-            id_unidad: itemData.unit,
-            vencimiento: itemData.expDate,
-            lote: itemData.lot,
+            nombre_comercial: itemData.nombre_comercial,
+            componente_principal: itemData.componente_principal,
+            componente_secundario: itemData.componente_secundario,
+            presentacion: itemData.presentacion,
+            precio_unitario: itemData.precio_unitario,
+            id_unidad: itemData.id_unidad,
+            vencimiento: itemData.vencimiento,
+            lote: itemData.lote,
             cuenta_cargo: null,
-            id_clasificacion_producto: itemData.Clasiffication,
-            id_casa_farmaceutica: itemData.farmacehouse,
-            id_estante: itemData.shelf,
-            existencias: itemData.quantity
+            id_clasificacion_producto: itemData.id_clasificacion_producto,
+            id_casa_farmaceutica: itemData.id_casa_farmaceutica,
+            id_estante: itemData.id_estante,
+            existencias: itemData.existencias
         });
+
         const newItem = await db('producto').where('id_producto', id).first();
 
-        res.status(201).json({
-            status: 'success',
-            data: newItem
-        });
+        if (newItem) {
+            return res.status(201).json({
+                status: 'success',
+                data: newItem
+            });
+        }
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        })
     }
 };
 
 // Update an item
-exports.updateItem = async (req, res, next) => {
+exports.editItem = async (req, res, next) => {
     try {
-        const itemData = req.body;
-        console.log(itemData)
+        const { itemData } = req.body;
+
         const updated = await db('producto').where('id_producto', itemData.id_producto).update({
-            id_producto: itemData.id_producto,
             nombre_comercial: itemData.nombre_comercial,
             componente_principal: itemData.componente_principal,
             componente_secundario: itemData.componente_secundario,
@@ -119,18 +130,19 @@ exports.updateItem = async (req, res, next) => {
         if (!updated) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Item not found'
+                message: 'Item no encontrado'
             });
         }
 
-        const updatedItem = await db('producto').where('id_producto', itemData.id_producto)
-
         res.status(200).json({
             status: 'success',
-            data: updatedItem
+            message: "Item actualizado con éxito"
         });
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        })
     }
 };
 
@@ -144,61 +156,70 @@ exports.deleteItem = async (req, res, next) => {
         if (!deleted) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Item not found'
+                message: 'Item no encontrado'
             });
         }
 
         res.status(200).json({
             status: 'success',
-            message: 'Item deleted successfully'
+            message: 'Item eliminado exitosamente'
         });
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        })
     }
 };
 
 // Get items by classification
-exports.getItemsByClassification = async (req, res, next) => {
-    try {
-        const { classificationId } = req.params;
-        const items = await db('producto').where('id_clasificacion_producto', classificationId).select('*');
+// exports.getItemsByClasification = async (req, res, next) => {
+//     try {
+//         const { classificationId } = req.params;
+//         const items = await db('producto').where('id_clasificacion_producto', classificationId).select('*');
 
-        res.status(200).json({
-            status: 'success',
-            data: items
-        });
-    } catch (error) {
-        next(error);
-    }
-};
+//         res.status(200).json({
+//             status: 'success',
+//             data: items
+//         });
+//     } catch (error) {
+//         next(error);
+//         return res.status(500).json({
+//             message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+//         });
+//     }
+// };
 
 // Get items nearing expiry
-exports.getItemsNearingExpiry = async (req, res, next) => {
-    try {
-        const daysThreshold = req.query.days || 30;
-        const now = new Date();
-        const futureDate = new Date();
-        futureDate.setDate(now.getDate() + parseInt(daysThreshold));
+// exports.getItemsNearingExpiry = async (req, res, next) => {
+//     try {
+//         const daysThreshold = req.query.days || 30;
+//         const now = new Date();
+//         const futureDate = new Date();
+//         futureDate.setDate(now.getDate() + parseInt(daysThreshold));
 
-        const items = await db('producto')
-            .whereBetween('vencimiento', [now.toISOString(), futureDate.toISOString()])
-            .select('*');
+//         const items = await db('producto')
+//             .whereBetween('vencimiento', [now.toISOString(), futureDate.toISOString()])
+//             .select('*');
 
-        res.status(200).json({
-            status: 'success',
-            data: items
-        });
-    } catch (error) {
-        next(error);
-    }
-};
+//         res.status(200).json({
+//             status: 'success',
+//             data: items
+//         });
+//     } catch (error) {
+//         next(error);
+//         return res.status(500).json({
+//             message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+//         });
+//     }
+// };
 
 //Obtain items clasifications
 exports.getAllProductClasifications = async (req, res, next) => {
     try {
         const clasifications = await db('clasificacion_producto').select('*');
 
-        if (clasifications.length) {
+        if (clasifications.length != 0) {
 
             return res.status(200).json({
                 data: clasifications,
@@ -213,12 +234,15 @@ exports.getAllProductClasifications = async (req, res, next) => {
         })
 
     } catch (error) {
-        next(error)
+        next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        });
     }
 }
 
 //Obtain all items units
-exports.getAllProductoUnits = async (req, res, next) => {
+exports.getAllUnits = async (req, res, next) => {
     try {
         const units = await db('unidad').select('*')
 
@@ -231,15 +255,19 @@ exports.getAllProductoUnits = async (req, res, next) => {
 
         return res.status(404).json({
             status: '404',
-            message: 'units not founded'
+            message: 'Datos de unidades no encontrados'
         })
+
     } catch (error) {
-        next(error)
+        next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        });
     }
 }
 
-//Obtain all items farmacehouse
-exports.getAllProductFarmacehouses = async (req, res, next) => {
+//Obtain all items id_casa_farmaceutica
+exports.getAllFarmacehouses = async (req, res, next) => {
     try {
         const farmacehouses = await db('casa_farmaceutica').select('*')
 
@@ -252,9 +280,13 @@ exports.getAllProductFarmacehouses = async (req, res, next) => {
 
         return res.status(404).json({
             status: '404',
-            message: 'farmacehouses not founded'
+            message: 'Datos de casas farmaceuticas no encontrados'
         })
+
     } catch (error) {
-        next(error)
+        next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo`
+        });
     }
 }

@@ -1,6 +1,5 @@
 import './HomeComponent.css'
 import HeaderGeneric from '../../Generics/HeaderGeneric/HeaderGeneric'
-import hand from '../../assets/img/seleccione.png'
 import NavButtonGeneric from '../../Generics/NavButtonGeneric/NavButtonGeneric'
 import inventory from '../../assets/img/inventario.png'
 import stocks from '../../assets/img/ahora-disponible.png'
@@ -16,7 +15,7 @@ function HomeComponent() {
     const username = localStorage.getItem('username').slice(1, -1)
     /* constante para identificar el rol de ese usuario que inicio sesión */
     /* Nota: la función slice es para quitar las comillas dobles del valor */
-    const [rol, setRol] = useState(localStorage.getItem('rolid'))
+    const rol = localStorage.getItem('rolid')
 
     /* variable de estado usada para renderizar los botones en base al rol del usuario*/
     const [buttons, setButtons] = useState([
@@ -83,13 +82,12 @@ function HomeComponent() {
         }
 
         renderByRol()
-    }, [])
+    }, [rol])
 
     return (
         <div className='homeComponent'>
             <HeaderGeneric username={username} route="/podocenter/auth">Home</HeaderGeneric>
-            <p>Selecciona una opción para comenzar a navegar</p>
-            <img src={hand} alt="" height="30px" width="30px" />
+            <p>Selecciona un menu</p>
             <section className='menuOptionsContainer1'>
                 {buttons[0].inventory && <NavButtonGeneric route="/podocenter/inventory">
                     <img src={inventory} alt="inventario.png" width="150px" height="150px" />
@@ -101,7 +99,7 @@ function HomeComponent() {
                 </NavButtonGeneric>}
             </section>
             <section className='menuOptionsContainer2'>
-                {buttons[2].payments && <NavButtonGeneric route="/podocenter/payments">
+                {buttons[2].payments && <NavButtonGeneric route="/podocenter/buys">
                     <img src={cobros} alt="inventario.png" width="150px" height="150px" />
                     <p>Cobros</p>
                 </NavButtonGeneric>}

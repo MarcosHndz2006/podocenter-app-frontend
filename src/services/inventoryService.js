@@ -52,7 +52,7 @@ export const updateInventoryItem = async (itemData) => {
 // Function to get clasifications
 export const getClasifications = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/clasification/all/`);
+        const response = await axios.get(`${API_BASE_URL}clasifications/all/`); // Corregido
         return response.data;
     } catch (error) {
         console.error('Error getting clasifications', error)
@@ -63,7 +63,7 @@ export const getClasifications = async () => {
 //Function to get units
 export const getUnits = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/units`)
+        const response = await axios.get(`${API_BASE_URL}/units/all`)
         return response.data
     } catch (error) {
         console.error('Error getting units: ', error)
@@ -74,7 +74,7 @@ export const getUnits = async () => {
 //Function to get farmacehouses
 export const getFarmacehouses = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/farmacehouses`)
+        const response = await axios.get(`${API_BASE_URL}/farmacehouses/all`)
         return response.data;
     } catch (error) {
         console.error('Error getting farmacehouses: ', error)

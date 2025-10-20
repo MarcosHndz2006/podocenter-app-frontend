@@ -52,8 +52,11 @@ function StocksComponent() {
             case 1: {
                 return <StocksContainerComponent stocks={products} />
             }
+            case 2: {
+                return <StocksContainerComponent stocks={services} />
+            }
             default: {
-                return ''
+                return <div>No hay contenido disponible</div>
             }
         }
     }

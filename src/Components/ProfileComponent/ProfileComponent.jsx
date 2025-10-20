@@ -12,143 +12,41 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import GeneralButton from '../../Generics/GeneralButton/GeneralButton';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-/* import de useState y useEffect */
-import { useState, useEffect } from 'react'
-import { getAllUsers, getUserById } from '../../services/userServices';
-import { createService, deleteService, getAllServiceClasifications, getAllServices, getAllServiceSubclasification, getServicesByUserId } from '../../services/serviceService';
 import { TextField } from '@mui/material';
-import { createSpace, deleteSpace, getAllSpaces } from '../../services/spacesService';
 import EndComponent from '../../Generics/EndComponent/EndComponent';
+import { useProfile } from '../../hooks/useProfile';
 
 function ProfileComponent() {
 
-    /* sección de variables */
+    // Obtener toda la lógica del hook personalizado
+    const {
+        // Estados
+        user,
+        username,
+        modalIsOpen,
+        setModalIsOpen,
+        spaceModalIsOpen,
+        setSpaceModalIsOpen,
+        services,
+        spaces,
+        clasifications,
+        subclasifications,
+        users,
+        service,
+        space,
+        
+        // Funciones
+        handleChange,
+        handleChangeSpace,
+        addService,
+        deleteOneService,
+        addSpace,
+        deleteOneSpace
+    } = useProfile();
 
-    const username = localStorage.getItem('username').slice(1, -1);
-    const userid = localStorage.getItem('userid');
-
-    /* variable de estado usada para almacenar los datos del usuario */
-    const [user, setUser] = useState(null);
-
-    /* variable de estado para almacenar el servicio que se creará */
-    const [service, setService] = useState({
-        nombre_servicio: '',
-        unidad_servicio: '',
-        precio_unitario: '',
-        id_usuario: '',
-        id_espacio: '',
-        id_clasificacion: '',
-        id_subclasificacion: ''
-    })
-
-    /* variable de estado para abrir y cerrar el modal para crear un 
-    servicio */
-
-    const [modalIsOpen, setModalIsOpen] = useState(false)
-
-    /* variable para abrir el modal para añadir un nuevo espacio */
-    const [spaceModalIsOpen, setSpaceModalIsOpen] = useState(false)
-
-    /* variable de estado usada para renderizar y almacenar los servicios totales */
-    const [services, setServices] = useState([]);
-
-    /* variable de estado usada para almacenar los espacios provenientes
-    de la api */
-    const [spaces, setSpaces] = useState([])
-
-    /* variable de estado para guardar los valores para crear un nuevo espacio */
-    const [space, setSpace] = useState({
-        nombre_espacio: '',
-        unidad_servicio_espacio: '',
-        costo_unidad_servicio_espacio: ''
-    })
-
-    /* variable usada para almacenar las clasificaciones vigentes de los 
-    servicios */
-    const [clasifications, setClasifications] = useState([])
-
-    /* variable usada para almacenar las subclasificaiones vigentes de los
-    servicios */
-    const [subclasifications, setSubclasifications] = useState([])
-
-    /* variable usada para almacenar a los usuarios disponibles */
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const userData = await getUserById(userid);
-                setUser(userData.data);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        const fetchServices = async () => {
-            try {
-                var servicesData = []
-                if (userid == 1) {
-                    servicesData = await getAllServices();
-                    setServices(servicesData.data.data)
-                } else {
-                    servicesData = await getServicesByUserId(userid);
-                    console.log(servicesData.data)
-                    setServices(servicesData.data);
-                }
-            } catch (error) {
-                console.error('Error fetching services:', error);
-            }
-        };
-
-        const fetchSpaces = async () => {
-            try {
-                const spacesData = await getAllSpaces();
-                setSpaces(spacesData.data)
-            } catch (error) {
-                console.error('Error fetching spaces: ', error)
-            }
-        }
-
-        const fetchUsers = async () => {
-            try {
-                const users = await getAllUsers();
-                setUsers(users.data)
-            } catch (error) {
-                console.error('Error fetching users: ', error)
-            }
-        }
-
-        const fetchClasifications = async () => {
-            try {
-                const clasifications = await getAllServiceClasifications()
-                setClasifications(clasifications.data.data)
-            } catch (error) {
-                console.error("Error fetching all service clasifications: ", error)
-            }
-        }
-
-        const fetchSubclasifications = async () => {
-            try {
-                const subclasifications = await getAllServiceSubclasification()
-                setSubclasifications(subclasifications.data.data)
-            } catch (error) {
-                console.error("Error fetching all service subclasifications: ", error)
-            }
-        }
-
-        fetchUserData();
-        fetchServices();
-        fetchSpaces();
-        fetchUsers()
-        fetchClasifications()
-        fetchSubclasifications()
-    }, [userid]);
-
-    /* sección de funciones */
-
-    /* función para renderizar los servicios totales */
+    // Funciones de renderizado (estas se mantienen aquí porque son específicas del JSX)
     const renderServices = () => {
         return services.map(service => {
             return <ServiceCard key={service.id_servicio}
@@ -163,12 +61,10 @@ function ProfileComponent() {
                 unit={service.unidad_servicio}
                 price={service.precio_unitario}
                 event={deleteOneService}
-
             />
         })
     }
 
-    /* función para renderizar los espacios totales */
     const renderSpaces = () => {
         return spaces.map(space => {
             return <SpaceCard key={space.id_espacio}
@@ -178,12 +74,11 @@ function ProfileComponent() {
                 currentState={space.id_estado_espacio}
                 cost={space.costo_unidad_servicio_espacio}
                 event={deleteOneSpace}
-                rolUser={user.id_rol}
+                rolUser={user?.id_rol}
             />
         })
     }
 
-    /* Función para renderizar las clasificaciones de los servicios */
     const renderClasifications = () => {
         return clasifications.map(clasification => {
             return <MenuItem key={clasification.id_clasificacion}
@@ -193,7 +88,6 @@ function ProfileComponent() {
         })
     }
 
-    /* Función utilizada para renderizar las subclasificaciones de los servicios */
     const renderSubClasifications = () => {
         return subclasifications.map(subclas => {
             return <MenuItem key={subclas.id_subclasificacion}
@@ -203,7 +97,6 @@ function ProfileComponent() {
         })
     }
 
-    /* función para renderizar la lista de usuarios disponibles */
     const renderUsers = () => {
         let filteredUsers = users.map(user =>
             user.id_rol == 4 ? (
@@ -223,87 +116,6 @@ function ProfileComponent() {
                 {`Espacio No. ${space.id_espacio}: ${space.nombre_espacio}, 
                 costo: $${space.costo_unidad_servicio_espacio}`}
             </MenuItem>)
-    }
-
-    /* función para agregar un nuevo servicio */
-    const addService = async () => {
-        const result = await createService(service)
-        try {
-            toast.success('Servicio añadido con éxito');
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } catch (error) {
-            toast.error(`Error: ${error.response.data.message}`);
-        }
-
-
-    }
-
-    /* función para eliminar un servicio */
-    const deleteOneService = async (id) => {
-        try {
-            const result = await deleteService(id)
-            toast.success('Servicio eliminado con éxito');
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } catch (error) {
-            toast.error(`Error: ${error}`);
-        }
-    }
-
-    /* función para agregar un nuevo espacio */
-    const addSpace = async () => {
-        const result = await createSpace(space)
-
-        if (result.data.message == "OK") {
-            toast.success('Espacio agregado con éxito');
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } else {
-            toast.error('No se puede agregar el espacio');
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        }
-    }
-
-    /* función para eliminar un espacio */
-    const deleteOneSpace = async (id) => {
-        try {
-            const result = await deleteSpace(id)
-            toast.success('Espacio eliminado con éxito');
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } catch (error) {
-            toast.error(`Error: ${error.response.data.message}`);
-
-        }
-    }
-
-    /* función para obtener los valores para crear un nuevo servicio */
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setService((s) => ({
-            ...s,
-            [name]: `${value}`
-        }))
-    }
-
-    /* función para obtener los valores para crear un nuevo espacio */
-    const handleChangeSpace = (e) => {
-        const { name, value } = e.target
-        setSpace((sp) => ({
-            ...sp, [name]: `${value}`
-        }))
     }
 
     return (
@@ -357,18 +169,21 @@ function ProfileComponent() {
                                 label='Nombre de servicio'
                                 variant='standard'
                                 name='nombre_servicio'
+                                value={service.nombre_servicio}
                                 onChange={handleChange}
                                 sx={{ width: '98%' }} />
                             <TextField id='standard-basic'
                                 label='Unidad de servicio'
                                 variant='standard'
                                 name='unidad_servicio'
+                                value={service.unidad_servicio}
                                 onChange={handleChange}
                                 sx={{ width: '98%' }} />
                             <TextField id='standard-basic'
                                 label='Precio unitario ($)'
                                 variant='standard'
                                 name='precio_unitario'
+                                value={service.precio_unitario}
                                 onChange={handleChange}
                                 sx={{ width: '98%' }} />
                             <FormControl sx={{ width: '100%' }}>
@@ -378,6 +193,7 @@ function ProfileComponent() {
                                 <Select
                                     labelId='demo-simple-select-label'
                                     id='demo-simple-select'
+                                    value={service.id_clasificacion}
                                     label='Clasificación'
                                     name='id_clasificacion'
                                     onChange={handleChange}
@@ -394,6 +210,7 @@ function ProfileComponent() {
                                 <Select
                                     labelId='demo-simple-select-label'
                                     id='demo-simple-select'
+                                    value={service.id_subclasificacion}
                                     label='Subclasificación'
                                     name='id_subclasificacion'
                                     onChange={handleChange}
@@ -410,6 +227,7 @@ function ProfileComponent() {
                                 <Select
                                     labelId='demo-simple-select-label'
                                     id='demo-simple-select'
+                                    value={service.id_usuario}
                                     label='Assigned User'
                                     name='id_usuario'
                                     onChange={handleChange}
@@ -426,6 +244,7 @@ function ProfileComponent() {
                                 <Select
                                     labelId='demo-simple-select-label'
                                     id='demo-simple-select'
+                                    value={service.id_espacio}
                                     label='Free space'
                                     name='id_espacio'
                                     onChange={handleChange}
@@ -471,18 +290,21 @@ function ProfileComponent() {
                             <TextField id='standard-basic'
                                 label='Nombre de espacio'
                                 variant='standard'
+                                value={space.nombre_espacio}
                                 onChange={handleChangeSpace}
                                 name="nombre_espacio"
                                 sx={{ width: '98%' }} />
                             <TextField id='standard-basic'
                                 label='Unidad de servicio de espacio'
                                 variant='standard'
+                                value={space.unidad_servicio_espacio}
                                 onChange={handleChangeSpace}
                                 name="unidad_servicio_espacio"
                                 sx={{ width: '98%' }} />
                             <TextField id='standard-basic'
                                 label='Precio unitario de espacio($)'
                                 variant='standard'
+                                value={space.costo_unidad_servicio_espacio}
                                 name="costo_unidad_servicio_espacio"
                                 onChange={handleChangeSpace}
                                 sx={{ width: '98%' }} />

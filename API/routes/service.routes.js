@@ -8,7 +8,7 @@ router.get('/subclasifications', serviceController.getServiceSubclasifications)
 // Routes for /api/services
 router.get('/', serviceController.getAllServices);
 router.post('/', serviceController.createService);
-router.put('/update', serviceController.updateService);
+router.put('/update', serviceController.updateServiceState);
 router.post('/updateService/:identifier', serviceController.updateInfoService)
 router.get('/:id', serviceController.getServiceById);
 router.delete('/:id', serviceController.deleteService);

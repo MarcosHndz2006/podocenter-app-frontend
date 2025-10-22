@@ -4,13 +4,26 @@ const db = require('../db/connection');
 // Get all providers
 exports.getAllProviders = async (req, res, next) => {
     try {
+
         const providers = await db('proveedor').select('*');
-        res.status(200).json({
+
+        if (!providers || providers.length === 0) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Proveedores no encontrados.'
+            })
+        }
+
+        return res.status(200).json({
             status: 'success',
             data: providers
         });
+
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo.`
+        });
     }
 };
 
@@ -23,7 +36,7 @@ exports.getProviderById = async (req, res, next) => {
         if (!provider) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Provider not found'
+                message: 'No se encontró el proveedor solicitado.'
             });
         }
 
@@ -33,6 +46,9 @@ exports.getProviderById = async (req, res, next) => {
         });
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo.`
+        });
     }
 };
 
@@ -42,22 +58,28 @@ exports.createProvider = async (req, res, next) => {
         const providerData = req.body;
 
         // Validate required fields
-        if (!providerData.nombre_proveedor) {
+        if (!providerData) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Provider name is required'
+                message: 'No se han propocionado datos para crear un proveedor.'
             });
         }
 
         const [id] = await db('proveedor').insert(providerData);
         const newProvider = await db('proveedor').where('id_proveedor', id).first();
 
-        res.status(201).json({
-            status: 'success',
-            data: newProvider
-        });
+        if (newProvider) {
+            return res.status(201).json({
+                status: 'success',
+                message: 'Proveedor creado con éxito'
+            });
+        }
+
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo.`
+        });
     }
 };
 
@@ -72,18 +94,24 @@ exports.updateProvider = async (req, res, next) => {
         if (!updated) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Provider not found'
+                message: 'No se encontró el proveedor para actualizar'
             });
         }
 
         const updatedProvider = await db('proveedor').where('id_proveedor', id).first();
 
-        res.status(200).json({
-            status: 'success',
-            data: updatedProvider
-        });
+        if (updatedProvider) {
+            return res.status(200).json({
+                status: 'success',
+                message: 'Proveedor actualizado con éxito'
+            });
+        }
+
     } catch (error) {
         next(error);
+        return res.status(500).json({
+            message: `Error interno del servidor: ${error}. Consulte con el equipo de desarrollo.`
+        });
     }
 };
 
@@ -91,19 +119,19 @@ exports.updateProvider = async (req, res, next) => {
 exports.deleteProvider = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(id)
+        
         const deleted = await db('proveedor').where('id_proveedor', id).del();
 
         if (!deleted) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Provider not found'
+                message: 'No se encontró el proveedor a eliminar'
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             status: 'success',
-            message: 'Provider deleted successfully'
+            message: 'Proveedor eliminado con éxito'
         });
     } catch (error) {
         next(error);
